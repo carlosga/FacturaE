@@ -32,7 +32,7 @@ using nFacturae.Extensions;
 using nFacturae.Schemas;
 using nFacturae.Xml;
 
-namespace nFacturae
+namespace nFacturae.Extensions
 {
     /// <summary>
     /// Facturae extensions
