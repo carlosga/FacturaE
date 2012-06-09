@@ -19,7 +19,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using nFacturae.Schemas;
 
-namespace nFacturae.Xml
+namespace nFacturae.Extensions
 {
     /// <summary>
     /// XML extensions

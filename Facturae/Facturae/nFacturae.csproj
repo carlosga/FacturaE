@@ -73,7 +73,7 @@
     <Compile Include="Schemas\XsdSchemas.cs" />
     <Compile Include="Xml\SignedFacturae.cs" />
     <Compile Include="Xml\XaDESSignedXml.cs" />
-    <Compile Include="Xml\XmlExtensions.cs" />
+    <Compile Include="Extensions\XmlExtensions.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

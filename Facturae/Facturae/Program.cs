@@ -11,8 +11,9 @@ namespace nFacturae
             Facturae            eInvoice	= new Facturae();
             X509Certificate2    cert        = new X509Certificate2(@"Certificates/usr0052.p12", "usr0052");
             SignedFacturae      signed      = null;
-            bool                isValid     = false;
+            bool                isValid    = false;
 
+            // Create a new facturae invoice & sign it
             signed = eInvoice.GiveCurrencyCode(CurrencyCodeType.EUR)
                     .GiveIssuerType(InvoiceIssuerTypeType.EM)
                     .Parties()
@@ -79,7 +80,7 @@ namespace nFacturae
                     .CalculateTotals()
                     .Sign(cert);
 
-
+            // Check signature
             isValid = signed.WriteToFile(@"Sample.xml")
                             .CheckSignature();
 

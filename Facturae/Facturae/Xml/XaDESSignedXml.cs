@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.Xml;
 using System.Xml;
+using nFacturae.Extensions;
 using nFacturae.Schemas;
 
 namespace nFacturae.Xml

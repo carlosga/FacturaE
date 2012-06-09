@@ -20,6 +20,9 @@ using nFacturae.Xml;
 
 namespace nFacturae
 {
+    /// <summary>
+    /// Helper class to verify signed invoices signatures.
+    /// </summary>
     public sealed class SignedFacturae
     {
         #region · Fields ·
@@ -30,10 +33,17 @@ namespace nFacturae
 
         #region · Constructors ·
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SignedFacturae"/> class.
+        /// </summary>
         public SignedFacturae()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SignedFacturae"/> class with the given <see cref="XmlDocument"/>.
+        /// </summary>
+        /// <param name="document">Source xml document</param>
         public SignedFacturae(XmlDocument document)
         {
             this.signedDocument = document;
@@ -43,6 +53,11 @@ namespace nFacturae
 
         #region · Methods ·
 
+        /// <summary>
+        /// Loads the given XML file
+        /// </summary>
+        /// <param name="path">The XML file path</param>
+        /// <returns>An instance of <see cref="SignedFacturae"/></returns>
         public SignedFacturae Load(string path)
         {
             this.signedDocument = new XmlDocument { PreserveWhitespace = true };
@@ -51,6 +66,11 @@ namespace nFacturae
             return this;
         }
 
+        /// <summary>
+        /// Loads the given XML document
+        /// </summary>
+        /// <param name="path">The XML document</param>
+        /// <returns>An instance of <see cref="SignedFacturae"/></returns>
         public SignedFacturae Load(XmlDocument document)
         {
             this.signedDocument = document;
@@ -58,6 +78,11 @@ namespace nFacturae
             return this;
         }
 
+        /// <summary>
+        /// Saves the signed XML to the given path
+        /// </summary>
+        /// <param name="path">The target file path</param>
+        /// <returns>An instance of <see cref="SignedFacturae"/></returns>
         public SignedFacturae WriteToFile(string path)
         {
             this.signedDocument.Save(path);
