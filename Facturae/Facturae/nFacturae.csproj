@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -8,8 +8,8 @@
     <ProjectGuid>{CFA51BB8-125F-4AE8-93D5-263407C0F309}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ElectronicInvoice</RootNamespace>
-    <AssemblyName>ElectronicInvoice</AssemblyName>
+    <RootNamespace>nFacturae</RootNamespace>
+    <AssemblyName>nFacturae</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -71,7 +71,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="FacturaeExtensions.cs" />
     <Compile Include="Schemas\XsdSchemas.cs" />
-    <Compile Include="SignedFacturae.cs" />
+    <Compile Include="Xml\SignedFacturae.cs" />
     <Compile Include="Xml\XaDESSignedXml.cs" />
     <Compile Include="Xml\XmlExtensions.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
@@ -114,9 +114,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Sample.xml" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -125,5 +122,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="license.txt" />
+  </ItemGroup>
 </Project>

@@ -1,3 +1,19 @@
+/* This file is part of Facturae.
+ * 
+ * Facturae is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Facturae is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Facturae.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,11 +28,11 @@ using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using ElectronicInvoice.Extensions;
-using ElectronicInvoice.Schemas;
-using ElectronicInvoice.Xml;
+using nFacturae.Extensions;
+using nFacturae.Schemas;
+using nFacturae.Xml;
 
-namespace ElectronicInvoice
+namespace nFacturae
 {
     /// <summary>
     /// Facturae extensions
@@ -1043,7 +1059,7 @@ namespace ElectronicInvoice
         private static byte[] ReadPolicyFile()
         {
             Assembly    currentAssembly = Assembly.GetExecutingAssembly();
-            string      resourceName = "ElectronicInvoice.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
+            string      resourceName = "nFacturae.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
 
             using (Stream stream = currentAssembly.GetManifestResourceStream(resourceName))
             {

@@ -1,7 +1,7 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
 
-namespace ElectronicInvoice
+namespace nFacturae
 {
     public class Program
     {
