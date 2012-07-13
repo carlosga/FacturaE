@@ -1,5 +1,7 @@
 ﻿/* This file is part of Facturae.
  * 
+ * Copyright (c) 2012. Carlos Guzmán Álvarez.
+ * 
  * Facturae is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +22,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace nFacturae.Schemas
+namespace nFacturae.Xml
 {
     /// <summary>
     /// Helper class for dealing with Facturae and xmldsig Schemas
@@ -35,6 +37,8 @@ namespace nFacturae.Schemas
         public const string FacturaePrefix          = "fe";
         public const string XmlDsigPrefix           = "ds";
         public const string XadesPrefix             = "";
+        private const string XmlDsigSchemaResource  = "ElectronicInvoice.Schemas.xmldsig-core-schema.xsd";
+        private const string FacturaeSchemaResource = "ElectronicInvoice.Schemas.Facturaev3_2.xsd";
 
         #endregion
 
@@ -55,26 +59,51 @@ namespace nFacturae.Schemas
 
         #region · Methods ·
 		
+        /// <summary>
+        /// Formats a new identifier with the given string
+        /// </summary>
+        /// <param name="firstPart">First part of the identifier to be generated</param>
+        /// <returns>A new identifier</returns>
         public static string FormatId(string firstPart)
         {
             return String.Format("{0}-{1}", firstPart, DateTime.Today.ToString("yyyyMMdd"));
         }
 
+        /// <summary>
+        /// Formats a new identifier with the given strings
+        /// </summary>
+        /// <param name="firstPart">First part of the identifier to be generated</param>
+        /// <returns>A new identifier</returns>
         public static string FormatId(string firstPart, string secondPart)
         {
             return String.Format("{0}-{1}{2}", firstPart, secondPart, DateTime.Today.ToString("yyyyMMdd"));
         }
 		
+        /// <summary>
+        /// Converts a Date & Time to their canonical representation
+        /// </summary>
+        /// <param name="now">Date & Time</param>
+        /// <returns>The canonical representation of the given Date & Time</returns>
         public static string DateTimeToCanonicalRepresentation(DateTime now)
         {
             return now.ToString("yyyy-MM-ddTHH:mm:sszzz");
         }
 
+        /// <summary>
+        /// Converts the current Date & Time to their canonical representation
+        /// </summary>
+        /// <param name="now">Date & Time</param>
+        /// <returns>The canonical representation of the given Date & Time</returns>
         public static string NowInCanonicalRepresentation()
         {
             return DateTimeToCanonicalRepresentation(DateTime.Now);
         }		
 		
+        /// <summary>
+        /// Creates a new <see cref="XmlNamespaceManager"/> with xades, dsig and facturae namespaces defined.
+        /// </summary>
+        /// <param name="document">The Xml Document</param>
+        /// <returns>A new instance of <see cref="XmlNamespaceManager"/></returns>
         public static XmlNamespaceManager CreateXadesNamespaceManager(XmlDocument document)
         {
             XmlNamespaceManager nsmgr = new XmlNamespaceManager(document.NameTable);
@@ -86,6 +115,11 @@ namespace nFacturae.Schemas
             return nsmgr;
         }
 
+        /// <summary>
+        /// Creates a new <see cref="XmlNamespaceManager"/> with desig and facturae namespaces defined.
+        /// </summary>
+        /// <param name="document">The Xml Document</param>
+        /// <returns>A new instance of <see cref="XmlNamespaceManager"/></returns>
         public static XmlSerializerNamespaces CreateXadesSerializerNamespace()
         {
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
@@ -160,8 +194,8 @@ namespace nFacturae.Schemas
                     }
 
                     FacturaeSchemaSet.XmlResolver = new XmlUrlResolver();
-                    FacturaeSchemaSet.Add(ReadSchema("ElectronicInvoice.Schemas.xmldsig-core-schema.xsd"));
-                    FacturaeSchemaSet.Add(ReadSchema("ElectronicInvoice.Schemas.Facturaev3_2.xsd"));
+                    FacturaeSchemaSet.Add(ReadSchema(XmlDsigSchemaResource));
+                    FacturaeSchemaSet.Add(ReadSchema(FacturaeSchemaResource));
                     FacturaeSchemaSet.Compile();
                 }
             }

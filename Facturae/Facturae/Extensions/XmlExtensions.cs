@@ -1,5 +1,7 @@
 ﻿/* This file is part of Facturae.
  * 
+ * Copyright (c) 2012. Carlos Guzmán Álvarez.
+ * 
  * Facturae is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -14,10 +16,7 @@
  * along with Facturae.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System;
 using System.Xml;
-using System.Xml.Serialization;
-using nFacturae.Schemas;
 
 namespace nFacturae.Extensions
 {

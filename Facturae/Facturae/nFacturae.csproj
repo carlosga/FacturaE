@@ -70,7 +70,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Extensions\FacturaeExtensions.cs" />
-    <Compile Include="Schemas\XsdSchemas.cs" />
+    <Compile Include="Xml\XsdSchemas.cs" />
     <Compile Include="Xml\SignedFacturae.cs" />
     <Compile Include="Xml\XaDESSignedXml.cs" />
     <Compile Include="Extensions\XmlExtensions.cs" />

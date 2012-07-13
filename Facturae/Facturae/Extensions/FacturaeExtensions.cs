@@ -1,5 +1,7 @@
 /* This file is part of Facturae.
  * 
+ * Copyright (c) 2012. Carlos Guzmán Álvarez.
+ * 
  * Facturae is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -28,8 +30,6 @@ using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using nFacturae.Extensions;
-using nFacturae.Schemas;
 using nFacturae.Xml;
 
 namespace nFacturae.Extensions
@@ -53,16 +53,28 @@ namespace nFacturae.Extensions
 
         #region · Facturae Extensions ·
 
-        public static Facturae GiveCurrencyCode(this Facturae eInvoice, CurrencyCodeType currencyCode)
+        /// <summary>
+        /// Sets the currency code of the electronic invoice
+        /// </summary>
+        /// <param name="eInvoice">The electronic invoice</param>
+        /// <param name="currencyCode">The currency code</param>
+        /// <returns></returns>
+        public static Facturae SetCurrency(this Facturae eInvoice, CurrencyCodeType currencyCode)
         {
             eInvoice.VerifyHeader();
 
-            eInvoice.FileHeader.Batch.InvoiceCurrencyCode = CurrencyCodeType.EUR;
+            eInvoice.FileHeader.Batch.InvoiceCurrencyCode = currencyCode;
 
             return eInvoice;
         }
 
-        public static Facturae SetSchemaVersion(this Facturae eInvoice, SchemaVersionType schemaVersion)
+        /// <summary>
+        /// Sets the electronic invoice schema version
+        /// </summary>
+        /// <param name="eInvoice">The electronic invoice</param>
+        /// <param name="schemaVersion">The schema version</param>
+        /// <returns></returns>
+        public static Facturae SetchemaVersion(this Facturae eInvoice, SchemaVersionType schemaVersion)
         {
             eInvoice.VerifyHeader();
 
@@ -71,7 +83,13 @@ namespace nFacturae.Extensions
             return eInvoice;
         }
         
-        public static Facturae GiveIssuerType(this Facturae eInvoice, InvoiceIssuerTypeType issuerType)
+        /// <summary>
+        /// Sets the electronic invoice issuer
+        /// </summary>
+        /// <param name="eInvoice">The electronic invoice</param>
+        /// <param name="issuerType">The issuer type</param>
+        /// <returns></returns>
+        public static Facturae SetIssuer(this Facturae eInvoice, InvoiceIssuerTypeType issuerType)
         {
             eInvoice.VerifyHeader();
 
@@ -80,6 +98,11 @@ namespace nFacturae.Extensions
             return eInvoice;
         }
             
+        /// <summary>
+        /// Calculates the electronic totals
+        /// </summary>
+        /// <param name="eInvoice">The electronic invoice</param>
+        /// <returns></returns>
         public static Facturae CalculateTotals(this Facturae eInvoice)
         {
             InvoiceType firstInvoice = eInvoice.Invoices[0];
@@ -102,6 +125,11 @@ namespace nFacturae.Extensions
             return eInvoice;
         }
 
+        /// <summary>
+        /// Sums the invoice total
+        /// </summary>
+        /// <param name="eInvoice">The electronic invoice</param>
+        /// <returns>An instance of AmountType</returns>
         public static AmountType SumTotalAmounts(this Facturae eInvoice)
         {
             AmountType amount = new AmountType();
@@ -112,6 +140,11 @@ namespace nFacturae.Extensions
             return amount;
         }
 
+        /// <summary>
+        /// Sums the electronic invoice outstanding amount
+        /// </summary>
+        /// <param name="eInvoice">The electronic invoice</param>
+        /// <returns>An instance of AmountType</returns>
         public static AmountType SumTotalOutstandingAmount(this Facturae eInvoice)
         {
             AmountType amount = new AmountType();
@@ -122,6 +155,11 @@ namespace nFacturae.Extensions
             return amount;
         }
 
+        /// <summary>
+        /// Sums the electronic invoice executable amount
+        /// </summary>
+        /// <param name="eInvoice">The electronic invoice</param>
+        /// <returns>An instance of AmountType</returns>
         public static AmountType SumTotalExecutableAmount(this Facturae eInvoice)
         {
             AmountType amount = new AmountType();
@@ -132,16 +170,6 @@ namespace nFacturae.Extensions
             return amount;
         }
         
-        public static Facturae Invoices(this Facturae eInvoice)
-        {
-            if (eInvoice.Invoices == null)
-            {
-                eInvoice.Invoices = new List<InvoiceType>();
-            }
-
-            return eInvoice;
-        }
-
         public static InvoiceType CreateInvoice(this Facturae eInvoice)
         {
             InvoiceType invoice = new InvoiceType();
@@ -251,7 +279,7 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
-        public static InvoiceType GivePlaceOfIssue(this InvoiceType invoice, string description, string postCode)
+        public static InvoiceType SetPlaceOfIssue(this InvoiceType invoice, string description, string postCode)
         {
             invoice.InvoiceIssueData.PlaceOfIssue = new PlaceOfIssueType();
 
@@ -271,14 +299,14 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
-        public static InvoiceType GiveCurrency(this InvoiceType invoice, CurrencyCodeType currency)
+        public static InvoiceType SetCurrency(this InvoiceType invoice, CurrencyCodeType currency)
         {
             invoice.InvoiceIssueData.InvoiceCurrencyCode = currency;
             
             return invoice;
         }
 
-        public static InvoiceType GiveExchangeRate(this InvoiceType invoice, double exchangeRate, DateTime exchangeDate)
+        public static InvoiceType SetExchangeRate(this InvoiceType invoice, double exchangeRate, DateTime exchangeDate)
         {
             invoice.InvoiceIssueData.ExchangeRateDetails = new ExchangeRateDetailsType();
             
@@ -287,14 +315,14 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
-        public static InvoiceType SetTaxCurrencyCode(this InvoiceType invoice)
+        public static InvoiceType SetTaxCurrency(this InvoiceType invoice, CurrencyCodeType currencyType)
         {
-            invoice.InvoiceIssueData.TaxCurrencyCode = CurrencyCodeType.EUR;
+            invoice.InvoiceIssueData.TaxCurrencyCode = currencyType;
                         
             return invoice;
         }
 
-        public static InvoiceType GiveLanguage(this InvoiceType invoice, LanguageCodeType language)
+        public static InvoiceType SetLanguage(this InvoiceType invoice, LanguageCodeType language)
         {
             invoice.InvoiceIssueData.LanguageName = language;
 
@@ -675,7 +703,7 @@ namespace nFacturae.Extensions
             return individual;
         }
 
-        public static IndividualType GiveAddress(this IndividualType individual, string address)
+        public static IndividualType SetAddress(this IndividualType individual, string address)
         {
             if (individual.Item is AddressType)
             {
@@ -689,7 +717,7 @@ namespace nFacturae.Extensions
             return individual;
         }
 
-        public static IndividualType GivePostCode(this IndividualType individual, string postCode)
+        public static IndividualType SetPostCode(this IndividualType individual, string postCode)
         {
             if (individual.Item is AddressType)
             {
@@ -703,7 +731,7 @@ namespace nFacturae.Extensions
             return individual;
         }
 
-        public static IndividualType GiveCountryCode(this IndividualType individual, CountryType countryCode)
+        public static IndividualType SetCountryCode(this IndividualType individual, CountryType countryCode)
         {
             if (individual.Item is AddressType)
             {
@@ -717,7 +745,7 @@ namespace nFacturae.Extensions
             return individual;
         }
 
-        public static IndividualType GiveTown(this IndividualType individual, string postCode)
+        public static IndividualType SetTown(this IndividualType individual, string postCode)
         {
             if (individual.Item is AddressType)
             {
@@ -737,7 +765,7 @@ namespace nFacturae.Extensions
             return individual;
         }
 
-        public static IndividualType GiveProvince(this IndividualType individual, string province)
+        public static IndividualType SetProvince(this IndividualType individual, string province)
         {
             if (individual.Item is AddressType)
             {
@@ -806,21 +834,21 @@ namespace nFacturae.Extensions
 
         #region · IndividualType Extensions ·
 
-        public static IndividualType GiveName(this IndividualType individual, string name)
+        public static IndividualType SetName(this IndividualType individual, string name)
         {
             individual.Name = name;
   
             return individual;
         }
 
-        public static IndividualType GiveFirstSurname(this IndividualType individual, string firstSurname)
+        public static IndividualType SetFirstSurname(this IndividualType individual, string firstSurname)
         {
             individual.FirstSurname = firstSurname;
   
             return individual;
         }
 
-        public static IndividualType GiveSecondSurname(this IndividualType individual, string secondSurname)
+        public static IndividualType SetSecondSurname(this IndividualType individual, string secondSurname)
         {
             individual.SecondSurname = secondSurname;
   
@@ -836,6 +864,11 @@ namespace nFacturae.Extensions
 
         #region · XML Validation Extensions ·
 
+        /// <summary>
+        /// Validates the electronic invoice XML
+        /// </summary>
+        /// <param name="eInvoice">The electronic invoice</param>
+        /// <returns></returns>
         public static Facturae Validate(this Facturae eInvoice)
         {
             XmlDocument document = eInvoice.ToXmlDocument();
@@ -862,11 +895,24 @@ namespace nFacturae.Extensions
 
         #region · XML Signature Extensions ·
 
+        /// <summary>
+        /// Signs the electronic invoice using the given certificate.
+        /// </summary>
+        /// <param name="eInvoice">The electronic invoice</param>
+        /// <param name="certificate">The certificate</param>
+        /// <returns></returns>
         public static SignedFacturae Sign(this Facturae eInvoice, X509Certificate2 certificate)
         {
             return eInvoice.Sign(certificate, (RSA)certificate.PrivateKey);
         }
-        
+
+        /// <summary>
+        /// Signs the electronic invoice using the given certificate & RSA key
+        /// </summary>
+        /// <param name="eInvoice">The electronic invoice</param>
+        /// <param name="certificate">The certificate</param>
+        /// <param name="key">The RSA Key</param>
+        /// <returns></returns>
         public static SignedFacturae Sign(this Facturae eInvoice, X509Certificate2 certificate, RSA key)
         {
             XmlDocument     document    = eInvoice.ToXmlDocument();
@@ -901,6 +947,12 @@ namespace nFacturae.Extensions
 
         #region · IO Extensions ·
 
+        /// <summary>
+        /// Writes the electronic invoice to the given path
+        /// </summary>
+        /// <param name="eInvoice">The electronic invoice</param>
+        /// <param name="path">The file path</param>
+        /// <returns></returns>
         public static Facturae WriteToFile(this Facturae eInvoice, string path)
         {
             eInvoice.ToXmlDocument().Save(path);
@@ -1059,7 +1111,7 @@ namespace nFacturae.Extensions
         private static byte[] ReadPolicyFile()
         {
             Assembly    currentAssembly = Assembly.GetExecutingAssembly();
-            string      resourceName = "nFacturae.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
+            string      resourceName    = "nFacturae.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
 
             using (Stream stream = currentAssembly.GetManifestResourceStream(resourceName))
             {
@@ -1085,7 +1137,11 @@ namespace nFacturae.Extensions
                 eInvoice.Parties                    = new PartiesType();
                 eInvoice.Parties.SellerParty        = new BusinessType();
                 eInvoice.Parties.BuyerParty         = new BusinessType();
-            }        
+                eInvoice.Invoices                   = new List<InvoiceType>();
+
+                eInvoice.SetCurrency(CurrencyCodeType.EUR);
+                eInvoice.SetIssuer(InvoiceIssuerTypeType.EM);
+            }
 
             return eInvoice;
         }
