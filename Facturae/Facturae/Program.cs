@@ -18,10 +18,10 @@ namespace nFacturae
             signed = eInvoice
                 .Parties()
                     .Seller()
-                        .GiveIdentification("00001")
+                        .SetIdentification("00001")
                         .TaxIdentification()
                             .IsResidentInSpain()
-                            .GiveIdentificationNumber("36142")
+                            .SetIdentificationNumber("36142")
                             .Party()
                         .IsIndividual()
                             .SetName("C")
@@ -35,10 +35,10 @@ namespace nFacturae
                             .Party()
                         .Parties()
                     .Buyer()
-                        .GiveIdentification("00002")
+                        .SetIdentification("00002")
                         .TaxIdentification()
                             .IsResidentInSpain()
-                            .GiveIdentificationNumber("36142")
+                            .SetIdentificationNumber("36142")
                             .Party()
                         .IsIndividual()
                             .SetName("C")
@@ -60,7 +60,7 @@ namespace nFacturae
                         .SetPlaceOfIssue(String.Empty, "00000")
                         .IsOriginal()
                         .IsComplete()
-                        .SetInvoiceSeriesCode("0")
+                        .SetInvoiceSeries("0")
                         .SetInvoiceNumber("1000")
                         .Items()
                             .AddInvoiceItem("XX", "XX")
@@ -77,6 +77,7 @@ namespace nFacturae
                                 .CalculateTotals()
                         .CalculateTotals()
                 .CalculateTotals()
+                .Validate()
                 .Sign(cert);
 
             // Check signature

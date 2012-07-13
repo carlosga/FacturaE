@@ -170,6 +170,11 @@ namespace nFacturae.Extensions
             return amount;
         }
         
+        /// <summary>
+        /// Creates a new invoice
+        /// </summary>
+        /// <param name="eInvoice"></param>
+        /// <returns></returns>
         public static InvoiceType CreateInvoice(this Facturae eInvoice)
         {
             InvoiceType invoice = new InvoiceType();
@@ -188,6 +193,25 @@ namespace nFacturae.Extensions
 
         #region · InvoiceType Extensions ·
 
+        /// <summary>
+        /// Set the invoice series code
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <param name="seriesCode">The invoice series code</param>
+        /// <returns></returns>
+        public static InvoiceType SetInvoiceSeries(this InvoiceType invoice, string seriesCode)
+        {
+            invoice.InvoiceHeader.InvoiceSeriesCode = seriesCode;
+
+            return invoice;
+        }
+
+        /// <summary>
+        /// Sets the invoice number
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <param name="invoiceNumber">The invoice number</param>
+        /// <returns></returns>
         public static InvoiceType SetInvoiceNumber(this InvoiceType invoice, string invoiceNumber)
         {
             invoice.InvoiceHeader.InvoiceNumber = invoiceNumber;
@@ -195,13 +219,11 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
-        public static InvoiceType SetInvoiceSeriesCode(this InvoiceType invoice, string seriesCode)
-        {
-            invoice.InvoiceHeader.InvoiceSeriesCode = seriesCode;
-
-            return invoice;
-        }
-
+        /// <summary>
+        /// Sets the invoice class as a complete invoice
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <returns></returns>
         public static InvoiceType IsComplete(this InvoiceType invoice)
         {
             invoice.InvoiceHeader.InvoiceDocumentType = InvoiceDocumentTypeType.Complete;
@@ -209,6 +231,11 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
+        /// <summary>
+        /// Sets the invoice class as a abbreviated invoice
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <returns></returns>
         public static InvoiceType IsAbbreviated(this InvoiceType invoice)
         {
             invoice.InvoiceHeader.InvoiceDocumentType = InvoiceDocumentTypeType.Abbreviated;
@@ -216,6 +243,11 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
+        /// <summary>
+        /// Sets the invoice class as a self invoice
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <returns></returns>
         public static InvoiceType IsSelfInvoice(this InvoiceType invoice)
         {
             invoice.InvoiceHeader.InvoiceDocumentType = InvoiceDocumentTypeType.SelfInvoice;
@@ -223,6 +255,11 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
+        /// <summary>
+        /// Sets the invoice class as a original invoice
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <returns></returns>
         public static InvoiceType IsOriginal(this InvoiceType invoice)
         {
             invoice.InvoiceHeader.InvoiceClass = InvoiceClassType.Original;
@@ -230,6 +267,11 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
+        /// <summary>
+        /// Sets the invoice class as a corrective invoice
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <returns></returns>
         public static InvoiceType IsCorrective(this InvoiceType invoice)
         {
             invoice.InvoiceHeader.InvoiceClass = InvoiceClassType.Corrective;
@@ -237,6 +279,11 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
+        /// <summary>
+        /// Sets the invoice class as summary of original invoice
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <returns></returns>
         public static InvoiceType IsSummaryOriginal(this InvoiceType invoice)
         {
             invoice.InvoiceHeader.InvoiceClass = InvoiceClassType.SummaryOriginal;
@@ -244,6 +291,11 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
+        /// <summary>
+        /// Sets the invoice class as copy of original invoice
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <returns></returns>
         public static InvoiceType IsCopyOfOriginal(this InvoiceType invoice)
         {
             invoice.InvoiceHeader.InvoiceClass = InvoiceClassType.CopyOfOriginal;
@@ -251,6 +303,11 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
+        /// <summary>
+        /// Sets the invoice class as copy of corrective invoice
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <returns></returns>
         public static InvoiceType IsCopyOfCorrective(this InvoiceType invoice)
         {
             invoice.InvoiceHeader.InvoiceClass = InvoiceClassType.CopyOfCorrective;
@@ -258,6 +315,11 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
+        /// <summary>
+        /// Sets the invoice class as copy of summary invoice
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <returns></returns>
         public static InvoiceType IsCopyOfSummary(this InvoiceType invoice)
         {
             invoice.InvoiceHeader.InvoiceClass = InvoiceClassType.CopyOfSummary;
@@ -265,6 +327,12 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
+        /// <summary>
+        /// Sets the invoice issue date
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <param name="date">The invoice issue date</param>
+        /// <returns></returns>
         public static InvoiceType GiveIssueDate(this InvoiceType invoice, DateTime date)
         {
             invoice.InvoiceIssueData.IssueDate = date;
@@ -272,13 +340,26 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
-        public static InvoiceType GiveOperationDate(this InvoiceType invoice, DateTime date)
+        /// <summary>
+        /// Sets the invoice operation date
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <param name="date">The invoice operation date</param>
+        /// <returns></returns>
+        public static InvoiceType SetOperationDate(this InvoiceType invoice, DateTime date)
         {
             invoice.InvoiceIssueData.OperationDate = date;
             
             return invoice;
         }
 
+        /// <summary>
+        /// Set the invoice place of issue
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <param name="description">The place of issue description</param>
+        /// <param name="postCode">The place of issue post code</param>
+        /// <returns></returns>
         public static InvoiceType SetPlaceOfIssue(this InvoiceType invoice, string description, string postCode)
         {
             invoice.InvoiceIssueData.PlaceOfIssue = new PlaceOfIssueType();
@@ -289,7 +370,14 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
-        public static InvoiceType GiveInvoicingPeriod(this InvoiceType invoice, DateTime startDate, DateTime endDate)
+        /// <summary>
+        /// Sets the invoicing period of an invoice
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <param name="startDate">The start date</param>
+        /// <param name="endDate">The end date</param>
+        /// <returns></returns>
+        public static InvoiceType SetInvoicingPeriod(this InvoiceType invoice, DateTime startDate, DateTime endDate)
         {
             invoice.InvoiceIssueData.InvoicingPeriod = new PeriodDates();
 
@@ -299,6 +387,12 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
+        /// <summary>
+        /// Sets the invoice currency
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <param name="currency">The invoice currency</param>
+        /// <returns></returns>
         public static InvoiceType SetCurrency(this InvoiceType invoice, CurrencyCodeType currency)
         {
             invoice.InvoiceIssueData.InvoiceCurrencyCode = currency;
@@ -306,6 +400,13 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
+        /// <summary>
+        /// Sets the invoice currency exchange rate
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <param name="exchangeRate">The exchange rate</param>
+        /// <param name="exchangeDate">The exchange date</param>
+        /// <returns></returns>
         public static InvoiceType SetExchangeRate(this InvoiceType invoice, double exchangeRate, DateTime exchangeDate)
         {
             invoice.InvoiceIssueData.ExchangeRateDetails = new ExchangeRateDetailsType();
@@ -315,13 +416,25 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
-        public static InvoiceType SetTaxCurrency(this InvoiceType invoice, CurrencyCodeType currencyType)
+        /// <summary>
+        /// Sets the invoice tax currency
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <param name="taxCurrency">The invoice currency</param>
+        /// <returns></returns>
+        public static InvoiceType SetTaxCurrency(this InvoiceType invoice, CurrencyCodeType taxCurrency)
         {
-            invoice.InvoiceIssueData.TaxCurrencyCode = currencyType;
+            invoice.InvoiceIssueData.TaxCurrencyCode = taxCurrency;
                         
             return invoice;
         }
 
+        /// <summary>
+        /// Sets the invoice language
+        /// </summary>
+        /// <param name="invoice">The invoice</param>
+        /// <param name="language">The invoice language</param>
+        /// <returns></returns>
         public static InvoiceType SetLanguage(this InvoiceType invoice, LanguageCodeType language)
         {
             invoice.InvoiceIssueData.LanguageName = language;
@@ -329,6 +442,11 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
+        /// <summary>
+        /// Gets the items of an invoice
+        /// </summary>
+        /// <param name="invoice"></param>
+        /// <returns></returns>
         public static InvoiceType Items(this InvoiceType invoice)
         {
             if (invoice.Items == null)
@@ -339,6 +457,11 @@ namespace nFacturae.Extensions
             return invoice;
         }
 
+        /// <summary>
+        /// Calculates the invoice totals
+        /// </summary>
+        /// <param name="invoice"></param>
+        /// <returns></returns>
         public static Facturae CalculateTotals(this InvoiceType invoice)
         {
             double                      subsidyAmount   = 0;
@@ -482,10 +605,10 @@ namespace nFacturae.Extensions
 
             invoice.InvoiceTotals.TotalExecutableAmount = Math.Round
             (
-                invoice.InvoiceTotals.TotalOutstandingAmount    - 
-                invoice.InvoiceTotals.TotalTaxesWithheld        + 
-                invoice.InvoiceTotals.TotalReimbursableExpenses + 
-                invoice.InvoiceTotals.TotalFinancialExpenses, 2
+                invoice.InvoiceTotals.TotalOutstandingAmount
+                    - invoice.InvoiceTotals.TotalTaxesWithheld
+                        + invoice.InvoiceTotals.TotalReimbursableExpenses
+                            + invoice.InvoiceTotals.TotalFinancialExpenses, 2
             );
 
             return invoice.Parent;
@@ -619,6 +742,11 @@ namespace nFacturae.Extensions
 
         #region · PartiesType Extensions ·
 
+        /// <summary>
+        /// Gets the electronic invoice business parties
+        /// </summary>
+        /// <param name="eInvoice"></param>
+        /// <returns></returns>
         public static PartiesType Parties(this Facturae eInvoice)
         {
             eInvoice.VerifyHeader();
@@ -628,6 +756,11 @@ namespace nFacturae.Extensions
             return eInvoice.Parties;
         }
 
+        /// <summary>
+        /// Gets the electronic invoice seller
+        /// </summary>
+        /// <param name="parties"></param>
+        /// <returns></returns>
         public static BusinessType Seller(this PartiesType parties)
         {
             BusinessType partie = new BusinessType();
@@ -638,6 +771,11 @@ namespace nFacturae.Extensions
             return partie;
         }
 
+        /// <summary>
+        /// Gets the electronic invoice buyer
+        /// </summary>
+        /// <param name="parties"></param>
+        /// <returns></returns>
         public static BusinessType Buyer(this PartiesType parties)
         {
             BusinessType partie = new BusinessType();
@@ -648,6 +786,11 @@ namespace nFacturae.Extensions
             return partie;
         }
 
+        /// <summary>
+        /// Gets the business parties electronic invoice
+        /// </summary>
+        /// <param name="parties"></param>
+        /// <returns></returns>
         public static Facturae Facturae(this PartiesType parties)
         {
             return parties.Parent;
@@ -662,21 +805,40 @@ namespace nFacturae.Extensions
             return party.Parent;
         }
 
-        public static BusinessType GiveIdentification(this BusinessType party, string identification)
+        /// <summary>
+        /// Sets the identification of a invoice business party
+        /// </summary>
+        /// <param name="party">The business party</param>
+        /// <param name="identification">The identification</param>
+        /// <returns></returns>
+        public static BusinessType SetIdentification(this BusinessType party, string identification)
         {
             party.PartyIdentification = identification;
   
             return party;
         }
 
+        /// <summary>
+        /// Gets the tax identification of a invoice business party
+        /// </summary>
+        /// <param name="party">The business party</param>
+        /// <returns></returns>
         public static TaxIdentificationType TaxIdentification(this BusinessType party)
         {
-            party.TaxIdentification         = new TaxIdentificationType();
-            party.TaxIdentification.Parent  = party;
+            if (party.TaxIdentification == null)
+            {
+                party.TaxIdentification = new TaxIdentificationType();
+                party.TaxIdentification.Parent = party;
+            }
   
             return party.TaxIdentification;
         }
 
+        /// <summary>
+        /// Sets an invoice business party as an individual
+        /// </summary>
+        /// <param name="party">The business party</param>
+        /// <returns></returns>
         public static IndividualType IsIndividual(this BusinessType party)
         {
             IndividualType individual = new IndividualType();
@@ -703,6 +865,12 @@ namespace nFacturae.Extensions
             return individual;
         }
 
+        /// <summary>
+        /// Sets an individual party address
+        /// </summary>
+        /// <param name="party">The business party</param>
+        /// <param name="address">The address</param>
+        /// <returns></returns>
         public static IndividualType SetAddress(this IndividualType individual, string address)
         {
             if (individual.Item is AddressType)
@@ -717,6 +885,12 @@ namespace nFacturae.Extensions
             return individual;
         }
 
+        /// <summary>
+        /// Sets an individual party post code
+        /// </summary>
+        /// <param name="party">The business party</param>
+        /// <param name="address">The post code</param>
+        /// <returns></returns>
         public static IndividualType SetPostCode(this IndividualType individual, string postCode)
         {
             if (individual.Item is AddressType)
@@ -731,6 +905,12 @@ namespace nFacturae.Extensions
             return individual;
         }
 
+        /// <summary>
+        /// Sets an individual party country code
+        /// </summary>
+        /// <param name="party">The business party</param>
+        /// <param name="address">The country code</param>
+        /// <returns></returns>
         public static IndividualType SetCountryCode(this IndividualType individual, CountryType countryCode)
         {
             if (individual.Item is AddressType)
@@ -745,6 +925,12 @@ namespace nFacturae.Extensions
             return individual;
         }
 
+        /// <summary>
+        /// Sets an individual party town
+        /// </summary>
+        /// <param name="party">The business party</param>
+        /// <param name="address">The town</param>
+        /// <returns></returns>
         public static IndividualType SetTown(this IndividualType individual, string postCode)
         {
             if (individual.Item is AddressType)
@@ -755,7 +941,13 @@ namespace nFacturae.Extensions
             return individual;
         }
 
-        public static IndividualType GivePostCodeAndTown(this IndividualType individual, string postCodeAndTown)
+        /// <summary>
+        /// Sets an individual party post code & town 
+        /// </summary>
+        /// <param name="party">The business party</param>
+        /// <param name="address">The post code & towm</param>
+        /// <returns></returns>
+        public static IndividualType SetPostCodeAndTown(this IndividualType individual, string postCodeAndTown)
         {
             if (individual.Item is OverseasAddressType)
             {
@@ -765,6 +957,12 @@ namespace nFacturae.Extensions
             return individual;
         }
 
+        /// <summary>
+        /// Sets an individual party province
+        /// </summary>
+        /// <param name="party">The business party</param>
+        /// <param name="address">The province</param>
+        /// <returns></returns>
         public static IndividualType SetProvince(this IndividualType individual, string province)
         {
             if (individual.Item is AddressType)
@@ -783,13 +981,24 @@ namespace nFacturae.Extensions
 
         #region · TaxIdentificationType Extensions ·
 
-        public static TaxIdentificationType GiveIdentificationNumber(this TaxIdentificationType taxIdentification, string identificationNumber)
+        /// <summary>
+        /// Sets the identification number
+        /// </summary>
+        /// <param name="taxIdentification">The tax identification</param>
+        /// <param name="identificationNumber">The identification number</param>
+        /// <returns></returns>
+        public static TaxIdentificationType SetIdentificationNumber(this TaxIdentificationType taxIdentification, string identificationNumber)
         {
             taxIdentification.TaxIdentificationNumber = identificationNumber;
   
             return taxIdentification;
         }
 
+        /// <summary>
+        /// Sets the tax identification as a individual entity identification
+        /// </summary>
+        /// <param name="taxIdentification">The tax identification</param>
+        /// <returns></returns>
         public static TaxIdentificationType IsIndividual(this TaxIdentificationType taxIdentification)
         {
             taxIdentification.PersonTypeCode = PersonTypeCodeType.Individual;
@@ -797,6 +1006,11 @@ namespace nFacturae.Extensions
             return taxIdentification;
         }
 
+        /// <summary>
+        /// Sets the tax identification as a legal entity identification
+        /// </summary>
+        /// <param name="taxIdentification">The tax identification</param>
+        /// <returns></returns>
         public static TaxIdentificationType IsLegalEntity(this TaxIdentificationType taxIdentification)
         {
             taxIdentification.PersonTypeCode = PersonTypeCodeType.LegalEntity;
@@ -804,6 +1018,11 @@ namespace nFacturae.Extensions
             return taxIdentification;
         }
 
+        /// <summary>
+        /// Sets the tax identification as a foreigner entity identification
+        /// </summary>
+        /// <param name="taxIdentification">The tax identification</param>
+        /// <returns></returns>
         public static TaxIdentificationType IsForeigner(this TaxIdentificationType taxIdentification)
         {
             taxIdentification.ResidenceTypeCode = ResidenceTypeCodeType.Foreigner;
@@ -811,6 +1030,11 @@ namespace nFacturae.Extensions
             return taxIdentification;
         }
 
+        /// <summary>
+        /// Sets the tax identification as an spain tax identification
+        /// </summary>
+        /// <param name="taxIdentification">The tax identification</param>
+        /// <returns></returns>
         public static TaxIdentificationType IsResidentInSpain(this TaxIdentificationType taxIdentification)
         {
             taxIdentification.ResidenceTypeCode = ResidenceTypeCodeType.ResidentInSpain;
@@ -818,6 +1042,11 @@ namespace nFacturae.Extensions
             return taxIdentification;
         }
 
+        /// <summary>
+        /// Sets the tax identification as an EU tax identification
+        /// </summary>
+        /// <param name="taxIdentification">The tax identification</param>
+        /// <returns></returns>
         public static TaxIdentificationType IsResidentInEU(this TaxIdentificationType taxIdentification)
         {
             taxIdentification.ResidenceTypeCode = ResidenceTypeCodeType.ResidentInEU;
@@ -825,6 +1054,11 @@ namespace nFacturae.Extensions
             return taxIdentification;
         }
 
+        /// <summary>
+        /// Gets the tax identification parent party
+        /// </summary>
+        /// <param name="individual">The individual</param>
+        /// <returns></returns>
         public static BusinessType Party(this TaxIdentificationType taxIdentification)
         {
             return taxIdentification.Parent;
@@ -834,6 +1068,12 @@ namespace nFacturae.Extensions
 
         #region · IndividualType Extensions ·
 
+        /// <summary>
+        /// Sets an individual name
+        /// </summary>
+        /// <param name="individual">The individual</param>
+        /// <param name="name">The individual name</param>
+        /// <returns></returns>
         public static IndividualType SetName(this IndividualType individual, string name)
         {
             individual.Name = name;
@@ -841,6 +1081,12 @@ namespace nFacturae.Extensions
             return individual;
         }
 
+        /// <summary>
+        /// Sets an individual first surname
+        /// </summary>
+        /// <param name="individual">The individual</param>
+        /// <param name="name">The individual first surname</param>
+        /// <returns></returns>
         public static IndividualType SetFirstSurname(this IndividualType individual, string firstSurname)
         {
             individual.FirstSurname = firstSurname;
@@ -848,6 +1094,12 @@ namespace nFacturae.Extensions
             return individual;
         }
 
+        /// <summary>
+        /// Sets an individual second surname
+        /// </summary>
+        /// <param name="individual">The individual</param>
+        /// <param name="name">The individual second surname</param>
+        /// <returns></returns>
         public static IndividualType SetSecondSurname(this IndividualType individual, string secondSurname)
         {
             individual.SecondSurname = secondSurname;
@@ -855,6 +1107,11 @@ namespace nFacturae.Extensions
             return individual;
         }
 
+        /// <summary>
+        /// Gets the individual parent party
+        /// </summary>
+        /// <param name="individual">The individual</param>
+        /// <returns></returns>
         public static BusinessType Party(this IndividualType individual)
         {
             return individual.Parent;

@@ -37,8 +37,8 @@ namespace nFacturae.Xml
         public const string FacturaePrefix          = "fe";
         public const string XmlDsigPrefix           = "ds";
         public const string XadesPrefix             = "";
-        private const string XmlDsigSchemaResource  = "ElectronicInvoice.Schemas.xmldsig-core-schema.xsd";
-        private const string FacturaeSchemaResource = "ElectronicInvoice.Schemas.Facturaev3_2.xsd";
+        private const string XmlDsigSchemaResource  = "nFacturae.Schemas.xmldsig-core-schema.xsd";
+        private const string FacturaeSchemaResource = "nFacturae.Schemas.Facturaev3_2.xsd";
 
         #endregion
 
