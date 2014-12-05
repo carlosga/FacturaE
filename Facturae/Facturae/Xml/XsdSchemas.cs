@@ -44,6 +44,7 @@ namespace nFacturae.Xml
         public const string XadesPrefix             = "";
         private const string XmlDsigSchemaResource  = "nFacturae.Schemas.xmldsig-core-schema.xsd";
         private const string FacturaeSchemaResource = "nFacturae.Schemas.Facturaev3_2.xsd";
+        private const string XAdESSchemaResource    = "nFacturae.Schemas.XAdES.xsd";
 
         #endregion
 
@@ -71,7 +72,7 @@ namespace nFacturae.Xml
         /// <returns>A new identifier</returns>
         public static string FormatId(string firstPart)
         {
-            return String.Format("{0}-{1}", firstPart, DateTime.Today.ToString("yyyyMMdd"));
+            return String.Format("{0}{1}", firstPart, DateTime.Today.ToString("yyyyMMdd"));
         }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace nFacturae.Xml
         /// <returns>A new identifier</returns>
         public static string FormatId(string firstPart, string secondPart)
         {
-            return String.Format("{0}-{1}-{2}", firstPart, secondPart, DateTime.Today.ToString("yyyyMMdd"));
+            return String.Format("{0}-{1}{2}", firstPart, secondPart, DateTime.Today.ToString("yyyyMMdd"));
         }
         
         /// <summary>
@@ -131,6 +132,7 @@ namespace nFacturae.Xml
 
             ns.Add(XsdSchemas.FacturaePrefix, XsdSchemas.FacturaeNamespaceUrl);
             ns.Add(XsdSchemas.XmlDsigPrefix , XsdSchemas.XmlDsigNamespaceUrl);
+            ns.Add(XsdSchemas.XadesPrefix   , XsdSchemas.XadesNamespaceUrl);
 
             return ns;
         }
@@ -144,13 +146,14 @@ namespace nFacturae.Xml
         /// <returns></returns>
         public static XmlElement FixupNamespaces(XmlDocument envDoc, XmlElement inputElement)
         {
-            XmlDocument doc = new XmlDocument { PreserveWhitespace = true };
-
+            var doc   = new XmlDocument { PreserveWhitespace = true };
+            var nsmgr = XsdSchemas.CreateXadesNamespaceManager(doc);
+            
             doc.LoadXml(inputElement.OuterXml);
 
             if (envDoc != null)
             {
-                foreach (XmlAttribute attr in envDoc.DocumentElement.SelectNodes("namespace::*"))
+                foreach (XmlAttribute attr in envDoc.DocumentElement.SelectNodes("namespace::*", nsmgr))
                 {
                     if (attr.LocalName == "xml")
                     {
@@ -160,12 +163,12 @@ namespace nFacturae.Xml
                     if (attr.LocalName == "xmlns")
                     {
                         continue;
-                    }                        
+                    }              
 
-                    if (attr.Prefix == doc.DocumentElement.Prefix)
-                    {
-                        continue;
-                    }
+                    //if (attr.Prefix == doc.DocumentElement.Prefix)
+                    //{
+                    //    continue;
+                    //}
 
                     doc.DocumentElement.SetAttributeNode(doc.ImportNode(attr, true) as XmlAttribute);
                 }
@@ -206,6 +209,7 @@ namespace nFacturae.Xml
                     FacturaeSchemaSet.XmlResolver = new XmlUrlResolver();
                     FacturaeSchemaSet.Add(ReadSchema(XmlDsigSchemaResource));
                     FacturaeSchemaSet.Add(ReadSchema(FacturaeSchemaResource));
+                    FacturaeSchemaSet.Add(ReadSchema(XAdESSchemaResource));
                     FacturaeSchemaSet.Compile();
                 }
             }

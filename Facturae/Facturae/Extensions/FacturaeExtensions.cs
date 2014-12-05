@@ -1176,16 +1176,16 @@ namespace nFacturae.Extensions
 
             // Set nodes identifiers
             signedXml.Signature.Id  = XsdSchemas.FormatId("Signature");
-            signedXml.SignedInfo.Id = XsdSchemas.FormatId(signedXml.Signature.Id, "SignedInfo");
-
-            // Set the reference to sign
-            signedXml.AddReference(SetSignatureTransformReference(signedXml, document));
+            signedXml.SignedInfo.Id = XsdSchemas.FormatId("Signature", "SignedInfo");
 
             // Add XAdES node
             signedXml.AddReference(AddXAdESNodes(signedXml, document, certificate));
 
             // Set the Key Info
             signedXml.AddReference(SetKeyInfo(signedXml, certificate, (RSA)certificate.PublicKey.Key));
+
+            // Set the reference to sign
+            signedXml.AddReference(SetSignatureTransformReference(signedXml, document));
 
             // Compute Signature
             signedXml.ComputeSignature();
@@ -1220,7 +1220,7 @@ namespace nFacturae.Extensions
         private static Reference SetKeyInfo(XaDESSignedXml signedXml, X509Certificate2 certificate, RSA key)
         {   
             signedXml.KeyInfo    = new KeyInfo();
-            signedXml.KeyInfo.Id = XsdSchemas.FormatId(signedXml.Signature.Id, "KeyInfo");
+            signedXml.KeyInfo.Id = XsdSchemas.FormatId("Certificate");
 
             signedXml.KeyInfo.AddClause(new KeyInfoX509Data(certificate));
             signedXml.KeyInfo.AddClause(new RSAKeyValue(key));
@@ -1232,7 +1232,7 @@ namespace nFacturae.Extensions
         {
             Reference reference = new Reference(String.Empty);
 
-            reference.Id = XsdSchemas.FormatId("Reference", "ID");
+            reference.Id = XsdSchemas.FormatId("Reference", "ID-");
             reference.AddTransform(new XmlDsigEnvelopedSignatureTransform());
 
             return reference;
@@ -1261,9 +1261,9 @@ namespace nFacturae.Extensions
         {
             return new Reference
             {
-                Id   = XsdSchemas.FormatId(signedXml.Signature.Id, "SignedPropertiesReference"),
+                Id   = XsdSchemas.FormatId("SignedPropertiesID"),
                 Uri  = String.Format("#{0}", signedPropertiesNode.GetAttribute("Id")),
-                Type = "http://uri.etsi.org/01903/v1.3.2#SignedProperties"
+                Type = "http://uri.etsi.org/01903#SignedProperties"
             };
         }
 
@@ -1271,7 +1271,8 @@ namespace nFacturae.Extensions
         {
             var dataObject = new DataObject();
 
-            dataObject.Data = element.SelectNodes(".");
+            dataObject.Id   = XsdSchemas.FormatId(signedXml.Signature.Id, "Object");
+            dataObject.Data = element.SelectNodes(".", XsdSchemas.CreateXadesNamespaceManager(element.OwnerDocument));
             
             signedXml.AddObject(dataObject);
         }
@@ -1294,8 +1295,7 @@ namespace nFacturae.Extensions
 
         private static XmlElement AddSignedSignaturePropertiesNode(XmlDocument document, XmlElement propertiesNode)
         {
-            var signedSignaturePropertiesNode = document.CreateNode(XsdSchemas.XadesPrefix, "SignedSignatureProperties", XsdSchemas.XadesNamespaceUrl, propertiesNode);
-            return signedSignaturePropertiesNode;
+            return document.CreateNode(XsdSchemas.XadesPrefix, "SignedSignatureProperties", XsdSchemas.XadesNamespaceUrl, propertiesNode);
         }
 
         private static void AddSigningTimeNode(XmlDocument document, XmlElement signedSignaturePropertiesNode)
@@ -1402,6 +1402,7 @@ namespace nFacturae.Extensions
             XmlWriterSettings settings = new XmlWriterSettings();
                         
             settings.Encoding = new UTF8Encoding(false);
+            settings.Indent   = true;
             
             using (MemoryStream buffer = new MemoryStream())
             { 

@@ -79,6 +79,7 @@ namespace nFacturae.Xml
             }
 
             var xmlElement = base.GetIdElement(doc, id);
+            var nsmgr      = XsdSchemas.CreateXadesNamespaceManager(doc);
 
             if (xmlElement != null)
             {
@@ -91,7 +92,7 @@ namespace nFacturae.Xml
                 {
                     foreach (DataObject dataObject in this.dataObjects)
                     {
-                        var nodeWithSameId = dataObject.GetXml().SelectNodes(".").FindNode("Id", id);
+                        var nodeWithSameId = dataObject.GetXml().SelectNodes(".", nsmgr).FindNode("Id", id);
 
                         if (nodeWithSameId != null)
                         {
@@ -104,7 +105,7 @@ namespace nFacturae.Xml
             // Search the KeyInfo Node
             if (this.KeyInfo != null)
             {
-                var nodeWithSameId = this.KeyInfo.GetXml().SelectNodes(".").FindNode("Id", id);
+                var nodeWithSameId = this.KeyInfo.GetXml().SelectNodes(".", nsmgr).FindNode("Id", id);
 
                 if (nodeWithSameId != null)
                 {
