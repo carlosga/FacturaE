@@ -106,8 +106,8 @@ namespace nFacturae
         /// <remarks>http://social.msdn.microsoft.com/Forums/hu-HU/netfxbcl/thread/d6a4fe9f-7d2e-419c-ab19-9e57c75ba90f</remarks>
         public bool CheckSignature()
         {
-            XaDESSignedXml      signedXml   = new XaDESSignedXml(this.signedDocument);
-            XmlNamespaceManager nsmgr       = XsdSchemas.CreateXadesNamespaceManager(this.signedDocument);
+            XaDESSignedXml      signedXml = new XaDESSignedXml(this.signedDocument);
+            XmlNamespaceManager nsmgr     = XsdSchemas.CreateXadesNamespaceManager(this.signedDocument);
             
             // Load the signature node.
             signedXml.LoadXml((XmlElement)this.signedDocument.SelectSingleNode("//ds:Signature", nsmgr));

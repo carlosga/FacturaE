@@ -114,18 +114,15 @@ namespace nFacturae.Extensions
 
             eInvoice.VerifyHeader();
                                     
-            eInvoice.FileHeader.Modality                        = ((eInvoice.Invoices.Count == 1) ? ModalityType.Single : ModalityType.Batch);
-            eInvoice.FileHeader.Batch.InvoicesCount             = eInvoice.Invoices.Count;
-            eInvoice.FileHeader.Batch.TotalInvoicesAmount       = eInvoice.SumTotalAmounts();
-            eInvoice.FileHeader.Batch.TotalOutstandingAmount    = eInvoice.SumTotalOutstandingAmount();
-            eInvoice.FileHeader.Batch.TotalExecutableAmount     = eInvoice.SumTotalExecutableAmount();
-            eInvoice.FileHeader.Batch.BatchIdentifier           = String.Format
-            (
-                "{0}{1}{2}", 
-                String.Empty, 
-                firstInvoice.InvoiceHeader.InvoiceNumber, 
-                firstInvoice.InvoiceHeader.InvoiceSeriesCode
-            );
+            eInvoice.FileHeader.Modality                     = ((eInvoice.Invoices.Count == 1) ? ModalityType.Single : ModalityType.Batch);
+            eInvoice.FileHeader.Batch.InvoicesCount          = eInvoice.Invoices.Count;
+            eInvoice.FileHeader.Batch.TotalInvoicesAmount    = eInvoice.SumTotalAmounts();
+            eInvoice.FileHeader.Batch.TotalOutstandingAmount = eInvoice.SumTotalOutstandingAmount();
+            eInvoice.FileHeader.Batch.TotalExecutableAmount  = eInvoice.SumTotalExecutableAmount();
+            eInvoice.FileHeader.Batch.BatchIdentifier        = String.Format("{0}{1}{2}"
+                                                                           , String.Empty
+                                                                           , firstInvoice.InvoiceHeader.InvoiceNumber
+                                                                           , firstInvoice.InvoiceHeader.InvoiceSeriesCode);
 
             return eInvoice;
         }
@@ -139,8 +136,8 @@ namespace nFacturae.Extensions
         {
             AmountType amount = new AmountType();
 
-            amount.TotalAmount          = Math.Round(eInvoice.Invoices.Sum(il => il.InvoiceTotals.InvoiceTotal), 2);
-            amount.EquivalentInEuros    = Math.Round(eInvoice.Invoices.Sum(il => il.InvoiceTotals.InvoiceTotal), 2);
+            amount.TotalAmount       = Math.Round(eInvoice.Invoices.Sum(il => il.InvoiceTotals.InvoiceTotal), 2);
+            amount.EquivalentInEuros = Math.Round(eInvoice.Invoices.Sum(il => il.InvoiceTotals.InvoiceTotal), 2);
 
             return amount;
         }
@@ -154,8 +151,8 @@ namespace nFacturae.Extensions
         {
             AmountType amount = new AmountType();
 
-            amount.TotalAmount          = Math.Round(eInvoice.Invoices.Sum(il => il.InvoiceTotals.TotalOutstandingAmount), 2);
-            amount.EquivalentInEuros    = Math.Round(eInvoice.Invoices.Sum(il => il.InvoiceTotals.TotalOutstandingAmount), 2);
+            amount.TotalAmount       = Math.Round(eInvoice.Invoices.Sum(il => il.InvoiceTotals.TotalOutstandingAmount), 2);
+            amount.EquivalentInEuros = Math.Round(eInvoice.Invoices.Sum(il => il.InvoiceTotals.TotalOutstandingAmount), 2);
 
             return amount;
         }
@@ -169,8 +166,8 @@ namespace nFacturae.Extensions
         {
             AmountType amount = new AmountType();
 
-            amount.TotalAmount          = Math.Round(eInvoice.Invoices.Sum(il => il.InvoiceTotals.TotalExecutableAmount), 2);
-            amount.EquivalentInEuros    = Math.Round(eInvoice.Invoices.Sum(il => il.InvoiceTotals.TotalExecutableAmount), 2);
+            amount.TotalAmount       = Math.Round(eInvoice.Invoices.Sum(il => il.InvoiceTotals.TotalExecutableAmount), 2);
+            amount.EquivalentInEuros = Math.Round(eInvoice.Invoices.Sum(il => il.InvoiceTotals.TotalExecutableAmount), 2);
 
             return amount;
         }
@@ -184,10 +181,10 @@ namespace nFacturae.Extensions
         {
             InvoiceType invoice = new InvoiceType();
 
-            invoice.Parent              = eInvoice;
-            invoice.InvoiceHeader       = new InvoiceHeaderType();
-            invoice.InvoiceTotals       = new InvoiceTotalsType();
-            invoice.InvoiceIssueData    = new InvoiceIssueDataType();
+            invoice.Parent           = eInvoice;
+            invoice.InvoiceHeader    = new InvoiceHeaderType();
+            invoice.InvoiceTotals    = new InvoiceTotalsType();
+            invoice.InvoiceIssueData = new InvoiceIssueDataType();
 
             eInvoice.Invoices.Add(invoice);
 
@@ -369,8 +366,8 @@ namespace nFacturae.Extensions
         {
             invoice.InvoiceIssueData.PlaceOfIssue = new PlaceOfIssueType();
 
-            invoice.InvoiceIssueData.PlaceOfIssue.PlaceOfIssueDescription   = description;
-            invoice.InvoiceIssueData.PlaceOfIssue.PostCode                  = postCode;
+            invoice.InvoiceIssueData.PlaceOfIssue.PlaceOfIssueDescription = description;
+            invoice.InvoiceIssueData.PlaceOfIssue.PostCode                = postCode;
             
             return invoice;
         }
@@ -386,8 +383,8 @@ namespace nFacturae.Extensions
         {
             invoice.InvoiceIssueData.InvoicingPeriod = new PeriodDates();
 
-            invoice.InvoiceIssueData.InvoicingPeriod.StartDate  = startDate;
-            invoice.InvoiceIssueData.InvoicingPeriod.EndDate    = endDate;
+            invoice.InvoiceIssueData.InvoicingPeriod.StartDate = startDate;
+            invoice.InvoiceIssueData.InvoicingPeriod.EndDate   = endDate;
             
             return invoice;
         }
@@ -469,8 +466,8 @@ namespace nFacturae.Extensions
         /// <returns></returns>
         public static Facturae CalculateTotals(this InvoiceType invoice)
         {
-            double                      subsidyAmount   = 0;
-            List<InvoiceLineTypeTax>    rawLineTaxes    = new List<InvoiceLineTypeTax>();
+            double                   subsidyAmount = 0;
+            List<InvoiceLineTypeTax> rawLineTaxes  = new List<InvoiceLineTypeTax>();
                                     
             // Grab raw taxes from invoice lines
             invoice.Items.ForEach(item => item.TaxesOutputs.ForEach(itax => rawLineTaxes.Add(itax)));
@@ -483,13 +480,13 @@ namespace nFacturae.Extensions
                         TaxRate     = g.Key,
                         TaxableBase = new AmountType 
                         { 
-                            TotalAmount         = Math.Round(g.Sum(gtax => gtax.TaxableBase.TotalAmount), 2),
-                            EquivalentInEuros   = Math.Round(g.Sum(gtax => gtax.TaxableBase.EquivalentInEuros), 2)
+                            TotalAmount       = Math.Round(g.Sum(gtax => gtax.TaxableBase.TotalAmount), 2),
+                            EquivalentInEuros = Math.Round(g.Sum(gtax => gtax.TaxableBase.EquivalentInEuros), 2)
                         },
                         TaxAmount   = new AmountType 
                         { 
-                            TotalAmount         = Math.Round(g.Sum(gtax => gtax.TaxAmount.TotalAmount), 2),
-                            EquivalentInEuros   = Math.Round(g.Sum(gtax => gtax.TaxAmount.EquivalentInEuros), 2)
+                            TotalAmount       = Math.Round(g.Sum(gtax => gtax.TaxAmount.TotalAmount), 2),
+                            EquivalentInEuros = Math.Round(g.Sum(gtax => gtax.TaxAmount.EquivalentInEuros), 2)
                         },
                         TaxTypeCode = TaxTypeCodeType.Item01,
                     };
@@ -531,12 +528,9 @@ namespace nFacturae.Extensions
                 );
             }
 
-            invoice.InvoiceTotals.TotalGrossAmountBeforeTaxes = Math.Round
-            (
-                invoice.InvoiceTotals.TotalGrossAmount      - 
-                invoice.InvoiceTotals.TotalGeneralDiscounts + 
-                invoice.InvoiceTotals.TotalGeneralSurcharges, 2
-            );
+            invoice.InvoiceTotals.TotalGrossAmountBeforeTaxes = Math.Round(invoice.InvoiceTotals.TotalGrossAmount      
+                                                                         - invoice.InvoiceTotals.TotalGeneralDiscounts 
+                                                                         + invoice.InvoiceTotals.TotalGeneralSurcharges, 2);
 
             if (invoice.InvoiceTotals.PaymentsOnAccount != null)
             {
@@ -581,12 +575,9 @@ namespace nFacturae.Extensions
                 invoice.TaxesOutputs.Sum(to => to.TaxAmount.TotalAmount), 2
             );
 
-            invoice.InvoiceTotals.InvoiceTotal = Math.Round
-            (
-                invoice.InvoiceTotals.TotalGrossAmountBeforeTaxes   +
-                invoice.InvoiceTotals.TotalTaxOutputs               -
-                invoice.InvoiceTotals.TotalTaxesWithheld, 2
-            );
+            invoice.InvoiceTotals.InvoiceTotal = Math.Round(invoice.InvoiceTotals.TotalGrossAmountBeforeTaxes   
+                                                          + invoice.InvoiceTotals.TotalTaxOutputs               
+                                                          - invoice.InvoiceTotals.TotalTaxesWithheld, 2);
 
             // Total de gastos financieros
 #warning TODO: Hacer un extension method para que se pueda indicar
@@ -608,13 +599,10 @@ namespace nFacturae.Extensions
                 invoice.InvoiceTotals.InvoiceTotal - (subsidyAmount + invoice.InvoiceTotals.TotalPaymentsOnAccount), 2
             );
 
-            invoice.InvoiceTotals.TotalExecutableAmount = Math.Round
-            (
-                invoice.InvoiceTotals.TotalOutstandingAmount
-                    - invoice.InvoiceTotals.TotalTaxesWithheld
-                        + invoice.InvoiceTotals.TotalReimbursableExpenses
-                            + invoice.InvoiceTotals.TotalFinancialExpenses, 2
-            );
+            invoice.InvoiceTotals.TotalExecutableAmount = Math.Round(invoice.InvoiceTotals.TotalOutstandingAmount
+                                                                   - invoice.InvoiceTotals.TotalTaxesWithheld
+                                                                   + invoice.InvoiceTotals.TotalReimbursableExpenses
+                                                                   + invoice.InvoiceTotals.TotalFinancialExpenses, 2);
 
             return invoice.Parent;
         }
@@ -627,9 +615,9 @@ namespace nFacturae.Extensions
         {
             InvoiceLineType item = new InvoiceLineType();
 
-            item.Parent             = invoice;
-            item.ArticleCode        = articleCode;
-            item.ItemDescription    = productDescription;
+            item.Parent          = invoice;
+            item.ArticleCode     = articleCode;
+            item.ItemDescription = productDescription;
 
             invoice.Items.Add(item);
 
@@ -686,8 +674,8 @@ namespace nFacturae.Extensions
 
         public static InvoiceType CalculateTotals(this InvoiceLineType invoiceLine)
         {
-            double totalDiscounts   = 0;
-            double totalCharges     = 0;
+            double totalDiscounts = 0;
+            double totalCharges   = 0;
 
             invoiceLine.TotalCost = Math.Round(invoiceLine.Quantity * invoiceLine.UnitPriceWithoutTax, 2);
 
@@ -697,8 +685,8 @@ namespace nFacturae.Extensions
                 (
                     dar => 
                     {
-                        dar.DiscountAmount  = Math.Round(invoiceLine.TotalCost * dar.DiscountRate / 100, 2);
-                        totalDiscounts      = Math.Round(totalDiscounts + dar.DiscountAmount, 2);
+                        dar.DiscountAmount = Math.Round(invoiceLine.TotalCost * dar.DiscountRate / 100, 2);
+                        totalDiscounts     = Math.Round(totalDiscounts + dar.DiscountAmount, 2);
                     }
                 );
             }
@@ -709,15 +697,13 @@ namespace nFacturae.Extensions
                 (
                     chr =>
                     {
-                        chr.ChargeAmount    = Math.Round(invoiceLine.TotalCost * chr.ChargeRate / 100, 2);
-                        totalCharges        = Math.Round(totalCharges + chr.ChargeAmount, 2);
+                        chr.ChargeAmount = Math.Round(invoiceLine.TotalCost * chr.ChargeRate / 100, 2);
+                        totalCharges     = Math.Round(totalCharges + chr.ChargeAmount, 2);
                     }
                 );
             }
 
-            invoiceLine.GrossAmount = invoiceLine.TotalCost 
-                                      - totalDiscounts
-                                      + totalCharges;
+            invoiceLine.GrossAmount = invoiceLine.TotalCost - totalDiscounts + totalCharges;
 
             invoiceLine.TaxesOutputs.ForEach
             (
@@ -728,8 +714,8 @@ namespace nFacturae.Extensions
                         tax.TaxableBase = new AmountType();
                     }
 
-                    tax.TaxableBase.TotalAmount         = invoiceLine.GrossAmount;
-                    tax.TaxableBase.EquivalentInEuros   = invoiceLine.GrossAmount;
+                    tax.TaxableBase.TotalAmount       = invoiceLine.GrossAmount;
+                    tax.TaxableBase.EquivalentInEuros = invoiceLine.GrossAmount;
 
                     if (tax.TaxAmount == null)
                     {
@@ -785,8 +771,8 @@ namespace nFacturae.Extensions
         {
             BusinessType partie = new BusinessType();
 
-            partie.Parent       = parties;
-            parties.BuyerParty  = partie;
+            partie.Parent      = parties;
+            parties.BuyerParty = partie;
             
             return partie;
         }
@@ -848,8 +834,8 @@ namespace nFacturae.Extensions
         {
             IndividualType individual = new IndividualType();
 
-            party.Item          = individual;
-            individual.Parent   = party;
+            party.Item        = individual;
+            individual.Parent = party;
 
             if (party.TaxIdentification != null)
             {
@@ -1177,8 +1163,8 @@ namespace nFacturae.Extensions
         /// <returns></returns>
         public static SignedFacturae Sign(this Facturae eInvoice, X509Certificate2 certificate, RSA key)
         {
-            XmlDocument     document    = eInvoice.ToXmlDocument();
-            XaDESSignedXml  signedXml   = new XaDESSignedXml(document);
+            XmlDocument    document  = eInvoice.ToXmlDocument();
+            XaDESSignedXml signedXml = new XaDESSignedXml(document);
 
             // Set the key to sign
             signedXml.SigningKey = key;
@@ -1228,16 +1214,13 @@ namespace nFacturae.Extensions
 
         private static Reference SetKeyInfo(XaDESSignedXml signedXml, X509Certificate2 certificate, RSA key)
         {   
-            signedXml.KeyInfo       = new KeyInfo();
-            signedXml.KeyInfo.Id    = XsdSchemas.FormatId(signedXml.Signature.Id, "KeyInfo");
+            signedXml.KeyInfo    = new KeyInfo();
+            signedXml.KeyInfo.Id = XsdSchemas.FormatId(signedXml.Signature.Id, "KeyInfo");
 
             signedXml.KeyInfo.AddClause(new KeyInfoX509Data(certificate));
             signedXml.KeyInfo.AddClause(new RSAKeyValue(key));
 
-            return new Reference
-            {
-                Uri = String.Format("#{0}", signedXml.KeyInfo.Id),
-            };
+            return new Reference { Uri = String.Format("#{0}", signedXml.KeyInfo.Id) };
         }
 
         private static Reference SetSignatureTransformReference(XaDESSignedXml signedXml, XmlDocument document)
@@ -1255,9 +1238,9 @@ namespace nFacturae.Extensions
 
         private static Reference AddXAdESNodes(XaDESSignedXml signedXml, XmlDocument document, X509Certificate2 certificate)
         {
-            var qualifyingPropertiesNode    = AddQualifyingPropertiesNode(signedXml, document);
-            var signedPropertiesNode        = AddSignedPropertiesNode(signedXml, document, qualifyingPropertiesNode);
-            var signedSignatureProperties   = AddSignedSignaturePropertiesNode(document, signedPropertiesNode);
+            var qualifyingPropertiesNode  = AddQualifyingPropertiesNode(signedXml, document);
+            var signedPropertiesNode      = AddSignedPropertiesNode(signedXml, document, qualifyingPropertiesNode);
+            var signedSignatureProperties = AddSignedSignaturePropertiesNode(document, signedPropertiesNode);
 
             AddSigningTimeNode(document, signedSignatureProperties);
             AddSigningCertificate(document, signedSignatureProperties, certificate);           
@@ -1272,9 +1255,9 @@ namespace nFacturae.Extensions
         {
             return new Reference
             {
-                Id      = XsdSchemas.FormatId(signedXml.Signature.Id, "SignedPropertiesReference"),
-                Uri     = String.Format("#{0}", signedPropertiesNode.GetAttribute("Id")),
-                Type    = "http://uri.etsi.org/01903/v1.3.2#SignedProperties"
+                Id   = XsdSchemas.FormatId(signedXml.Signature.Id, "SignedPropertiesReference"),
+                Uri  = String.Format("#{0}", signedPropertiesNode.GetAttribute("Id")),
+                Type = "http://uri.etsi.org/01903/v1.3.2#SignedProperties"
             };
         }
 
@@ -1372,8 +1355,8 @@ namespace nFacturae.Extensions
 
         private static byte[] ReadPolicyFile()
         {
-            Assembly    currentAssembly = Assembly.GetExecutingAssembly();
-            string      resourceName    = "nFacturae.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
+            Assembly currentAssembly = Assembly.GetExecutingAssembly();
+            string   resourceName    = "nFacturae.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
 
             using (Stream stream = currentAssembly.GetManifestResourceStream(resourceName))
             {
@@ -1393,13 +1376,13 @@ namespace nFacturae.Extensions
         {
             if (eInvoice.FileHeader == null)
             {
-                eInvoice.FileHeader                 = new FileHeaderType();
-                eInvoice.FileHeader.Batch           = new BatchType();
-                eInvoice.FileHeader.SchemaVersion   = SchemaVersionType.Item32;
-                eInvoice.Parties                    = new PartiesType();
-                eInvoice.Parties.SellerParty        = new BusinessType();
-                eInvoice.Parties.BuyerParty         = new BusinessType();
-                eInvoice.Invoices                   = new List<InvoiceType>();
+                eInvoice.FileHeader               = new FileHeaderType();
+                eInvoice.FileHeader.Batch         = new BatchType();
+                eInvoice.FileHeader.SchemaVersion = SchemaVersionType.Item32;
+                eInvoice.Parties                  = new PartiesType();
+                eInvoice.Parties.SellerParty      = new BusinessType();
+                eInvoice.Parties.BuyerParty       = new BusinessType();
+                eInvoice.Invoices                 = new List<InvoiceType>();
 
                 eInvoice.SetCurrency(CurrencyCodeType.EUR);
                 eInvoice.SetIssuer(InvoiceIssuerTypeType.EM);

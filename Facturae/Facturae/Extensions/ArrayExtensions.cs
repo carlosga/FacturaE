@@ -83,9 +83,9 @@ namespace nFacturae.Extensions
             {
                 if (value != null)
                 {
-                    byte[]  buffer  = Encoding.UTF8.GetBytes(value);
-                    byte[]  output  = new byte[buffer.Length];
-                    int     count   = hashAlgorithm.TransformBlock(buffer, 0, buffer.Length, output, 0);
+                    byte[] buffer = Encoding.UTF8.GetBytes(value);
+                    byte[] output = new byte[buffer.Length];
+                    int    count  = hashAlgorithm.TransformBlock(buffer, 0, buffer.Length, output, 0);
                 }
             }
 
@@ -107,9 +107,9 @@ namespace nFacturae.Extensions
             {
                 if (value != null)
                 {
-                    byte[]  buffer  = Encoding.UTF8.GetBytes(value);
-                    byte[]  output  = new byte[buffer.Length];
-                    int     count   = hashAlgorithm.TransformBlock(buffer, 0, buffer.Length, output, 0);
+                    byte[] buffer = Encoding.UTF8.GetBytes(value);
+                    byte[] output = new byte[buffer.Length];
+                    int    count  = hashAlgorithm.TransformBlock(buffer, 0, buffer.Length, output, 0);
                 }
             }
 
