@@ -1,6 +1,6 @@
 ### Facturae
 
-Signature of Facturae (http://www.facturae.gob.es/) invoices using purce C#
+Signature of Facturae (http://www.facturae.gob.es/) invoices using pure C#
 
 It uses some code from mono project (http://www.mono-project.com/)
 
