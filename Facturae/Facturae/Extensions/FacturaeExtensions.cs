@@ -1,21 +1,27 @@
-/* This file is part of Facturae.
+/* nFacturae - The MIT License (MIT)
  * 
- * Copyright (c) 2012. Carlos Guzmán Álvarez.
+ * Copyright (c) 2013-2014 Carlos Guzmán Álvarez
  * 
- * Facturae is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  * 
- * Facturae is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  * 
- * You should have received a copy of the GNU General Public License
- * along with Facturae.  If not, see <http://www.gnu.org/licenses/>.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 
+using nFacturae.Xml;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,7 +36,6 @@ using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using nFacturae.Xml;
 
 namespace nFacturae.Extensions
 {
@@ -1257,8 +1262,8 @@ namespace nFacturae.Extensions
             AddSigningTimeNode(document, signedSignatureProperties);
             AddSigningCertificate(document, signedSignatureProperties, certificate);           
             AddSignaturePolicyIdentifier(document, signedSignatureProperties, certificate);
-			
-			CreateDataObject(signedXml, qualifyingPropertiesNode);
+            
+            CreateDataObject(signedXml, qualifyingPropertiesNode);
 
             return CreateSignedPropertiesReference(signedXml, signedPropertiesNode);
         }
@@ -1295,7 +1300,7 @@ namespace nFacturae.Extensions
             var signedPropertiesNode = document.CreateNode(XsdSchemas.XadesPrefix, "SignedProperties", XsdSchemas.XadesNamespaceUrl, qualifyingPropertiesNode);
             signedPropertiesNode.SetAttribute("Id", XsdSchemas.FormatId(signedXml.Signature.Id, "SignedProperties"));
             
-			return signedPropertiesNode;
+            return signedPropertiesNode;
         }
 
         private static XmlElement AddSignedSignaturePropertiesNode(XmlDocument document, XmlElement propertiesNode)
@@ -1307,7 +1312,7 @@ namespace nFacturae.Extensions
         private static void AddSigningTimeNode(XmlDocument document, XmlElement signedSignaturePropertiesNode)
         {
             document.CreateNode(XsdSchemas.XadesPrefix, "SigningTime", XsdSchemas.NowInCanonicalRepresentation(),
-                				XsdSchemas.XadesNamespaceUrl, signedSignaturePropertiesNode);
+                                XsdSchemas.XadesNamespaceUrl, signedSignaturePropertiesNode);
         }
 
         private static void AddSigningCertificate(XmlDocument document, XmlElement signedSignatureProperties, X509Certificate2 certificate)
@@ -1322,11 +1327,11 @@ namespace nFacturae.Extensions
         private static void AddCertDigestNode(XmlDocument document, XmlElement certNode, X509Certificate2 certificate)
         {
             var certDigestNode = document.CreateNode(XsdSchemas.XadesPrefix, "CertDigest", XsdSchemas.XadesNamespaceUrl, certNode);
-			
+            
             document.CreateNode(XsdSchemas.XmlDsigPrefix, "DigestMethod", "Algorithm", SignedXml.XmlDsigSHA1Url, SignedXml.XmlDsigNamespaceUrl, certDigestNode);
 
             var digestValue = certificate.RawData.ComputeSHA1Hash().ToBase64String();
-			
+            
             document.CreateNode(XsdSchemas.XmlDsigPrefix, "DigestValue", digestValue, SignedXml.XmlDsigNamespaceUrl, certDigestNode);
         }
 
@@ -1335,7 +1340,7 @@ namespace nFacturae.Extensions
             var issuerSerialNode = document.CreateNode(XsdSchemas.XadesPrefix, "IssuerSerial", XsdSchemas.XadesNamespaceUrl, certNode);
 
             document.CreateNode(XsdSchemas.XmlDsigPrefix, "X509IssuerName", certificate.Issuer,
-            					SignedXml.XmlDsigNamespaceUrl, issuerSerialNode);
+                                SignedXml.XmlDsigNamespaceUrl, issuerSerialNode);
 
             document.CreateNode(XsdSchemas.XmlDsigPrefix, "X509SerialNumber", Int32.Parse(certificate.SerialNumber, NumberStyles.HexNumber).ToString(),
                                 SignedXml.XmlDsigNamespaceUrl, issuerSerialNode);
@@ -1348,8 +1353,8 @@ namespace nFacturae.Extensions
             var policyIdNode 				  = document.CreateNode(XsdSchemas.XadesPrefix, "SigPolicyId", XsdSchemas.XadesNamespaceUrl, signaturePolicyId);
             var identifierNode 				  = document.CreateNode(XsdSchemas.XadesPrefix, "Identifier", PolicyIdentifier, XsdSchemas.XadesNamespaceUrl, policyIdNode);
             var descriptionNode 			  = document.CreateNode(XsdSchemas.XadesPrefix, "Description", "facturae31", XsdSchemas.XadesNamespaceUrl, policyIdNode);			
-			
-			identifierNode.SetAttribute("Qualifier", "OIDAsURI");
+            
+            identifierNode.SetAttribute("Qualifier", "OIDAsURI");
 
             AddSigPolicyHash(document, signaturePolicyId, certificate);
         }
@@ -1357,11 +1362,11 @@ namespace nFacturae.Extensions
         private static void AddSigPolicyHash(XmlDocument document, XmlElement signaturePolicyId, X509Certificate2 certificate)
         {
             var signaturePolicyIdNode = document.CreateNode(XsdSchemas.XadesPrefix, "SigPolicyHash", XsdSchemas.XadesNamespaceUrl, signaturePolicyId);
-			
+            
             document.CreateNode(XsdSchemas.XmlDsigPrefix, "DigestMethod", "Algorithm", SignedXml.XmlDsigSHA1Url, SignedXml.XmlDsigNamespaceUrl, signaturePolicyIdNode);
 
             var digestValue = ReadPolicyFile().ComputeSHA1Hash().ToBase64String();
-			
+            
             document.CreateNode(XsdSchemas.XmlDsigPrefix, "DigestValue", digestValue, SignedXml.XmlDsigNamespaceUrl, signaturePolicyIdNode);
         }
 
