@@ -79,7 +79,7 @@ namespace nFacturae.Extensions
         /// <param name="eInvoice">The electronic invoice</param>
         /// <param name="schemaVersion">The schema version</param>
         /// <returns></returns>
-        public static Facturae SetchemaVersion(this Facturae eInvoice, SchemaVersionType schemaVersion)
+        public static Facturae SetSchemaVersion(this Facturae eInvoice, SchemaVersionType schemaVersion)
         {
             eInvoice.VerifyHeader();
 
@@ -364,10 +364,11 @@ namespace nFacturae.Extensions
         /// <returns></returns>
         public static InvoiceType SetPlaceOfIssue(this InvoiceType invoice, string description, string postCode)
         {
-            invoice.InvoiceIssueData.PlaceOfIssue = new PlaceOfIssueType();
-
-            invoice.InvoiceIssueData.PlaceOfIssue.PlaceOfIssueDescription = description;
-            invoice.InvoiceIssueData.PlaceOfIssue.PostCode                = postCode;
+            invoice.InvoiceIssueData.PlaceOfIssue = new PlaceOfIssueType
+            {
+                PlaceOfIssueDescription = description
+              , PostCode                = postCode
+            };
             
             return invoice;
         }
@@ -381,10 +382,11 @@ namespace nFacturae.Extensions
         /// <returns></returns>
         public static InvoiceType SetInvoicingPeriod(this InvoiceType invoice, DateTime startDate, DateTime endDate)
         {
-            invoice.InvoiceIssueData.InvoicingPeriod = new PeriodDates();
-
-            invoice.InvoiceIssueData.InvoicingPeriod.StartDate = startDate;
-            invoice.InvoiceIssueData.InvoicingPeriod.EndDate   = endDate;
+            invoice.InvoiceIssueData.InvoicingPeriod = new PeriodDates
+            {
+                StartDate = startDate
+              , EndDate   = endDate
+            };
             
             return invoice;
         }
@@ -411,9 +413,10 @@ namespace nFacturae.Extensions
         /// <returns></returns>
         public static InvoiceType SetExchangeRate(this InvoiceType invoice, double exchangeRate, DateTime exchangeDate)
         {
-            invoice.InvoiceIssueData.ExchangeRateDetails = new ExchangeRateDetailsType();
-            
-            invoice.InvoiceIssueData.ExchangeRateDetails.ExchangeRate = exchangeRate;
+            invoice.InvoiceIssueData.ExchangeRateDetails = new ExchangeRateDetailsType
+            {
+                ExchangeRate = exchangeRate
+            };
             
             return invoice;
         }
@@ -613,11 +616,12 @@ namespace nFacturae.Extensions
 
         public static InvoiceLineType AddInvoiceItem(this InvoiceType invoice, string articleCode, string productDescription)
         {
-            InvoiceLineType item = new InvoiceLineType();
-
-            item.Parent          = invoice;
-            item.ArticleCode     = articleCode;
-            item.ItemDescription = productDescription;
+            InvoiceLineType item = new InvoiceLineType
+            {
+                Parent          = invoice
+              , ArticleCode     = articleCode
+              , ItemDescription = productDescription
+            };
 
             invoice.Items.Add(item);
 
@@ -645,10 +649,11 @@ namespace nFacturae.Extensions
                 invoiceLine.DiscountsAndRebates = new List<DiscountType>();
             }
 
-            DiscountType discount = new DiscountType();
-
-            discount.DiscountRate   = discountRate;
-            discount.DiscountReason = "Descuento";
+            DiscountType discount = new DiscountType
+            {
+                DiscountRate   = discountRate
+              , DiscountReason = "Descuento"
+            };
 
             invoiceLine.DiscountsAndRebates.Add(discount);
 
@@ -662,10 +667,11 @@ namespace nFacturae.Extensions
                 invoiceLine.TaxesOutputs = new List<InvoiceLineTypeTax>();
             }
 
-            InvoiceLineTypeTax tax = new InvoiceLineTypeTax();
-
-            tax.TaxTypeCode = TaxTypeCodeType.Item01;
-            tax.TaxRate     = taxRate;
+            InvoiceLineTypeTax tax = new InvoiceLineTypeTax
+            {
+                TaxTypeCode = TaxTypeCodeType.Item01
+              , TaxRate     = taxRate
+            };
 
             invoiceLine.TaxesOutputs.Add(tax);
 
@@ -754,9 +760,8 @@ namespace nFacturae.Extensions
         /// <returns></returns>
         public static BusinessType Seller(this PartiesType parties)
         {
-            BusinessType partie = new BusinessType();
+            BusinessType partie = new BusinessType { Parent = parties };
 
-            partie.Parent       = parties;
             parties.SellerParty = partie;
             
             return partie;
@@ -769,9 +774,8 @@ namespace nFacturae.Extensions
         /// <returns></returns>
         public static BusinessType Buyer(this PartiesType parties)
         {
-            BusinessType partie = new BusinessType();
-
-            partie.Parent      = parties;
+            BusinessType partie = new BusinessType { Parent = parties };
+            
             parties.BuyerParty = partie;
             
             return partie;
@@ -818,8 +822,10 @@ namespace nFacturae.Extensions
         {
             if (party.TaxIdentification == null)
             {
-                party.TaxIdentification = new TaxIdentificationType();
-                party.TaxIdentification.Parent = party;
+                party.TaxIdentification = new TaxIdentificationType
+                {
+                    Parent = party
+                };
             }
   
             return party.TaxIdentification;
@@ -832,10 +838,9 @@ namespace nFacturae.Extensions
         /// <returns></returns>
         public static IndividualType IsIndividual(this BusinessType party)
         {
-            IndividualType individual = new IndividualType();
+            IndividualType individual = new IndividualType { Parent = party };
 
-            party.Item        = individual;
-            individual.Parent = party;
+            party.Item = individual;
 
             if (party.TaxIdentification != null)
             {
@@ -1227,6 +1232,7 @@ namespace nFacturae.Extensions
         {
             Reference reference = new Reference(String.Empty);
 
+            reference.Id = XsdSchemas.FormatId("Reference", "ID");
             reference.AddTransform(new XmlDsigEnvelopedSignatureTransform());
 
             return reference;

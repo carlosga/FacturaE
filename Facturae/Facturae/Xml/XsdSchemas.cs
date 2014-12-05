@@ -81,7 +81,7 @@ namespace nFacturae.Xml
         /// <returns>A new identifier</returns>
         public static string FormatId(string firstPart, string secondPart)
         {
-            return String.Format("{0}-{1}{2}", firstPart, secondPart, DateTime.Today.ToString("yyyyMMdd"));
+            return String.Format("{0}-{1}-{2}", firstPart, secondPart, DateTime.Today.ToString("yyyyMMdd"));
         }
         
         /// <summary>
@@ -156,7 +156,12 @@ namespace nFacturae.Xml
                     {
                         continue;
                     }
-                    
+
+                    if (attr.LocalName == "xmlns")
+                    {
+                        continue;
+                    }                        
+
                     if (attr.Prefix == doc.DocumentElement.Prefix)
                     {
                         continue;
