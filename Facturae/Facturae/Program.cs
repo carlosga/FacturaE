@@ -32,7 +32,7 @@ namespace FacturaE
         static void Main(string[] args)
         {
             Facturae         eInvoice = new Facturae();
-            X509Certificate2 cert     = new X509Certificate2(@"Certificates/fc-6y.p12", "1234");
+            X509Certificate2 cert     = new X509Certificate2(@"Certificates/pj-5m.p12", "1234");
             SignedFacturae   signed   = null;
             bool             isValid  = false;
 

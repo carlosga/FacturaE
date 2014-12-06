@@ -22,6 +22,8 @@
  */
 
 using FacturaE.Xml;
+using Mono.Security;
+using Mono.Security.X509;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -1351,9 +1353,9 @@ namespace FacturaE.Extensions
         private static void AddIssuerSerialNode(XmlDocument document, XmlElement certNode, X509Certificate2 certificate)
         {
             var issuerSerialNode = document.CreateNode(XsdSchemas.XadesPrefix, "IssuerSerial", XsdSchemas.XadesNamespaceUrl, certNode);
+            var issuer           = X501.ToString(new ASN1(certificate.IssuerName.RawData)); // RFC2253 Encoded
 
-#warning TODO: This needs to be changed to format the issuer name as Java does with getIssuerX500Principal.getName()
-            document.CreateNode(XsdSchemas.XmlDsigPrefix, "X509IssuerName", certificate.Issuer, SignedXml.XmlDsigNamespaceUrl, issuerSerialNode);
+            document.CreateNode(XsdSchemas.XmlDsigPrefix, "X509IssuerName", issuer, SignedXml.XmlDsigNamespaceUrl, issuerSerialNode);
             document.CreateNode(XsdSchemas.XmlDsigPrefix
                               , "X509SerialNumber"
                               , Int32.Parse(certificate.SerialNumber, NumberStyles.HexNumber).ToString()
