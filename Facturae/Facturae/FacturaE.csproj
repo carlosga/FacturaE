@@ -107,13 +107,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <EmbeddedResource Include="Policies\politica_de_firma_formato_facturae_v3_1.pdf" />
-    <None Include="Certificates\usr0052.p12">
+    <None Include="Certificates\fc-6y.cer">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Certificates\usr0032.cer">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Certificates\usr0032.p12">
+    <None Include="Certificates\fc-6y.p12">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <EmbeddedResource Include="Schemas\XAdES.xsd">
