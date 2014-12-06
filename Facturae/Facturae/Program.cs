@@ -31,10 +31,10 @@ namespace FacturaE
     {
         static void Main(string[] args)
         {
-            Facturae            eInvoice	= new Facturae();
-            X509Certificate2    cert        = new X509Certificate2(@"Certificates/usr0052.p12", "usr0052");
-            SignedFacturae      signed      = null;
-            bool                isValid    = false;
+            Facturae         eInvoice = new Facturae();
+            X509Certificate2 cert     = new X509Certificate2(@"Certificates/usr0052.p12", "usr0052");
+            SignedFacturae   signed   = null;
+            bool             isValid  = false;
 
             // Create a new facturae invoice & sign it
             signed = eInvoice

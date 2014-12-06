@@ -47,6 +47,7 @@ namespace FacturaE.Extensions
         #region · Constants ·
 
         const string PolicyIdentifier = "http://www.facturae.es/politica_de_firma_formato_facturae/politica_de_firma_formato_facturae_v3_1.pdf";
+        const string PolicyResource   = "FacturaE.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
 
         #endregion
 
@@ -1362,9 +1363,8 @@ namespace FacturaE.Extensions
         private static byte[] ReadPolicyFile()
         {
             Assembly currentAssembly = Assembly.GetExecutingAssembly();
-            string   resourceName    = "FacturaE.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
 
-            using (Stream stream = currentAssembly.GetManifestResourceStream(resourceName))
+            using (Stream stream = currentAssembly.GetManifestResourceStream(PolicyResource))
             {
                 byte[] buffer = new byte[stream.Length];
  
