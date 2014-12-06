@@ -1,4 +1,4 @@
-/* nFacturae - The MIT License (MIT)
+/* FacturaE - The MIT License (MIT)
  * 
  * Copyright (c) 2012-2014 Carlos Guzmán Álvarez
  * 
@@ -21,11 +21,11 @@
  * THE SOFTWARE.
  */
 
-using nFacturae.Extensions;
+using FacturaE.Extensions;
 using System;
 using System.Security.Cryptography.X509Certificates;
 
-namespace nFacturae
+namespace FacturaE
 {
     public class Program
     {

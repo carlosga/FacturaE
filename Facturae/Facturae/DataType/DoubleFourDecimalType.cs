@@ -1,4 +1,4 @@
-﻿/* nFacturae - The MIT License (MIT)
+﻿/* FacturaE - The MIT License (MIT)
  * 
  * Copyright (c) 2012-2014 Carlos Guzmán Álvarez
  * 
@@ -26,7 +26,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace nFacturae.DataType
+namespace FacturaE.DataType
 {
     public struct DoubleFourDecimalType 
         : IComparable, IFormattable, IConvertible, IComparable<double>, IEquatable<double>, IXmlSerializable

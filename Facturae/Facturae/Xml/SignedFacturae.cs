@@ -1,4 +1,4 @@
-﻿/* nFacturae - The MIT License (MIT)
+﻿/* FacturaE - The MIT License (MIT)
  * 
  * Copyright (c) 2012-2014 Carlos Guzmán Álvarez
  * 
@@ -21,10 +21,10 @@
  * THE SOFTWARE.
  */
 
-using nFacturae.Xml;
+using FacturaE.Xml;
 using System.Xml;
 
-namespace nFacturae
+namespace FacturaE
 {
     /// <summary>
     /// Helper class to verify signed invoices signatures.

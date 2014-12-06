@@ -1,4 +1,4 @@
-﻿/* nFacturae - The MIT License (MIT)
+﻿/* FacturaE - The MIT License (MIT)
  * 
  * Copyright (c) 2012-2014 Carlos Guzmán Álvarez
  * 
@@ -21,9 +21,9 @@
  * THE SOFTWARE.
  */
 
-namespace nFacturae
+namespace FacturaE
 {
-    using nFacturae.DataType;
+    using FacturaE.DataType;
     using System;
     using System.CodeDom.Compiler;
     using System.Collections.Generic;

@@ -8,8 +8,8 @@
     <ProjectGuid>{CFA51BB8-125F-4AE8-93D5-263407C0F309}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>nFacturae</RootNamespace>
-    <AssemblyName>nFacturae</AssemblyName>
+    <RootNamespace>FacturaE</RootNamespace>
+    <AssemblyName>FacturaE</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>

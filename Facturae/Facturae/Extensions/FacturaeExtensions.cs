@@ -1,4 +1,4 @@
-/* nFacturae - The MIT License (MIT)
+/* FacturaE - The MIT License (MIT)
  * 
  * Copyright (c) 2012-2014 Carlos Guzmán Álvarez
  * 
@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-using nFacturae.Xml;
+using FacturaE.Xml;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -37,7 +37,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace nFacturae.Extensions
+namespace FacturaE.Extensions
 {
     /// <summary>
     /// Facturae extensions
@@ -1362,7 +1362,7 @@ namespace nFacturae.Extensions
         private static byte[] ReadPolicyFile()
         {
             Assembly currentAssembly = Assembly.GetExecutingAssembly();
-            string   resourceName    = "nFacturae.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
+            string   resourceName    = "FacturaE.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
 
             using (Stream stream = currentAssembly.GetManifestResourceStream(resourceName))
             {

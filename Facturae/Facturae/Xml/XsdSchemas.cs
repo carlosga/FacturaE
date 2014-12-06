@@ -1,4 +1,4 @@
-﻿/* nFacturae - The MIT License (MIT)
+﻿/* FacturaE - The MIT License (MIT)
  * 
  * Copyright (c) 2012-2014 Carlos Guzmán Álvarez
  * 
@@ -27,7 +27,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace nFacturae.Xml
+namespace FacturaE.Xml
 {
     /// <summary>
     /// Helper class for dealing with Facturae and xmldsig Schemas
@@ -42,9 +42,9 @@ namespace nFacturae.Xml
         public const string FacturaePrefix          = "fe";
         public const string XmlDsigPrefix           = "ds";
         public const string XadesPrefix             = "";
-        private const string XmlDsigSchemaResource  = "nFacturae.Schemas.xmldsig-core-schema.xsd";
-        private const string FacturaeSchemaResource = "nFacturae.Schemas.Facturaev3_2.xsd";
-        private const string XAdESSchemaResource    = "nFacturae.Schemas.XAdES.xsd";
+        private const string XmlDsigSchemaResource  = "FacturaE.Schemas.xmldsig-core-schema.xsd";
+        private const string FacturaeSchemaResource = "FacturaE.Schemas.Facturaev3_2.xsd";
+        private const string XAdESSchemaResource    = "FacturaE.Schemas.XAdES.xsd";
 
         #endregion
 

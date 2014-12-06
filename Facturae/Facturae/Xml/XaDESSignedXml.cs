@@ -1,4 +1,4 @@
-﻿/* nFacturae - The MIT License (MIT)
+﻿/* FacturaE - The MIT License (MIT)
  * 
  * Copyright (c) 2012-2014 Carlos Guzmán Álvarez
  * 
@@ -21,13 +21,13 @@
  * THE SOFTWARE.
  */
 
-using nFacturae.Extensions;
+using FacturaE.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.Xml;
 using System.Xml;
 
-namespace nFacturae.Xml
+namespace FacturaE.Xml
 {
     /// <summary>
     /// Custom <see cref="SignedXml"/> implementation.
