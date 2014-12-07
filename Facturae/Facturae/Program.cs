@@ -21,6 +21,7 @@
  * THE SOFTWARE.
  */
 
+using FacturaE.DataType;
 using FacturaE.Extensions;
 using System;
 using System.Security.Cryptography.X509Certificates;

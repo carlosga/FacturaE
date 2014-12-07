@@ -214,7 +214,7 @@ namespace FacturaE.DataType
 
         public override string ToString()
         {
-            return this.value.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+            return this.value.ToString("0.########", System.Globalization.CultureInfo.InvariantCulture);
         }
 
         public String ToString(String format)
@@ -237,7 +237,7 @@ namespace FacturaE.DataType
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return this.Value.ToString("F8", formatProvider);
+            return this.Value.ToString("0.########", formatProvider);
         }
 
         #endregion
