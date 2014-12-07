@@ -31,33 +31,6 @@ namespace FacturaE.Extensions
     internal static class XmlExtensions
     {
         #region · Methods ·
-                
-        internal static XmlElement CreateNode(this XmlDocument document, string prefix, string nodeName, string nameSpace, XmlElement rootNode)
-        {
-            var result = document.CreateElement(prefix, nodeName, nameSpace);
-            
-            rootNode.AppendChild(result);
-
-            return result;
-        }
-
-        internal static XmlElement CreateNode(this XmlDocument document, string prefix, string nodeName, string text, string nameSpace, XmlElement rootNode)
-        {
-            var newNode = document.CreateNode(prefix, nodeName, nameSpace, rootNode);
-            
-            newNode.InnerText = text;
-
-            return newNode;
-        }
-
-        internal static XmlElement CreateNode(this XmlDocument document, string prefix, string nodeName, string attName, string attValue, string nameSpace, XmlElement rootNode)
-        {			
-            var newNode = document.CreateNode(prefix, nodeName, nameSpace, rootNode);            
-
-            newNode.SetAttribute(attName, attValue);
-
-            return newNode;
-        }
 
         internal static XmlElement FindNode(this XmlNodeList nodeList, string attributeName, string value)
         {
