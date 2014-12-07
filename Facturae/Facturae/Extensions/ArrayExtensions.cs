@@ -51,10 +51,17 @@ namespace System
         /// <returns></returns>
         public static byte[] ComputeMD5Hash(this byte[] buffer)
         {
-            MD5 md5 = MD5.Create();
-            md5.TransformFinalBlock(buffer, 0, buffer.Length);
+            if (buffer == null)
+            {
+                return null;
+            }
 
-            return md5.Hash;
+            using (MD5 md5 = MD5.Create())
+            {
+                md5.TransformFinalBlock(buffer, 0, buffer.Length);
+
+                return md5.Hash;
+            }
         }
 
         /// <summary>
@@ -64,10 +71,17 @@ namespace System
         /// <returns></returns>
         public static byte[] ComputeSHA1Hash(this byte[] buffer)
         {
-            SHA1 hashAlgorithm = SHA1.Create();
-            hashAlgorithm.TransformFinalBlock(buffer, 0, buffer.Length);
+            if (buffer == null)
+            {
+                return null;
+            }
 
-            return hashAlgorithm.Hash;
+            using (SHA1 hashAlgorithm = SHA1.Create())
+            {
+                hashAlgorithm.TransformFinalBlock(buffer, 0, buffer.Length);
+
+                return hashAlgorithm.Hash;
+            }
         }
 
         /// <summary>
@@ -77,21 +91,28 @@ namespace System
         /// <returns></returns>
         public static byte[] ComputeMD5Hash(this string[] values)
         {
-            MD5 hashAlgorithm = MD5.Create();
-
-            foreach (string value in values)
+            if (values == null)
             {
-                if (value != null)
-                {
-                    byte[] buffer = Encoding.UTF8.GetBytes(value);
-                    byte[] output = new byte[buffer.Length];
-                    int    count  = hashAlgorithm.TransformBlock(buffer, 0, buffer.Length, output, 0);
-                }
+                return null;
             }
 
-            hashAlgorithm.TransformFinalBlock(new byte[0], 0, 0);
+            using (MD5 hashAlgorithm = MD5.Create())
+            {
+                foreach (string value in values)
+                {
+                    if (value != null)
+                    {
+                        byte[] buffer = Encoding.UTF8.GetBytes(value);
+                        byte[] output = new byte[buffer.Length];
+                        
+                        hashAlgorithm.TransformBlock(buffer, 0, buffer.Length, output, 0);
+                    }
+                }
 
-            return hashAlgorithm.Hash;
+                hashAlgorithm.TransformFinalBlock(new byte[0], 0, 0);
+
+                return hashAlgorithm.Hash;
+            }
         }
 
         /// <summary>
@@ -99,23 +120,30 @@ namespace System
         /// </summary>
         /// <param name="buffer"></param>
         /// <returns></returns>
-        private static byte[] ComputeSHA1Hash(this string[] values)
+        public static byte[] ComputeSHA1Hash(this string[] values)
         {
-            SHA1 hashAlgorithm = SHA1.Create();
-
-            foreach (string value in values)
+            if (values == null)
             {
-                if (value != null)
-                {
-                    byte[] buffer = Encoding.UTF8.GetBytes(value);
-                    byte[] output = new byte[buffer.Length];
-                    int    count  = hashAlgorithm.TransformBlock(buffer, 0, buffer.Length, output, 0);
-                }
+                return null;
             }
 
-            hashAlgorithm.TransformFinalBlock(new byte[0], 0, 0);
+            using (SHA1 hashAlgorithm = SHA1.Create())
+            {
+                foreach (string value in values)
+                {
+                    if (value != null)
+                    {
+                        byte[] buffer = Encoding.UTF8.GetBytes(value);
+                        byte[] output = new byte[buffer.Length];
 
-            return hashAlgorithm.Hash;
+                        hashAlgorithm.TransformBlock(buffer, 0, buffer.Length, output, 0);
+                    }
+                }
+
+                hashAlgorithm.TransformFinalBlock(new byte[0], 0, 0);
+
+                return hashAlgorithm.Hash;
+            }
         }
 
         /// <summary>
@@ -125,6 +153,12 @@ namespace System
         /// <returns></returns>
         public static string ToHexString(this byte[] buffer)
         {
+            if (buffer == null)
+            {
+                return null;
+            }
+
+
             StringBuilder hex = new StringBuilder();
 
             for (int i = 0; i < buffer.Length; i++)

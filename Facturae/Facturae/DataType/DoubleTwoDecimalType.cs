@@ -40,34 +40,34 @@ namespace FacturaE.DataType
 
         #region · Static Methods ·
 
-        public static bool GreatherThan(DoubleTwoDecimalType x, DoubleTwoDecimalType y)
+        public static bool GreaterThan(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
         {
-            return (x > y);
+            return (left > right);
         }
 
-        public static bool GreatherThanOrEqual(DoubleTwoDecimalType x, DoubleTwoDecimalType y)
+        public static bool GreaterThanOrEqual(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
         {
-            return (x >= y);
+            return (left >= right);
         }
 
-        public static bool LessThan(DoubleTwoDecimalType x, DoubleTwoDecimalType y)
+        public static bool LessThan(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
         {
-            return (x < y);
+            return (left < right);
         }
 
-        public static bool LessThanOrEqual(DoubleTwoDecimalType x, DoubleTwoDecimalType y)
+        public static bool LessThanOrEqual(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
         {
-            return (x <= y);
+            return (left <= right);
         }
 
-        public static bool NotEquals(DoubleTwoDecimalType x, DoubleTwoDecimalType y)
+        public static bool NotEquals(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
         {
-            return (x != y);
+            return (left != right);
         }
 
-        public static DoubleTwoDecimalType Parse(string s)
+        public static DoubleTwoDecimalType Parse(string value)
         {
-            return new DoubleTwoDecimalType(Double.Parse(s));
+            return new DoubleTwoDecimalType(Double.Parse(value));
         }
 
         #endregion
@@ -363,12 +363,18 @@ namespace FacturaE.DataType
 
         public void ReadXml(XmlReader reader)
         {
-            this.value = XmlConvert.ToDouble(reader.ReadString());
+            if (reader != null)
+            {
+                this.value = XmlConvert.ToDouble(reader.ReadString());
+            }
         }
 
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteString(this.ToString());
+            if (writer != null)
+            {
+                writer.WriteString(this.ToString());
+            }
         }
 
         #endregion

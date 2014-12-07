@@ -71,22 +71,22 @@ namespace FacturaE.XAdES
         /// <summary>
         /// Gets the id element.
         /// </summary>
-        /// <param name="doc">The doc.</param>
-        /// <param name="id">The id.</param>
+        /// <param name="document">The doc.</param>
+        /// <param name="idValue">The id.</param>
         /// <returns></returns>
-        public override XmlElement GetIdElement(XmlDocument doc, string id)
+        public override XmlElement GetIdElement(XmlDocument document, string idValue)
         {
-            if (String.IsNullOrEmpty(id))
+            if (String.IsNullOrEmpty(idValue))
             {
                 return null;
             }
 
-            var xmlElement = base.GetIdElement(doc, id);
-            var nsmgr      = XsdSchemas.CreateXadesNamespaceManager(doc);
+            var xmlElement = base.GetIdElement(document, idValue);
+            var nsmgr = XsdSchemas.CreateXadesNamespaceManager(document);
 
             if (xmlElement != null)
             {
-                return XsdSchemas.FixupNamespaces(doc, xmlElement);
+                return XsdSchemas.FixupNamespaces(document, xmlElement);
             }
 
             if (dataObjects.Count > 0)
@@ -95,11 +95,11 @@ namespace FacturaE.XAdES
                 {
                     foreach (DataObject dataObject in this.dataObjects)
                     {
-                        var nodeWithSameId = dataObject.GetXml().SelectNodes(".", nsmgr).FindNode("Id", id);
+                        var nodeWithSameId = dataObject.GetXml().SelectNodes(".", nsmgr).FindNode("Id", idValue);
 
                         if (nodeWithSameId != null)
                         {
-                            return XsdSchemas.FixupNamespaces(doc, nodeWithSameId);
+                            return XsdSchemas.FixupNamespaces(document, nodeWithSameId);
                         }
                     }
                 }                
@@ -108,11 +108,11 @@ namespace FacturaE.XAdES
             // Search the KeyInfo Node
             if (this.KeyInfo != null)
             {
-                var nodeWithSameId = this.KeyInfo.GetXml().SelectNodes(".", nsmgr).FindNode("Id", id);
+                var nodeWithSameId = this.KeyInfo.GetXml().SelectNodes(".", nsmgr).FindNode("Id", idValue);
 
                 if (nodeWithSameId != null)
                 {
-                    return XsdSchemas.FixupNamespaces(doc, nodeWithSameId);
+                    return XsdSchemas.FixupNamespaces(document, nodeWithSameId);
                 }
             }
 
@@ -179,7 +179,7 @@ namespace FacturaE.XAdES
 
             signedSignatureProperties.SetSigningTime()
                                      .SetSigningCertificate(certificate)
-                                     .SetSignaturePolicyIdentifier(certificate);
+                                     .SetSignaturePolicyIdentifier();
 
             return this.SetSignedDataObjectProperties(signedProperties)
                        .SetSignatureDataObject(qualifyingProperties)

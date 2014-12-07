@@ -40,34 +40,34 @@ namespace FacturaE.DataType
 
         #region · Static Methods ·
 
-        public static bool GreatherThan(DoubleUpToEightDecimalType x, DoubleUpToEightDecimalType y)
+        public static bool GreaterThan(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
         {
-            return (x > y);
+            return (left > right);
         }
 
-        public static bool GreatherThanOrEqual(DoubleUpToEightDecimalType x, DoubleUpToEightDecimalType y)
+        public static bool GreaterThanOrEqual(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
         {
-            return (x >= y);
+            return (left >= right);
         }
 
-        public static bool LessThan(DoubleUpToEightDecimalType x, DoubleUpToEightDecimalType y)
+        public static bool LessThan(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
         {
-            return (x < y);
+            return (left < right);
         }
 
-        public static bool LessThanOrEqual(DoubleUpToEightDecimalType x, DoubleUpToEightDecimalType y)
+        public static bool LessThanOrEqual(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
         {
-            return (x <= y);
+            return (left <= right);
         }
 
-        public static bool NotEquals(DoubleUpToEightDecimalType x, DoubleUpToEightDecimalType y)
+        public static bool NotEquals(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
         {
-            return (x != y);
+            return (left != right);
         }
 
-        public static DoubleUpToEightDecimalType Parse(string s)
+        public static DoubleUpToEightDecimalType Parse(string value)
         {
-            return new DoubleUpToEightDecimalType(Double.Parse(s));
+            return new DoubleUpToEightDecimalType(Double.Parse(value));
         }
 
         #endregion
@@ -145,20 +145,20 @@ namespace FacturaE.DataType
 
             return less;
         }
-        
-        public static implicit operator double(DoubleUpToEightDecimalType x)
+
+        public static implicit operator double(DoubleUpToEightDecimalType value)
         {
-            return x.Value;
+            return value.Value;
         }
 
-        public static implicit operator DoubleUpToEightDecimalType(double x)
+        public static implicit operator DoubleUpToEightDecimalType(double value)
         {
-            return new DoubleUpToEightDecimalType(x);
+            return new DoubleUpToEightDecimalType(value);
         }
 
-        public static implicit operator DoubleUpToEightDecimalType(DoubleSixDecimalType x)
+        public static implicit operator DoubleUpToEightDecimalType(DoubleSixDecimalType value)
         {
-            return new DoubleUpToEightDecimalType(x.Value);
+            return new DoubleUpToEightDecimalType(value.Value);
         }
 
         #endregion
@@ -358,12 +358,18 @@ namespace FacturaE.DataType
 
         public void ReadXml(XmlReader reader)
         {
-            this.value = XmlConvert.ToDouble(reader.ReadString());
+            if (reader != null)
+            {
+                this.value = XmlConvert.ToDouble(reader.ReadString());
+            }
         }
 
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteString(this.ToString());
+            if (writer != null)
+            {
+                writer.WriteString(this.ToString());
+            }
         }
 
         #endregion

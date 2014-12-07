@@ -25,6 +25,7 @@ using FacturaE.Xml;
 using Mono.Security;
 using Mono.Security.X509;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -93,6 +94,8 @@ namespace FacturaE.XAdES
         public static SignedSignaturePropertiesType SetSigningCertificate(this SignedSignaturePropertiesType signedSignatureProperties
                                                                         , X509Certificate2                   certificate)
         {
+            Debug.Assert(certificate != null);
+
             signedSignatureProperties.SigningCertificate = new CertIDType[]
             {
                 new CertIDType
@@ -116,8 +119,7 @@ namespace FacturaE.XAdES
             return signedSignatureProperties;
         }
 
-        public static SignaturePolicyIdentifierType SetSignaturePolicyIdentifier(this SignedSignaturePropertiesType signedSignatureProperties
-                                                                               , X509Certificate2                   certificate)
+        public static SignaturePolicyIdentifierType SetSignaturePolicyIdentifier(this SignedSignaturePropertiesType signedSignatureProperties)
         {
             signedSignatureProperties.SignaturePolicyIdentifier = new SignaturePolicyIdentifierType
             {

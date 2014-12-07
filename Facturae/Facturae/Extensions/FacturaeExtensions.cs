@@ -1118,7 +1118,7 @@ namespace FacturaE.Extensions
         {
             XmlDocument document = eInvoice.ToXmlDocument();
             
-            document.Schemas.Add(XsdSchemas.GetSchemaSet(document.NameTable));
+            document.Schemas.Add(XsdSchemas.BuildSchemaSet(document.NameTable));
             document.Validate(XmlValidationEventHandler);
 
             return eInvoice;
@@ -1148,6 +1148,11 @@ namespace FacturaE.Extensions
         /// <returns></returns>
         public static XAdESSignatureVerifier Sign(this Facturae eInvoice, X509Certificate2 certificate)
         {
+            if (certificate == null)
+            {
+                throw new ArgumentNullException("certificate cannot be null");
+            }
+
             return eInvoice.Sign(certificate, (RSA)certificate.PrivateKey);
         }
 
@@ -1160,7 +1165,16 @@ namespace FacturaE.Extensions
         /// <returns></returns>
         public static XAdESSignatureVerifier Sign(this Facturae eInvoice, X509Certificate2 certificate, RSA key)
         {
-            XmlDocument    document  = eInvoice.ToXmlDocument();
+            if (certificate == null)
+            {
+                throw new ArgumentNullException("certificate cannot be null");
+            }
+            if (key == null)
+            {
+                throw new ArgumentNullException("key cannot be null");
+            }
+
+            XmlDocument document = eInvoice.ToXmlDocument();
             XAdESSignedXml signedXml = new XAdESSignedXml(document);
 
             // Set the key to sign

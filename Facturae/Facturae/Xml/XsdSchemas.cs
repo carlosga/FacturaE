@@ -50,21 +50,6 @@ namespace FacturaE.Xml
 
         #endregion
 
-        #region · Members ·
-
-        private static readonly object SyncObject = new object();
-        private static XmlSchemaSet FacturaeSchemaSet;
-
-        #endregion
-
-        #region · Static Constructor ·
-
-        static XsdSchemas()
-        {
-        }
-
-        #endregion
-
         #region · Methods ·
         
         /// <summary>
@@ -96,16 +81,6 @@ namespace FacturaE.Xml
         {
             return now.ToString("yyyy-MM-ddTHH:mm:sszzz");
         }
-
-        /// <summary>
-        /// Converts the current Date & Time to their canonical representation
-        /// </summary>
-        /// <param name="now">Date & Time</param>
-        /// <returns>The canonical representation of the given Date & Time</returns>
-        public static string NowInCanonicalRepresentation()
-        {
-            return DateTimeToCanonicalRepresentation(DateTime.Now);
-        }		
         
         /// <summary>
         /// Creates a new <see cref="XmlNamespaceManager"/> with xades, dsig and facturae namespaces defined.
@@ -177,15 +152,6 @@ namespace FacturaE.Xml
             }
 
             return doc.DocumentElement;
-        }		
-
-        /// <summary>
-        /// Gets the schema set.
-        /// </summary>
-        /// <returns>A instance of <see cref="XmlSchemaSet"/></returns>
-        public static XmlSchemaSet GetSchemaSet()
-        {
-            return GetSchemaSet(null);
         }
 
         /// <summary>
@@ -193,30 +159,26 @@ namespace FacturaE.Xml
         /// </summary>
         /// <param name="nt">The name table.</param>
         /// <returns>A instance of <see cref="XmlSchemaSet"/></returns>
-        public static XmlSchemaSet GetSchemaSet(XmlNameTable nt)
+        public static XmlSchemaSet BuildSchemaSet(XmlNameTable nt)
         {
-            lock (SyncObject)
-            {
-                if (FacturaeSchemaSet == null)
-                {
-                    if (nt != null)
-                    {
-                        FacturaeSchemaSet = new XmlSchemaSet(nt);
-                    }
-                    else
-                    {
-                        FacturaeSchemaSet = new XmlSchemaSet();
-                    }
+            XmlSchemaSet schemaSet = null;
 
-                    FacturaeSchemaSet.XmlResolver = new XmlUrlResolver();
-                    FacturaeSchemaSet.Add(ReadSchema(XmlDsigSchemaResource));
-                    FacturaeSchemaSet.Add(ReadSchema(FacturaeSchemaResource));
-                    FacturaeSchemaSet.Add(ReadSchema(XAdESSchemaResource));
-                    FacturaeSchemaSet.Compile();
-                }
+            if (nt != null)
+            {
+                schemaSet = new XmlSchemaSet(nt);
+            }
+            else
+            {
+                schemaSet = new XmlSchemaSet();
             }
 
-            return FacturaeSchemaSet;
+            schemaSet.XmlResolver = new XmlUrlResolver();
+            schemaSet.Add(ReadSchema(XmlDsigSchemaResource));
+            schemaSet.Add(ReadSchema(FacturaeSchemaResource));
+            schemaSet.Add(ReadSchema(XAdESSchemaResource));
+            schemaSet.Compile();
+
+            return schemaSet;
         }
 
         #endregion
