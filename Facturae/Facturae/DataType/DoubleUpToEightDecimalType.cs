@@ -28,53 +28,53 @@ using System.Xml.Serialization;
 
 namespace FacturaE.DataType
 {
-    public struct DoubleTwoDecimalType 
+    public struct DoubleUpToEightDecimalType
         : IComparable, IFormattable, IConvertible, IComparable<double>, IEquatable<double>, IXmlSerializable
     {
         #region · Static Fields ·
 
-        public static readonly DoubleTwoDecimalType MaxValue = new DoubleTwoDecimalType(Double.MaxValue);
-        public static readonly DoubleTwoDecimalType	MinValue = new DoubleTwoDecimalType(Double.MinValue);
+        public static readonly DoubleUpToEightDecimalType MaxValue = new DoubleUpToEightDecimalType(Double.MaxValue);
+        public static readonly DoubleUpToEightDecimalType MinValue = new DoubleUpToEightDecimalType(Double.MinValue);
 
         #endregion
 
         #region · Static Methods ·
 
-        public static bool GreatherThan(DoubleTwoDecimalType x, DoubleTwoDecimalType y)
+        public static bool GreatherThan(DoubleUpToEightDecimalType x, DoubleUpToEightDecimalType y)
         {
             return (x > y);
         }
 
-        public static bool GreatherThanOrEqual(DoubleTwoDecimalType x, DoubleTwoDecimalType y)
+        public static bool GreatherThanOrEqual(DoubleUpToEightDecimalType x, DoubleUpToEightDecimalType y)
         {
             return (x >= y);
         }
 
-        public static bool LessThan(DoubleTwoDecimalType x, DoubleTwoDecimalType y)
+        public static bool LessThan(DoubleUpToEightDecimalType x, DoubleUpToEightDecimalType y)
         {
             return (x < y);
         }
 
-        public static bool LessThanOrEqual(DoubleTwoDecimalType x, DoubleTwoDecimalType y)
+        public static bool LessThanOrEqual(DoubleUpToEightDecimalType x, DoubleUpToEightDecimalType y)
         {
             return (x <= y);
         }
 
-        public static bool NotEquals(DoubleTwoDecimalType x, DoubleTwoDecimalType y)
+        public static bool NotEquals(DoubleUpToEightDecimalType x, DoubleUpToEightDecimalType y)
         {
             return (x != y);
         }
 
-        public static DoubleTwoDecimalType Parse(string s)
+        public static DoubleUpToEightDecimalType Parse(string s)
         {
-            return new DoubleTwoDecimalType(Double.Parse(s));
+            return new DoubleUpToEightDecimalType(Double.Parse(s));
         }
 
         #endregion
 
         #region · Operators ·
 
-        public static bool operator ==(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
+        public static bool operator ==(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
         {
             bool equals = false;
 
@@ -86,7 +86,7 @@ namespace FacturaE.DataType
             return equals;
         }
 
-        public static bool operator !=(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
+        public static bool operator !=(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
         {
             bool notequals = false;
 
@@ -98,7 +98,7 @@ namespace FacturaE.DataType
             return notequals;
         }
 
-        public static bool operator >(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
+        public static bool operator >(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
         {
             bool greater = false;
 
@@ -110,7 +110,7 @@ namespace FacturaE.DataType
             return greater;
         }
 
-        public static bool operator >=(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
+        public static bool operator >=(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
         {
             bool greater = false;
 
@@ -122,7 +122,7 @@ namespace FacturaE.DataType
             return greater;
         }
 
-        public static bool operator <(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
+        public static bool operator <(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
         {
             bool less = false;
 
@@ -134,7 +134,7 @@ namespace FacturaE.DataType
             return less;
         }
 
-        public static bool operator <=(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
+        public static bool operator <=(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
         {
             bool less = false;
 
@@ -146,24 +146,19 @@ namespace FacturaE.DataType
             return less;
         }
         
-        public static implicit operator double(DoubleTwoDecimalType x)
+        public static implicit operator double(DoubleUpToEightDecimalType x)
         {
             return x.Value;
         }
 
-        public static implicit operator DoubleTwoDecimalType(double x)
+        public static implicit operator DoubleUpToEightDecimalType(double x)
         {
-            return new DoubleTwoDecimalType(x);
+            return new DoubleUpToEightDecimalType(x);
         }
 
-        public static implicit operator DoubleTwoDecimalType(DoubleSixDecimalType x)
+        public static implicit operator DoubleUpToEightDecimalType(DoubleSixDecimalType x)
         {
-            return new DoubleTwoDecimalType(x.Value);
-        }
-
-        public static implicit operator DoubleTwoDecimalType(DoubleUpToEightDecimalType x)
-        {
-            return new DoubleTwoDecimalType(x.Value);
+            return new DoubleUpToEightDecimalType(x.Value);
         }
 
         #endregion
@@ -186,12 +181,12 @@ namespace FacturaE.DataType
 
         #region · Constructors ·
 
-        public DoubleTwoDecimalType(double value)
+        public DoubleUpToEightDecimalType(double value)
         {
             this.value = value;
         }
 
-        public DoubleTwoDecimalType(decimal value)
+        public DoubleUpToEightDecimalType(decimal value)
         {
             this.value = (double)value;
         }
@@ -207,9 +202,9 @@ namespace FacturaE.DataType
 
         public override bool Equals(object obj)
         {
-            if (obj != null && obj is DoubleTwoDecimalType)
+            if (obj != null && obj is DoubleUpToEightDecimalType)
             {
-                return ((DoubleTwoDecimalType)obj) == this;
+                return ((DoubleUpToEightDecimalType)obj) == this;
             }
             else
             {
@@ -242,7 +237,7 @@ namespace FacturaE.DataType
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return this.Value.ToString("F2", formatProvider);
+            return this.Value.ToString("F8", formatProvider);
         }
 
         #endregion

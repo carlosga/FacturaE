@@ -21,19 +21,15 @@
  * THE SOFTWARE.
  */
 
+using FacturaE.XAdES;
 using FacturaE.Xml;
-using Mono.Security;
-using Mono.Security.X509;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
@@ -46,13 +42,6 @@ namespace FacturaE.Extensions
     /// </summary>
     public static class FacturaeExtensions
     {
-        #region · Constants ·
-
-        const string PolicyIdentifier = "http://www.facturae.es/politica_de_firma_formato_facturae/politica_de_firma_formato_facturae_v3_1.pdf";
-        const string PolicyResource   = "FacturaE.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
-
-        #endregion
-
         #region · Static Members ·
 
         static readonly XmlSerializer FacturaeSerializer = new XmlSerializer(typeof(Facturae));
@@ -1157,7 +1146,7 @@ namespace FacturaE.Extensions
         /// <param name="eInvoice">The electronic invoice</param>
         /// <param name="certificate">The certificate</param>
         /// <returns></returns>
-        public static SignedFacturae Sign(this Facturae eInvoice, X509Certificate2 certificate)
+        public static XAdESSignatureVerifier Sign(this Facturae eInvoice, X509Certificate2 certificate)
         {
             return eInvoice.Sign(certificate, (RSA)certificate.PrivateKey);
         }
@@ -1169,31 +1158,23 @@ namespace FacturaE.Extensions
         /// <param name="certificate">The certificate</param>
         /// <param name="key">The RSA Key</param>
         /// <returns></returns>
-        public static SignedFacturae Sign(this Facturae eInvoice, X509Certificate2 certificate, RSA key)
+        public static XAdESSignatureVerifier Sign(this Facturae eInvoice, X509Certificate2 certificate, RSA key)
         {
             XmlDocument    document  = eInvoice.ToXmlDocument();
-            XaDESSignedXml signedXml = new XaDESSignedXml(document);
+            XAdESSignedXml signedXml = new XAdESSignedXml(document);
 
             // Set the key to sign
             signedXml.SigningKey = key;
 
-            // Set nodes identifiers
-            signedXml.Signature.Id  = XsdSchemas.FormatId("Signature");
-            signedXml.SignedInfo.Id = XsdSchemas.FormatId("Signature", "SignedInfo");
-
-            // Add XAdES node
-            signedXml.AddReference(AddXAdESNodes(signedXml, document, certificate));
-
-            // Set the Key Info
-            signedXml.AddReference(SetKeyInfo(signedXml, certificate, (RSA)certificate.PublicKey.Key));
-
-            // Compute Signature
-            signedXml.ComputeSignature();
+            signedXml.SetSignatureInfo()
+                     .SetKeyInfo(certificate, (RSA)certificate.PublicKey.Key)   // Key Info
+                     .SetQualifyingPropertiesObject(certificate)                // Add XAdES references
+                     .ComputeSignature();                                       // Compute Signature
             
             // Import the signed XML node 
-            document.DocumentElement.AppendChild(document.ImportNode(signedXml.GetXml(), true));
-                        
-            return new SignedFacturae(document);
+            document.DocumentElement.AppendChild(document.ImportNode(signedXml.GetXml(), true));            
+
+            return new XAdESSignatureVerifier(document);
         }
 
         #endregion
@@ -1211,192 +1192,6 @@ namespace FacturaE.Extensions
             eInvoice.ToXmlDocument().Save(path);
 
             return eInvoice;
-        }
-
-        #endregion
-
-        #region · Signature Helper Methods ·
-
-        private static Reference SetKeyInfo(XaDESSignedXml signedXml, X509Certificate2 certificate, RSA key)
-        {   
-            signedXml.KeyInfo    = new KeyInfo();
-            signedXml.KeyInfo.Id = XsdSchemas.FormatId("Certificate");
-
-            signedXml.KeyInfo.AddClause(new KeyInfoX509Data(certificate));
-            signedXml.KeyInfo.AddClause(new RSAKeyValue(key));
-
-            return new Reference { Uri = String.Format("#{0}", signedXml.KeyInfo.Id) };
-        }
-
-        private static Reference SetSignatureTransformReference(XaDESSignedXml signedXml, XmlDocument document)
-        {
-            Reference reference = new Reference(String.Empty);
-
-            reference.Id = XsdSchemas.FormatId("Reference", "ID-");
-            reference.AddTransform(new XmlDsigEnvelopedSignatureTransform());
-
-            return reference;
-        }
-
-        #endregion
-
-        #region · XaDES Node Methods ·
-
-        private static Reference AddXAdESNodes(XaDESSignedXml   signedXml
-                                             , XmlDocument      document
-                                             , X509Certificate2 certificate)
-        {
-            var qualifyingPropertiesNode  = AddQualifyingPropertiesNode(signedXml, document);
-            var signedPropertiesNode      = AddSignedPropertiesNode(signedXml, document, qualifyingPropertiesNode);
-            var signedSignatureProperties = AddSignedSignaturePropertiesNode(document, signedPropertiesNode);
-
-            AddSigningTimeNode(document, signedSignatureProperties);
-            AddSigningCertificate(document, signedSignatureProperties, certificate);           
-            AddSignaturePolicyIdentifier(document, signedSignatureProperties, certificate);
-
-            CreateSignatureDataObject(signedXml, document, qualifyingPropertiesNode);
-            CreateSignedDataObjectProperties(signedXml, document, qualifyingPropertiesNode);
-
-            return CreateSignedPropertiesReference(signedXml, signedPropertiesNode);
-        }
-
-        private static Reference CreateSignedPropertiesReference(XaDESSignedXml signedXml, XmlElement signedPropertiesNode)
-        {
-            return new Reference
-            {
-                Id   = XsdSchemas.FormatId("SignedPropertiesID"),
-                Uri  = String.Format("#{0}", signedPropertiesNode.GetAttribute("Id")),
-                Type = "http://uri.etsi.org/01903#SignedProperties"
-            };
-        }
-
-        private static void CreateSignatureDataObject(XaDESSignedXml signedXml, XmlDocument document, XmlElement parent)
-        {
-            var nsMgr      = XsdSchemas.CreateXadesNamespaceManager(document);
-            var dataObject = new DataObject();
-
-            dataObject.Id   = XsdSchemas.FormatId(signedXml.Signature.Id, "Object");
-            dataObject.Data = parent.SelectNodes(".", nsMgr);
-
-            signedXml.AddObject(dataObject);
-        }
-
-        private static void CreateSignedDataObjectProperties(XaDESSignedXml signedXml, XmlDocument document, XmlElement parent)
-        {
-            var reference    = SetSignatureTransformReference(signedXml, document);
-            var signedNode   = document.CreateNode(XsdSchemas.XadesPrefix, "SignedDataObjectProperties", XsdSchemas.XadesNamespaceUrl, parent);
-            var objectFormat = document.CreateNode(XsdSchemas.XadesPrefix, "DataObjectFormat", XsdSchemas.XadesNamespaceUrl, signedNode);
-            
-            // Set the reference to sign
-            signedXml.AddReference(reference);
-
-            var description = document.CreateNode(XsdSchemas.XadesPrefix, "Description", XsdSchemas.XadesNamespaceUrl, objectFormat);
-            var mimeType    = document.CreateNode(XsdSchemas.XadesPrefix, "MimeType", XsdSchemas.XadesNamespaceUrl, objectFormat);
-
-            signedNode.SetAttribute("ObjectReference", "#" + reference.Id);
-
-            description.InnerText = "Description";
-            mimeType.InnerText    = "text/xml";
-        }
-
-        private static XmlElement AddQualifyingPropertiesNode(XaDESSignedXml signedXml, XmlDocument document)
-        {            
-            var result = document.CreateElement(XsdSchemas.XadesPrefix, "QualifyingProperties", XsdSchemas.XadesNamespaceUrl);
-            result.SetAttribute("Target", String.Format("#{0}", signedXml.Signature.Id));          
-            
-            return result;
-        }
-
-        private static XmlElement AddSignedPropertiesNode(XaDESSignedXml signedXml, XmlDocument document, XmlElement qualifyingPropertiesNode)
-        {
-            var signedPropertiesNode = document.CreateNode(XsdSchemas.XadesPrefix, "SignedProperties", XsdSchemas.XadesNamespaceUrl, qualifyingPropertiesNode);
-            
-            signedPropertiesNode.SetAttribute("Id", XsdSchemas.FormatId(signedXml.Signature.Id, "SignedProperties"));
-            
-            return signedPropertiesNode;
-        }
-
-        private static XmlElement AddSignedSignaturePropertiesNode(XmlDocument document, XmlElement propertiesNode)
-        {
-            return document.CreateNode(XsdSchemas.XadesPrefix, "SignedSignatureProperties", XsdSchemas.XadesNamespaceUrl, propertiesNode);
-        }
-
-        private static void AddSigningTimeNode(XmlDocument document, XmlElement signedSignaturePropertiesNode)
-        {
-            document.CreateNode(XsdSchemas.XadesPrefix
-                              , "SigningTime"
-                              , XsdSchemas.NowInCanonicalRepresentation()
-                              , XsdSchemas.XadesNamespaceUrl
-                              , signedSignaturePropertiesNode);
-        }
-
-        private static void AddSigningCertificate(XmlDocument document, XmlElement signedSignatureProperties, X509Certificate2 certificate)
-        {
-            var signingCertificateNode = document.CreateNode(XsdSchemas.XadesPrefix, "SigningCertificate", XsdSchemas.XadesNamespaceUrl, signedSignatureProperties);
-            var certNode 			   = document.CreateNode(XsdSchemas.XadesPrefix, "Cert", XsdSchemas.XadesNamespaceUrl, signingCertificateNode);
-
-            AddCertDigestNode(document, certNode, certificate);
-            AddIssuerSerialNode(document, certNode, certificate);
-        }
-
-        private static void AddCertDigestNode(XmlDocument document, XmlElement certNode, X509Certificate2 certificate)
-        {
-            var certDigestNode = document.CreateNode(XsdSchemas.XadesPrefix, "CertDigest", XsdSchemas.XadesNamespaceUrl, certNode);
-            
-            document.CreateNode(XsdSchemas.XmlDsigPrefix, "DigestMethod", "Algorithm", SignedXml.XmlDsigSHA1Url, SignedXml.XmlDsigNamespaceUrl, certDigestNode);
-
-            var digestValue = certificate.RawData.ComputeSHA1Hash().ToBase64String();
-            
-            document.CreateNode(XsdSchemas.XmlDsigPrefix, "DigestValue", digestValue, SignedXml.XmlDsigNamespaceUrl, certDigestNode);
-        }
-
-        private static void AddIssuerSerialNode(XmlDocument document, XmlElement certNode, X509Certificate2 certificate)
-        {
-            var issuerSerialNode = document.CreateNode(XsdSchemas.XadesPrefix, "IssuerSerial", XsdSchemas.XadesNamespaceUrl, certNode);
-            var issuer           = X501.ToString(new ASN1(certificate.IssuerName.RawData)); // RFC2253 Encoded
-
-            document.CreateNode(XsdSchemas.XmlDsigPrefix, "X509IssuerName", issuer, SignedXml.XmlDsigNamespaceUrl, issuerSerialNode);
-            document.CreateNode(XsdSchemas.XmlDsigPrefix
-                              , "X509SerialNumber"
-                              , Int32.Parse(certificate.SerialNumber, NumberStyles.HexNumber).ToString()
-                              , SignedXml.XmlDsigNamespaceUrl
-                              , issuerSerialNode);
-        }
-        
-        private static void AddSignaturePolicyIdentifier(XmlDocument document, XmlElement signedSignatureProperties, X509Certificate2 certificate)
-        {
-            var signaturePolicyIdentifier = document.CreateNode(XsdSchemas.XadesPrefix, "SignaturePolicyIdentifier", XsdSchemas.XadesNamespaceUrl, signedSignatureProperties);
-            var signaturePolicyId         = document.CreateNode(XsdSchemas.XadesPrefix, "SignaturePolicyId", XsdSchemas.XadesNamespaceUrl, signaturePolicyIdentifier);
-            var policyIdNode 		      = document.CreateNode(XsdSchemas.XadesPrefix, "SigPolicyId", XsdSchemas.XadesNamespaceUrl, signaturePolicyId);
-            var identifierNode 		      = document.CreateNode(XsdSchemas.XadesPrefix, "Identifier", PolicyIdentifier, XsdSchemas.XadesNamespaceUrl, policyIdNode);
-            var descriptionNode           = document.CreateNode(XsdSchemas.XadesPrefix, "Description", "Política de Firma FacturaE v3.1", XsdSchemas.XadesNamespaceUrl, policyIdNode);
-
-            AddSigPolicyHash(document, signaturePolicyId, certificate);
-        }
-
-        private static void AddSigPolicyHash(XmlDocument document, XmlElement signaturePolicyId, X509Certificate2 certificate)
-        {
-            var signaturePolicyIdNode = document.CreateNode(XsdSchemas.XadesPrefix, "SigPolicyHash", XsdSchemas.XadesNamespaceUrl, signaturePolicyId);
-            
-            document.CreateNode(XsdSchemas.XmlDsigPrefix, "DigestMethod", "Algorithm", SignedXml.XmlDsigSHA1Url, SignedXml.XmlDsigNamespaceUrl, signaturePolicyIdNode);
-
-            var digestValue = ReadPolicyFile().ComputeSHA1Hash().ToBase64String();
-            
-            document.CreateNode(XsdSchemas.XmlDsigPrefix, "DigestValue", digestValue, SignedXml.XmlDsigNamespaceUrl, signaturePolicyIdNode);
-        }
-
-        private static byte[] ReadPolicyFile()
-        {
-            Assembly currentAssembly = Assembly.GetExecutingAssembly();
-
-            using (Stream stream = currentAssembly.GetManifestResourceStream(PolicyResource))
-            {
-                byte[] buffer = new byte[stream.Length];
- 
-                stream.Read(buffer, 0, (int)stream.Length);
-            
-                return buffer;
-            }
         }
 
         #endregion
@@ -1427,13 +1222,12 @@ namespace FacturaE.Extensions
             XmlWriterSettings settings = new XmlWriterSettings();
                         
             settings.Encoding = new UTF8Encoding(false);
-            settings.Indent   = true;
             
             using (MemoryStream buffer = new MemoryStream())
             { 
                 using (XmlWriter writer = XmlWriter.Create(buffer, settings))
                 {
-                    FacturaeExtensions.FacturaeSerializer.Serialize(writer, eInvoice, XsdSchemas.CreateXadesSerializerNamespace());
+                    FacturaeSerializer.Serialize(writer, eInvoice, XsdSchemas.CreateXadesSerializerNamespace());
                 }
 
                 return Encoding.UTF8.GetString(buffer.ToArray());

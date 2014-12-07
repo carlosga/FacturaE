@@ -21,6 +21,7 @@
  * THE SOFTWARE.
  */
 
+using FacturaE.XAdES;
 using FacturaE.Xml;
 using System.Xml;
 
@@ -29,7 +30,7 @@ namespace FacturaE
     /// <summary>
     /// Helper class to verify signed invoices signatures.
     /// </summary>
-    public sealed class SignedFacturae
+    public sealed class XAdESSignatureVerifier
     {
         #region · Fields ·
 
@@ -40,17 +41,17 @@ namespace FacturaE
         #region · Constructors ·
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SignedFacturae"/> class.
+        /// Initializes a new instance of the <see cref="XAdESSignatureVerifier"/> class.
         /// </summary>
-        public SignedFacturae()
+        public XAdESSignatureVerifier()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SignedFacturae"/> class with the given <see cref="XmlDocument"/>.
+        /// Initializes a new instance of the <see cref="XAdESSignatureVerifier"/> class with the given <see cref="XmlDocument"/>.
         /// </summary>
         /// <param name="document">Source xml document</param>
-        public SignedFacturae(XmlDocument document)
+        public XAdESSignatureVerifier(XmlDocument document)
         {
             this.signedDocument = document;
         }
@@ -64,7 +65,7 @@ namespace FacturaE
         /// </summary>
         /// <param name="path">The XML file path</param>
         /// <returns>An instance of <see cref="SignedFacturae"/></returns>
-        public SignedFacturae Load(string path)
+        public XAdESSignatureVerifier Load(string path)
         {
             this.signedDocument = new XmlDocument { PreserveWhitespace = true };
             this.signedDocument.Load(path);
@@ -77,7 +78,7 @@ namespace FacturaE
         /// </summary>
         /// <param name="path">The XML document</param>
         /// <returns>An instance of <see cref="SignedFacturae"/></returns>
-        public SignedFacturae Load(XmlDocument document)
+        public XAdESSignatureVerifier Load(XmlDocument document)
         {
             this.signedDocument = document;
 
@@ -89,7 +90,7 @@ namespace FacturaE
         /// </summary>
         /// <param name="path">The target file path</param>
         /// <returns>An instance of <see cref="SignedFacturae"/></returns>
-        public SignedFacturae WriteToFile(string path)
+        public XAdESSignatureVerifier WriteToFile(string path)
         {
             this.signedDocument.Save(path);
 
@@ -106,7 +107,7 @@ namespace FacturaE
         /// <remarks>http://social.msdn.microsoft.com/Forums/hu-HU/netfxbcl/thread/d6a4fe9f-7d2e-419c-ab19-9e57c75ba90f</remarks>
         public bool CheckSignature()
         {
-            XaDESSignedXml      signedXml = new XaDESSignedXml(this.signedDocument);
+            XAdESSignedXml      signedXml = new XAdESSignedXml(this.signedDocument);
             XmlNamespaceManager nsmgr     = XsdSchemas.CreateXadesNamespaceManager(this.signedDocument);
             
             // Load the signature node.

@@ -25,7 +25,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace FacturaE.Extensions
+namespace System
 {
     /// <summary>
     /// Extension methods

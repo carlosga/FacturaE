@@ -31,13 +31,13 @@ namespace FacturaE
     {
         static void Main(string[] args)
         {
-            Facturae         eInvoice = new Facturae();
-            X509Certificate2 cert     = new X509Certificate2(@"Certificates/pj-5m.p12", "1234");
-            SignedFacturae   signed   = null;
-            bool             isValid  = false;
+            Facturae               eInvoice = new Facturae();
+            X509Certificate2       cert     = new X509Certificate2(@"Certificates/pj-5m.p12", "1234");
+            XAdESSignatureVerifier verifier = null;
+            bool                   isValid  = false;
 
             // Create a new facturae invoice & sign it
-            signed = eInvoice
+            verifier = eInvoice
                 .Parties()
                     .Seller()
                         .SetIdentification("00001")
@@ -100,8 +100,8 @@ namespace FacturaE
                 .Sign(cert);
 
             // Check signature
-            isValid = signed.WriteToFile(@"Sample.xml")
-                            .CheckSignature();
+            isValid = verifier.WriteToFile(@"Sample.xml")
+                              .CheckSignature();
 
             System.Console.WriteLine(isValid);
             System.Console.ReadLine();

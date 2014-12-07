@@ -35,8 +35,10 @@ namespace FacturaE.Xml
     internal static class XsdSchemas
     {
         #region · Constants ·
+        
+        // http://www.facturae.es/Facturae/2009/v3.2/Facturae
 
-        public const string FacturaeNamespaceUrl    = "http://www.facturae.es/Facturae/2009/v3.2/Facturae";
+        public const string FacturaeNamespaceUrl    = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae";
         public const string XmlDsigNamespaceUrl     = "http://www.w3.org/2000/09/xmldsig#";
         public const string XadesNamespaceUrl       = "http://uri.etsi.org/01903/v1.3.2#";
         public const string FacturaePrefix          = "fe";
