@@ -7249,13 +7249,6 @@ namespace FacturaE
 
         private object itemField;
 
-        internal PartiesType Parent
-        {
-            get;
-            set;
-        }
-
-
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public TaxIdentificationType TaxIdentification
