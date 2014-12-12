@@ -461,7 +461,6 @@ namespace FacturaE.Extensions
         /// <returns></returns>
         public static Facturae CalculateTotals(this InvoiceType invoice)
         {
-#warning TODO: Simplify this 
             double subsidyAmount = 0;
 
             // Taxes Outputs

@@ -22,6 +22,7 @@
  */
 
 using System;
+using System.Globalization;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
@@ -35,18 +36,16 @@ namespace FacturaE.Xml
     internal static class XsdSchemas
     {
         #region · Constants ·
-        
-        // http://www.facturae.es/Facturae/2009/v3.2/Facturae
 
-        public const string FacturaeNamespaceUrl    = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae";
-        public const string XmlDsigNamespaceUrl     = "http://www.w3.org/2000/09/xmldsig#";
-        public const string XadesNamespaceUrl       = "http://uri.etsi.org/01903/v1.3.2#";
-        public const string FacturaePrefix          = "fe";
-        public const string XmlDsigPrefix           = "ds";
-        public const string XadesPrefix             = "";
-        private const string XmlDsigSchemaResource  = "FacturaE.Schemas.xmldsig-core-schema.xsd";
-        private const string FacturaeSchemaResource = "FacturaE.Schemas.Facturaev3_2.xsd";
-        private const string XAdESSchemaResource    = "FacturaE.Schemas.XAdES.xsd";
+        internal const string FacturaeNamespaceUrl   = "http://www.facturae.es/Facturae/2009/v3.2/Facturae";
+        internal const string XmlDsigNamespaceUrl    = "http://www.w3.org/2000/09/xmldsig#";
+        internal const string XadesNamespaceUrl      = "http://uri.etsi.org/01903/v1.3.2#";
+        internal const string FacturaePrefix         = "fe";
+        internal const string XmlDsigPrefix          = "ds";
+        internal const string XadesPrefix            = "";
+        internal const string XmlDsigSchemaResource  = "FacturaE.Schemas.xmldsig-core-schema.xsd";
+        internal const string FacturaeSchemaResource = "FacturaE.Schemas.Facturaev3_2.xsd";
+        internal const string XAdESSchemaResource    = "FacturaE.Schemas.XAdES.xsd";
 
         #endregion
 
@@ -59,7 +58,7 @@ namespace FacturaE.Xml
         /// <returns>A new identifier</returns>
         public static string FormatId(string firstPart)
         {
-            return String.Format("{0}{1}", firstPart, DateTime.Today.ToString("yyyyMMdd"));
+            return String.Format("{0}{1}", firstPart, DateTime.Today.ToString("yyyyMMdd", CultureInfo.InvariantCulture));
         }
 
         /// <summary>
@@ -69,7 +68,7 @@ namespace FacturaE.Xml
         /// <returns>A new identifier</returns>
         public static string FormatId(string firstPart, string secondPart)
         {
-            return String.Format("{0}-{1}{2}", firstPart, secondPart, DateTime.Today.ToString("yyyyMMdd"));
+            return String.Format("{0}-{1}{2}", firstPart, secondPart, DateTime.Today.ToString("yyyyMMdd", CultureInfo.InvariantCulture));
         }
 
         /// <summary>
@@ -79,7 +78,7 @@ namespace FacturaE.Xml
         /// <returns>A new instance of <see cref="XmlNamespaceManager"/></returns>
         public static XmlNamespaceManager CreateXadesNamespaceManager(XmlDocument document)
         {
-            XmlNamespaceManager nsmgr = new XmlNamespaceManager(document.NameTable);
+            var nsmgr = new XmlNamespaceManager(document.NameTable);
             
             nsmgr.AddNamespace(XsdSchemas.FacturaePrefix, XsdSchemas.FacturaeNamespaceUrl);
             nsmgr.AddNamespace(XsdSchemas.XmlDsigPrefix , XsdSchemas.XmlDsigNamespaceUrl);
@@ -95,7 +94,7 @@ namespace FacturaE.Xml
         /// <returns>A new instance of <see cref="XmlNamespaceManager"/></returns>
         public static XmlSerializerNamespaces CreateXadesSerializerNamespace()
         {
-            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            var ns = new XmlSerializerNamespaces();
 
             ns.Add(XsdSchemas.FacturaePrefix, XsdSchemas.FacturaeNamespaceUrl);
             ns.Add(XsdSchemas.XmlDsigPrefix , XsdSchemas.XmlDsigNamespaceUrl);
@@ -132,11 +131,6 @@ namespace FacturaE.Xml
                         continue;
                     }              
 
-                    //if (attr.Prefix == doc.DocumentElement.Prefix)
-                    //{
-                    //    continue;
-                    //}
-
                     doc.DocumentElement.SetAttributeNode(doc.ImportNode(attr, true) as XmlAttribute);
                 }
             }
@@ -151,16 +145,7 @@ namespace FacturaE.Xml
         /// <returns>A instance of <see cref="XmlSchemaSet"/></returns>
         public static XmlSchemaSet BuildSchemaSet(XmlNameTable nt)
         {
-            XmlSchemaSet schemaSet = null;
-
-            if (nt != null)
-            {
-                schemaSet = new XmlSchemaSet(nt);
-            }
-            else
-            {
-                schemaSet = new XmlSchemaSet();
-            }
+            var schemaSet = new XmlSchemaSet(nt);
 
             schemaSet.XmlResolver = new XmlUrlResolver();
             schemaSet.Add(ReadSchema(XmlDsigSchemaResource));
