@@ -142,7 +142,7 @@ namespace FacturaE.XAdES
             return this;
         }
 
-        public XAdESSignedXml SetKeyInfo(X509Certificate2 certificate, RSA key)
+        public XAdESSignedXml SetKeyInfo(X509Certificate certificate, RSA key)
         {
             this.KeyInfo    = new KeyInfo();
             this.KeyInfo.Id = XsdSchemas.FormatId("Certificate");

@@ -34,8 +34,7 @@ namespace FacturaE.Extensions
 
         internal static XmlElement FindNode(this XmlNodeList nodeList, string attributeName, string value)
         {
-            if (nodeList == null 
-                || nodeList.Count == 0)
+            if (nodeList == null || nodeList.Count == 0)
             {
                 return null;
             }
@@ -61,8 +60,7 @@ namespace FacturaE.Extensions
         {
             var attributeValueInNode = node.GetAttributeValueInNodeOrNull(attributeName);
             
-            if (attributeValueInNode != null 
-                && attributeValueInNode.Equals(value))
+            if (attributeValueInNode != null && attributeValueInNode.Equals(value))
             {
                 return (XmlElement)node;
             }
@@ -72,11 +70,9 @@ namespace FacturaE.Extensions
 
         private static string GetAttributeValueInNodeOrNull(this XmlNode node, string attributeName)
         {
-            var xmlAttributeCollection = node.Attributes;
-            
-            if (xmlAttributeCollection != null)
+            if (node.Attributes != null)
             {
-                var attribute = xmlAttributeCollection[attributeName];
+                var attribute = node.Attributes[attributeName];
             
                 if (attribute != null) 
                 {

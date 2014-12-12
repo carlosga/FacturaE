@@ -323,25 +323,6 @@ namespace Mono.Security
             }
         }
 
-        public ASN1 Element(int index, byte anTag)
-        {
-            try
-            {
-                if ((elist == null) || (index >= elist.Count))
-                    return null;
-
-                ASN1 elm = (ASN1)elist[index];
-                if (elm.Tag == anTag)
-                    return elm;
-                else
-                    return null;
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                return null;
-            }
-        }
-
         public override string ToString()
         {
             StringBuilder hexLine = new StringBuilder();
@@ -362,18 +343,6 @@ namespace Mono.Security
                     hexLine.AppendFormat(Environment.NewLine);
             }
             return hexLine.ToString();
-        }
-
-        public void SaveToFile(string filename)
-        {
-            if (filename == null)
-                throw new ArgumentNullException("filename");
-
-            using (FileStream fs = File.Create(filename))
-            {
-                byte[] data = GetBytes();
-                fs.Write(data, 0, data.Length);
-            }
         }
     }
 }

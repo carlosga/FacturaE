@@ -21,7 +21,6 @@
  * THE SOFTWARE.
  */
 
-using FacturaE.DataType;
 using FacturaE.Extensions;
 using System;
 using System.Security.Cryptography.X509Certificates;
@@ -32,13 +31,11 @@ namespace FacturaE
     {
         static void Main(string[] args)
         {
-            Facturae               eInvoice = new Facturae();
-            X509Certificate2       cert     = new X509Certificate2(@"Certificates/pj-5m.p12", "1234");
-            XAdESSignatureVerifier verifier = null;
-            bool                   isValid  = false;
+            var eInvoice = new Facturae();
+            var cert     = new X509Certificate2(@"Certificates/ANF_PF_Activo.pfx", "12341234");
 
             // Create a new facturae invoice & sign it
-            verifier = eInvoice
+            var isValid = eInvoice
                 .Parties()
                     .Seller()
                         .SetIdentification("00001")
@@ -98,11 +95,9 @@ namespace FacturaE
                                 .CalculateTotals()
                         .CalculateTotals()
                 .CalculateTotals()
-                .Sign(cert);
-
-            // Check signature
-            isValid = verifier.WriteToFile(@"Sample.xml")
-                              .CheckSignature();
+                .Sign(cert)
+                .WriteToFile(@"Sample.xsig")
+                .CheckSignature();
 
             System.Console.WriteLine(isValid);
             System.Console.ReadLine();

@@ -71,17 +71,7 @@ namespace FacturaE.Xml
         {
             return String.Format("{0}-{1}{2}", firstPart, secondPart, DateTime.Today.ToString("yyyyMMdd"));
         }
-        
-        /// <summary>
-        /// Converts a Date & Time to their canonical representation
-        /// </summary>
-        /// <param name="now">Date & Time</param>
-        /// <returns>The canonical representation of the given Date & Time</returns>
-        public static string DateTimeToCanonicalRepresentation(DateTime now)
-        {
-            return now.ToString("yyyy-MM-ddTHH:mm:sszzz");
-        }
-        
+
         /// <summary>
         /// Creates a new <see cref="XmlNamespaceManager"/> with xades, dsig and facturae namespaces defined.
         /// </summary>

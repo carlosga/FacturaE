@@ -44,7 +44,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -71,6 +71,9 @@
     <Compile Include="DataType\DoubleFourDecimalType.cs" />
     <Compile Include="DataType\DoubleSixDecimalType.cs" />
     <Compile Include="DataType\DoubleUpToEightDecimalType.cs" />
+    <None Include="Certificates\ANF_PF_Activo.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Facturaev321.cs" />
     <Compile Include="Facturae.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,7 +81,6 @@
     <Compile Include="Extensions\FacturaeExtensions.cs" />
     <Compile Include="Security\ASN1.cs" />
     <Compile Include="Security\ASN1Convert.cs" />
-    <Compile Include="Security\BitConverterLE.cs" />
     <Compile Include="Security\CryptoConvert.cs" />
     <Compile Include="Security\X501Name.cs" />
     <Compile Include="Security\X520Attributes.cs" />
@@ -118,12 +120,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <EmbeddedResource Include="Policies\politica_de_firma_formato_facturae_v3_1.pdf" />
-    <None Include="Certificates\fc-6y.cer">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Certificates\fc-6y.p12">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <EmbeddedResource Include="Schemas\XAdES.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -137,9 +133,6 @@
   </Target>
   -->
   <ItemGroup>
-    <None Include="Certificates\pj-5m.p12">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="license.txt" />
   </ItemGroup>
   <ItemGroup>

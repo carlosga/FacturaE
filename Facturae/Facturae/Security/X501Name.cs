@@ -396,24 +396,5 @@ namespace Mono.Security.X509
             }
             return sb.ToString();
         }
-
-        static public ASN1 FromString(string rdn)
-        {
-            if (rdn == null)
-                throw new ArgumentNullException("rdn");
-
-            int pos = 0;
-            ASN1 asn1 = new ASN1(0x30);
-            while (pos < rdn.Length)
-            {
-                X520.AttributeTypeAndValue atv = ReadAttribute(rdn, ref pos);
-                atv.Value = ReadValue(rdn, ref pos);
-
-                ASN1 sequence = new ASN1(0x31);
-                sequence.Add(atv.GetASN1());
-                asn1.Add(sequence);
-            }
-            return asn1;
-        }
     }
 }

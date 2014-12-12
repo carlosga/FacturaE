@@ -21,7 +21,6 @@
  * THE SOFTWARE.
  */
 
-using System;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -157,7 +156,6 @@ namespace System
             {
                 return null;
             }
-
 
             StringBuilder hex = new StringBuilder();
 

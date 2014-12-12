@@ -461,14 +461,11 @@ namespace FacturaE.Extensions
         /// <returns></returns>
         public static Facturae CalculateTotals(this InvoiceType invoice)
         {
-            double                   subsidyAmount = 0;
-            List<InvoiceLineTypeTax> rawLineTaxes  = new List<InvoiceLineTypeTax>();
-                                    
-            // Grab raw taxes from invoice lines
-            invoice.Items.ForEach(item => item.TaxesOutputs.ForEach(itax => rawLineTaxes.Add(itax)));
+#warning TODO: Simplify this 
+            double subsidyAmount = 0;
 
             // Taxes Outputs
-            var q = from tax in rawLineTaxes
+            var q = from tax in invoice.Items.SelectMany(x => x.TaxesOutputs)
                     group tax by tax.TaxRate into g
                     select new TaxOutputType
                     {
@@ -492,83 +489,26 @@ namespace FacturaE.Extensions
             invoice.InvoiceTotals = new InvoiceTotalsType();
 
             // Calculate totals
-            invoice.InvoiceTotals.TotalGrossAmount = Math.Round
-            (
-                invoice.Items.Sum(it => it.GrossAmount), 2
-            );
-                        
-            if (invoice.InvoiceTotals.GeneralDiscounts != null)
-            {
-                invoice.InvoiceTotals.GeneralDiscounts.ForEach
-                (
-                    gd => gd.DiscountAmount = Math.Round((invoice.InvoiceTotals.TotalGrossAmount * gd.DiscountRate) / 100, 2)
-                );
+            invoice.InvoiceTotals.TotalGrossAmount = Math.Round(invoice.Items.Sum(it => it.GrossAmount), 2);
 
-                invoice.InvoiceTotals.TotalGeneralDiscounts = Math.Round
-                (
-                    invoice.InvoiceTotals.GeneralDiscounts.Sum(gd => gd.DiscountAmount), 2
-                );
-            }
-            
-            if (invoice.InvoiceTotals.GeneralSurcharges != null)
-            {
-                invoice.InvoiceTotals.GeneralSurcharges.ForEach
-                (
-                    gs => gs.ChargeAmount = Math.Round((invoice.InvoiceTotals.TotalGrossAmount * gs.ChargeRate) / 100, 2)
-                );
+            invoice.CalculateGeneralDiscountTotals();
 
-                invoice.InvoiceTotals.TotalGeneralSurcharges = Math.Round
-                (
-                    invoice.InvoiceTotals.GeneralSurcharges.Sum(gs => gs.ChargeAmount), 2
-                );
-            }
+            invoice.CalculateGeneralSurchargesTotals();
 
             invoice.InvoiceTotals.TotalGrossAmountBeforeTaxes = Math.Round(invoice.InvoiceTotals.TotalGrossAmount      
                                                                          - invoice.InvoiceTotals.TotalGeneralDiscounts 
                                                                          + invoice.InvoiceTotals.TotalGeneralSurcharges, 2);
 
-            if (invoice.InvoiceTotals.PaymentsOnAccount != null)
-            {
-                invoice.InvoiceTotals.TotalPaymentsOnAccount = Math.Round
-                (
-                    invoice.InvoiceTotals.PaymentsOnAccount.Sum(poa => poa.PaymentOnAccountAmount), 2
-                );
-            }
+            invoice.CalculatePaymentsOnAccountTotals();
 
-            // Total de suplidos
-            if (invoice.InvoiceTotals.ReimbursableExpenses != null)
-            {
-                invoice.InvoiceTotals.TotalReimbursableExpenses = Math.Round
-                (
-                    invoice.InvoiceTotals.ReimbursableExpenses.Sum(re => re.ReimbursableExpensesAmount), 2
-                );
-            }
+            invoice.CalculateReimbursableExpensesTotals();
             
             // Total impuestos retenidos.
-            invoice.InvoiceTotals.TotalTaxesWithheld = Math.Round
-            (
-                invoice.Items.Sum
-                (
-                    il => 
-                    {
-                        double total = 0;
-
-                        if (il.TaxesWithheld != null)
-                        {
-                            total = Math.Round(il.TaxesWithheld.Sum(tw => tw.TaxAmount.TotalAmount), 2);
-                        }
-
-                        return total;
-                    }
-                )
-            );
+            invoice.CalculateTotalTaxesWithheldTotals();
 
             // Sum of different fields Tax Amounts + Total Equivalence 
             // Surcharges. Always to two decimal points.
-            invoice.InvoiceTotals.TotalTaxOutputs = Math.Round
-            (
-                invoice.TaxesOutputs.Sum(to => to.TaxAmount.TotalAmount), 2
-            );
+            invoice.InvoiceTotals.TotalTaxOutputs = Math.Round(invoice.CalculateTaxOutputTotal(), 2);
 
             invoice.InvoiceTotals.InvoiceTotal = Math.Round(invoice.InvoiceTotals.TotalGrossAmountBeforeTaxes   
                                                           + invoice.InvoiceTotals.TotalTaxOutputs               
@@ -580,11 +520,7 @@ namespace FacturaE.Extensions
             
             if (invoice.InvoiceTotals.Subsidies != null)
             {
-                // Rate applied to the Invoice Total.
-                invoice.InvoiceTotals.Subsidies.ForEach
-                (
-                    s => s.SubsidyAmount = Math.Round(invoice.InvoiceTotals.InvoiceTotal * s.SubsidyRate / 100, 2)
-                );
+                CalculateSubsidyAmounts(invoice);
 
                 subsidyAmount = Math.Round(invoice.InvoiceTotals.Subsidies.Sum(s => s.SubsidyAmount), 2);
             }
@@ -600,6 +536,96 @@ namespace FacturaE.Extensions
                                                                    + invoice.InvoiceTotals.TotalFinancialExpenses, 2);
 
             return invoice.Parent;
+        }
+
+        private static void CalculateSubsidyAmounts(this InvoiceType invoice)
+        {
+            // Rate applied to the Invoice Total.
+            invoice.InvoiceTotals.Subsidies.ForEach
+            (
+                s => s.SubsidyAmount = Math.Round(invoice.InvoiceTotals.InvoiceTotal * s.SubsidyRate / 100, 2)
+            );
+        }
+
+        private static void CalculateTotalTaxesWithheldTotals(this InvoiceType invoice)
+        {
+            invoice.InvoiceTotals.TotalTaxesWithheld = Math.Round
+            (
+                invoice.Items.Sum
+                (
+                    il =>
+                    {
+                        double total = 0;
+
+                        if (il.TaxesWithheld != null)
+                        {
+                            total = Math.Round(il.TaxesWithheld.Sum(tw => tw.TaxAmount.TotalAmount), 2);
+                        }
+
+                        return total;
+                    }
+                )
+            );
+        }
+
+        private static void CalculateReimbursableExpensesTotals(this InvoiceType invoice)
+        {
+            // Total de suplidos
+            if (invoice.InvoiceTotals.ReimbursableExpenses != null)
+            {
+                invoice.InvoiceTotals.TotalReimbursableExpenses = Math.Round
+                (
+                    invoice.InvoiceTotals.ReimbursableExpenses.Sum(re => re.ReimbursableExpensesAmount), 2
+                );
+            }
+        }
+
+        private static void CalculatePaymentsOnAccountTotals(this InvoiceType invoice)
+        {
+            if (invoice.InvoiceTotals.PaymentsOnAccount != null)
+            {
+                invoice.InvoiceTotals.TotalPaymentsOnAccount = Math.Round
+                (
+                    invoice.InvoiceTotals.PaymentsOnAccount.Sum(poa => poa.PaymentOnAccountAmount), 2
+                );
+            }
+        }
+
+        private static void CalculateGeneralSurchargesTotals(this InvoiceType invoice)
+        {
+            if (invoice.InvoiceTotals.GeneralSurcharges != null)
+            {
+                invoice.InvoiceTotals.GeneralSurcharges.ForEach
+                (
+                    gs => gs.ChargeAmount = Math.Round((invoice.InvoiceTotals.TotalGrossAmount * gs.ChargeRate) / 100, 2)
+                );
+
+                invoice.InvoiceTotals.TotalGeneralSurcharges = Math.Round
+                (
+                    invoice.InvoiceTotals.GeneralSurcharges.Sum(gs => gs.ChargeAmount), 2
+                );
+            }
+        }
+
+        private static void CalculateGeneralDiscountTotals(this InvoiceType invoice)
+        {
+            if (invoice.InvoiceTotals.GeneralDiscounts != null)
+            {
+                invoice.InvoiceTotals.GeneralDiscounts.ForEach
+                (
+                    gd => gd.DiscountAmount = Math.Round((invoice.InvoiceTotals.TotalGrossAmount * gd.DiscountRate) / 100, 2)
+                );
+
+                invoice.InvoiceTotals.TotalGeneralDiscounts = Math.Round
+                (
+                    invoice.InvoiceTotals.GeneralDiscounts.Sum(gd => gd.DiscountAmount), 2
+                );
+            }
+        }
+
+        private static double CalculateTaxOutputTotal(this InvoiceType invoice)
+        {
+            return invoice.TaxesOutputs.Sum(to => to.TaxAmount.TotalAmount);
         }
 
         #endregion
