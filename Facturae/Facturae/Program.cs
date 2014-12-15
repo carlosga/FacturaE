@@ -38,10 +38,8 @@ namespace FacturaE
             var isValid = eInvoice
                 .Seller()
                     .SetIdentification("00001")
-                    .TaxIdentification
-                        .IsResidentInSpain()
-                        .SetIdentificationNumber("555888555")
-                        .Party()
+                    .IsResidentInSpain()
+                    .SetIdentificationNumber("555888555")
                     .IsIndividual()
                         .SetName("JOHN")
                         .SetFirstSurname("DOE")
@@ -54,10 +52,8 @@ namespace FacturaE
                     .Invoice()
                 .Buyer()
                     .SetIdentification("00002")
-                    .TaxIdentification
-                        .IsResidentInSpain()
-                        .SetIdentificationNumber("555888555")
-                        .Party()
+                    .IsResidentInSpain()
+                    .SetIdentificationNumber("555888555")
                     .IsIndividual()
                         .SetName("JOHN")
                         .SetFirstSurname("DOE")

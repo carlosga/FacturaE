@@ -938,10 +938,7 @@ namespace FacturaE
         public BusinessType(Facturae parent)
         {
             this.parent            = parent;
-            this.TaxIdentification = new TaxIdentificationType
-            {
-                Parent = this
-            };
+            this.TaxIdentification = new TaxIdentificationType();
         }
 
         #endregion
@@ -977,23 +974,83 @@ namespace FacturaE
 
             this.Item = individual;
 
-            if (this.TaxIdentification != null)
+            if (this.TaxIdentification.ResidenceTypeCode == ResidenceTypeCodeType.ResidentInSpain)
             {
-                if (this.TaxIdentification.ResidenceTypeCode == ResidenceTypeCodeType.ResidentInSpain)
-                {
-                    AddressType address = new AddressType();
+                AddressType address = new AddressType();
                     
-                    address.CountryCode = CountryType.ESP;
+                address.CountryCode = CountryType.ESP;
                     
-                    individual.Item = address;
-                }
-                else
-                {
-                    individual.Item = new OverseasAddressType();
-                }
+                individual.Item = address;
             }
-  
+            else
+            {
+                individual.Item = new OverseasAddressType();
+            }
+
+            this.TaxIdentification.PersonTypeCode = PersonTypeCodeType.Individual;
+
             return individual;
+        }
+
+        /// <summary>
+        /// Sets the identification number
+        /// </summary>
+        /// <param name="taxIdentification">The tax identification</param>
+        /// <param name="identificationNumber">The identification number</param>
+        /// <returns></returns>
+        public BusinessType SetIdentificationNumber(string identificationNumber)
+        {
+            this.TaxIdentification.TaxIdentificationNumber = identificationNumber;
+  
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the tax identification as a legal entity identification
+        /// </summary>
+        /// <param name="taxIdentification">The tax identification</param>
+        /// <returns></returns>
+        public BusinessType IsLegalEntity()
+        {
+            this.TaxIdentification.PersonTypeCode = PersonTypeCodeType.LegalEntity;
+  
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the tax identification as a foreigner entity identification
+        /// </summary>
+        /// <param name="taxIdentification">The tax identification</param>
+        /// <returns></returns>
+        public BusinessType IsForeigner()
+        {
+            this.TaxIdentification.ResidenceTypeCode = ResidenceTypeCodeType.Foreigner;
+  
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the tax identification as an spain tax identification
+        /// </summary>
+        /// <param name="taxIdentification">The tax identification</param>
+        /// <returns></returns>
+        public BusinessType IsResidentInSpain()
+        {
+            this.TaxIdentification.ResidenceTypeCode = ResidenceTypeCodeType.ResidentInSpain;
+  
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the tax identification as an EU tax identification
+        /// </summary>
+        /// <param name="taxIdentification">The tax identification</param>
+        /// <returns></returns>
+        public BusinessType IsResidentInEU()
+        {
+            this.TaxIdentification.ResidenceTypeCode = ResidenceTypeCodeType.ResidentInEU;
+  
+            return this;
         }
 
         #endregion
@@ -1162,96 +1219,6 @@ namespace FacturaE
             }
 
             return this;
-        }
-
-        #endregion
-    }
-
-    public partial class TaxIdentificationType
-    {
-        #region · TaxIdentificationType Extensions ·
-
-        /// <summary>
-        /// Sets the identification number
-        /// </summary>
-        /// <param name="taxIdentification">The tax identification</param>
-        /// <param name="identificationNumber">The identification number</param>
-        /// <returns></returns>
-        public TaxIdentificationType SetIdentificationNumber(string identificationNumber)
-        {
-            this.TaxIdentificationNumber = identificationNumber;
-  
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the tax identification as a individual entity identification
-        /// </summary>
-        /// <param name="taxIdentification">The tax identification</param>
-        /// <returns></returns>
-        public TaxIdentificationType IsIndividual()
-        {
-            this.PersonTypeCode = PersonTypeCodeType.Individual;
-  
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the tax identification as a legal entity identification
-        /// </summary>
-        /// <param name="taxIdentification">The tax identification</param>
-        /// <returns></returns>
-        public TaxIdentificationType IsLegalEntity()
-        {
-            this.PersonTypeCode = PersonTypeCodeType.LegalEntity;
-  
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the tax identification as a foreigner entity identification
-        /// </summary>
-        /// <param name="taxIdentification">The tax identification</param>
-        /// <returns></returns>
-        public TaxIdentificationType IsForeigner()
-        {
-            this.ResidenceTypeCode = ResidenceTypeCodeType.Foreigner;
-  
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the tax identification as an spain tax identification
-        /// </summary>
-        /// <param name="taxIdentification">The tax identification</param>
-        /// <returns></returns>
-        public TaxIdentificationType IsResidentInSpain()
-        {
-            this.ResidenceTypeCode = ResidenceTypeCodeType.ResidentInSpain;
-  
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the tax identification as an EU tax identification
-        /// </summary>
-        /// <param name="taxIdentification">The tax identification</param>
-        /// <returns></returns>
-        public TaxIdentificationType IsResidentInEU()
-        {
-            this.ResidenceTypeCode = ResidenceTypeCodeType.ResidentInEU;
-  
-            return this;
-        }
-
-        /// <summary>
-        /// Gets the tax identification parent party
-        /// </summary>
-        /// <param name="individual">The individual</param>
-        /// <returns></returns>
-        public BusinessType Party()
-        {
-            return this.Parent;
         }
 
         #endregion

@@ -337,11 +337,6 @@ namespace FacturaE
 
         private string taxIdentificationNumberField;
 
-        internal BusinessType Parent
-        {
-            get;
-            set;
-        }
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public PersonTypeCodeType PersonTypeCode
