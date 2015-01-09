@@ -1005,16 +1005,31 @@ namespace FacturaE
             return this;
         }
 
-        /// <summary>
-        /// Sets the tax identification as a legal entity identification
-        /// </summary>
-        /// <param name="taxIdentification">The tax identification</param>
-        /// <returns></returns>
-        public BusinessType IsLegalEntity()
+        public LegalEntityType IsLegalEntity()
         {
-            this.TaxIdentification.PersonTypeCode = PersonTypeCodeType.LegalEntity;
-  
-            return this;
+            var legalEntity = new LegalEntityType(this);
+
+            this.Item = legalEntity;
+
+            if (this.TaxIdentification != null)
+            {
+                this.TaxIdentification.PersonTypeCode = PersonTypeCodeType.LegalEntity;
+
+                if (this.TaxIdentification.ResidenceTypeCode == ResidenceTypeCodeType.ResidentInSpain)
+                {
+                    AddressType address = new AddressType();
+
+                    address.CountryCode = CountryType.ESP;
+
+                    legalEntity.Item = address;
+                }
+                else
+                {
+                    legalEntity.Item = new OverseasAddressType();
+                }
+            }
+
+            return legalEntity;
         }
 
         /// <summary>
@@ -1052,6 +1067,36 @@ namespace FacturaE
   
             return this;
         }
+
+        /// <summary>
+        /// Adds an administrative centre
+        /// </summary>
+        /// <returns></returns>
+        public AdministrativeCentreType AddAdministrativeCentre()
+        {
+            var centre = new AdministrativeCentreType(this);
+
+            this.AdministrativeCentres = new List<AdministrativeCentreType>();
+            this.AdministrativeCentres.Add(centre);
+
+            if (this.TaxIdentification != null)
+            {
+                if (this.TaxIdentification.ResidenceTypeCode == ResidenceTypeCodeType.ResidentInSpain)
+                {
+                    AddressType address = new AddressType();
+
+                    address.CountryCode = CountryType.ESP;
+
+                    centre.Item = address;
+                }
+                else
+                {
+                    centre.Item = new OverseasAddressType();
+                }
+            }
+
+            return this.AdministrativeCentres.Last();
+        } 
 
         #endregion
     }
@@ -1223,4 +1268,322 @@ namespace FacturaE
 
         #endregion
     }
+
+    public partial class AdministrativeCentreType
+    {
+        #region · Fields ·
+
+        private BusinessType parent;
+
+        #endregion
+
+        #region · Constructors ·
+
+        public AdministrativeCentreType()
+        {
+        }
+
+        public AdministrativeCentreType(BusinessType parent)
+        {
+            this.parent = parent;
+        }
+
+        #endregion
+
+        #region · Public Methods ·
+
+        public BusinessType Party()
+        {
+            return this.parent;
+        }
+
+        public AdministrativeCentreType SetRoleCodeType(string roleCodeType)
+        {
+            RoleTypeCodeType role = RoleTypeCodeType.Item01;
+
+            switch (roleCodeType)
+            {
+                case "02":
+                    role = RoleTypeCodeType.Item02;
+                    break;
+                case "03":
+                    role = RoleTypeCodeType.Item03;
+                    break;
+                case "04":
+                    role = RoleTypeCodeType.Item04;
+                    break;
+                case "05":
+                    role = RoleTypeCodeType.Item05;
+                    break;
+                case "06":
+                    role = RoleTypeCodeType.Item06;
+                    break;
+                case "07":
+                    role = RoleTypeCodeType.Item07;
+                    break;
+                case "08":
+                    role = RoleTypeCodeType.Item08;
+                    break;
+                case "09":
+                    role = RoleTypeCodeType.Item09;
+                    break;
+            }
+
+            this.RoleTypeCode = role;
+            this.RoleTypeCodeSpecified = true;
+
+            return this;
+        }
+
+        public AdministrativeCentreType SetCentreCode(string centreCode)
+        {
+            this.CentreCode = centreCode;
+
+            return this;
+        }
+
+        public AdministrativeCentreType SetCentreDescription(string centreDescription)
+        {
+            this.CentreDescription = centreDescription;
+
+            return this;
+        }
+
+        public AdministrativeCentreType SetFirstSurname(string firstSurname)
+        {
+            this.FirstSurname = firstSurname;
+
+            return this;
+        }
+
+        public AdministrativeCentreType SetLogicalOperationalPoint(string logicalOperationalPoint)
+        {
+            this.LogicalOperationalPoint = logicalOperationalPoint;
+
+            return this;
+        }
+
+        public AdministrativeCentreType SetName(string name)
+        {
+            this.Name = name;
+
+            return this;
+        }
+
+        public AdministrativeCentreType SetPhysicalGLN(string physicalGLN)
+        {
+            this.PhysicalGLN = physicalGLN;
+
+            return this;
+        }
+
+        public AdministrativeCentreType SetSecondSurname(string secondSurname)
+        {
+            this.SecondSurname = secondSurname;
+
+            return this;
+        }
+
+        public AdministrativeCentreType SetAddress(string address)
+        {
+            if (this.Item is AddressType)
+            {
+                ((AddressType)this.Item).Address = address;
+            }
+            else
+            {
+                ((OverseasAddressType)this.Item).Address = address;
+            }
+
+            return this;
+        }
+
+        public AdministrativeCentreType SetPostCode(string postCode)
+        {
+            if (this.Item is AddressType)
+            {
+                ((AddressType)this.Item).PostCode = postCode;
+            }
+            else
+            {
+                ((OverseasAddressType)this.Item).PostCodeAndTown = postCode;
+            }
+
+            return this;
+        }
+
+        public AdministrativeCentreType SetCountryCode(CountryType countryCode)
+        {
+            if (this.Item is AddressType)
+            {
+                ((AddressType)this.Item).CountryCode = countryCode;
+            }
+            else
+            {
+                ((OverseasAddressType)this.Item).CountryCode = countryCode;
+            }
+
+            return this;
+        }
+
+        public AdministrativeCentreType SetTown(string town)
+        {
+            if (this.Item is AddressType)
+            {
+                ((AddressType)this.Item).Town = town;
+            }
+
+            return this;
+        }
+
+        public AdministrativeCentreType SetPostCodeAndTown(string postCodeAndTown)
+        {
+            if (this.Item is OverseasAddressType)
+            {
+                ((OverseasAddressType)this.Item).PostCodeAndTown = postCodeAndTown;
+            }
+
+            return this;
+        }
+
+        public AdministrativeCentreType SetProvince(string province)
+        {
+            if (this.Item is AddressType)
+            {
+                ((AddressType)this.Item).Province = province;
+            }
+            else
+            {
+                ((OverseasAddressType)this.Item).Province = province;
+            }
+
+            return this;
+        }
+
+        #endregion
+    }
+
+    public partial class LegalEntityType
+    {
+        #region · Fields ·
+
+        private BusinessType parent;
+
+        #endregion
+
+        #region · Constructors ·
+
+        public LegalEntityType()
+        {
+
+        }
+
+        public LegalEntityType(BusinessType parent)
+        {
+            this.parent = parent;
+
+        }
+
+        #endregion
+
+        #region · LegalEntity Type Extensions ·
+
+        public BusinessType Party()
+        {
+            return this.parent;
+        }
+
+        public LegalEntityType SetCorporateName(string corporateName)
+        {
+            this.CorporateName = corporateName;
+
+            return this;
+        }
+
+        public LegalEntityType SetTradeName(string tradeName)
+        {
+            this.TradeName = tradeName;
+
+            return this;
+        }
+
+        public LegalEntityType SetAddress(string address)
+        {
+            if (this.Item is AddressType)
+            {
+                ((AddressType)this.Item).Address = address;
+            }
+            else
+            {
+                ((OverseasAddressType)this.Item).Address = address;
+            }
+
+            return this;
+        }
+
+        public LegalEntityType SetPostCode(string postCode)
+        {
+            if (this.Item is AddressType)
+            {
+                ((AddressType)this.Item).PostCode = postCode;
+            }
+            else
+            {
+                ((OverseasAddressType)this.Item).PostCodeAndTown = postCode;
+            }
+
+            return this;
+        }
+
+        public LegalEntityType SetCountryCode(CountryType countryCode)
+        {
+            if (this.Item is AddressType)
+            {
+                ((AddressType)this.Item).CountryCode = countryCode;
+            }
+            else
+            {
+                ((OverseasAddressType)this.Item).CountryCode = countryCode;
+            }
+
+            return this;
+        }
+
+        public LegalEntityType SetTown(string postCode)
+        {
+            if (this.Item is AddressType)
+            {
+                ((AddressType)this.Item).Town = postCode;
+            }
+
+            return this;
+        }
+
+        public LegalEntityType SetPostCodeAndTown(string postCodeAndTown)
+        {
+            if (this.Item is OverseasAddressType)
+            {
+                ((OverseasAddressType)this.Item).PostCodeAndTown = postCodeAndTown;
+            }
+
+            return this;
+        }
+
+        public LegalEntityType SetProvince(string province)
+        {
+            if (this.Item is AddressType)
+            {
+                ((AddressType)this.Item).Province = province;
+            }
+            else
+            {
+                ((OverseasAddressType)this.Item).Province = province;
+            }
+
+            return this;
+        }
+
+        #endregion
+    }
+
 }
