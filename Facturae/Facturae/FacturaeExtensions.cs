@@ -44,7 +44,19 @@ namespace FacturaE
     {
         #region · Static Members ·
 
-        static readonly XmlSerializer FacturaeSerializer = new XmlSerializer(typeof(Facturae));
+        private static readonly XmlSerializer FacturaeSerializer = new XmlSerializer(typeof(Facturae));
+
+        private static void XmlValidationEventHandler(object sender, ValidationEventArgs e)
+        {
+            if (e.Severity == XmlSeverityType.Error)
+            {
+                throw e.Exception;
+            }
+            else
+            {
+                Trace.Write(String.Format("Warning while validating XML '{0}'", e.Message));
+            }
+        }
 
         #endregion
 
@@ -77,10 +89,10 @@ namespace FacturaE
         #region · Facturae Extensions ·
 
         /// <summary>
-        /// Sets the currency code of the electronic invoice
+        /// Sets the currency code of the electronic invoice.
         /// </summary>
-        /// <param name="eInvoice">The electronic invoice</param>
-        /// <param name="currencyCode">The currency code</param>
+        /// <param name="eInvoice">The electronic invoice.</param>
+        /// <param name="currencyCode">The currency code.</param>
         /// <returns></returns>
         public Facturae SetCurrency(CurrencyCodeType currencyCode)
         {
@@ -90,10 +102,10 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the electronic invoice schema version
+        /// Sets the electronic invoice schema version.
         /// </summary>
-        /// <param name="eInvoice">The electronic invoice</param>
-        /// <param name="schemaVersion">The schema version</param>
+        /// <param name="eInvoice">The electronic invoice.</param>
+        /// <param name="schemaVersion">The schema version.</param>
         /// <returns></returns>
         public Facturae SetSchemaVersion(SchemaVersionType schemaVersion)
         {
@@ -103,10 +115,9 @@ namespace FacturaE
         }
         
         /// <summary>
-        /// Sets the electronic invoice issuer
+        /// Sets the electronic invoice issuer.
         /// </summary>
-        /// <param name="eInvoice">The electronic invoice</param>
-        /// <param name="issuerType">The issuer type</param>
+        /// <param name="issuerType">The issuer type.</param>
         /// <returns></returns>
         public Facturae SetIssuer(InvoiceIssuerTypeType issuerType)
         {
@@ -118,8 +129,7 @@ namespace FacturaE
         /// <summary>
         /// Gets the electronic invoice seller
         /// </summary>
-        /// <param name="parties"></param>
-        /// <returns></returns>
+        /// <returns>The seller party.</returns>
         public BusinessType Seller()
         {
             return this.Parties.SellerParty;
@@ -128,17 +138,15 @@ namespace FacturaE
         /// <summary>
         /// Gets the electronic invoice buyer
         /// </summary>
-        /// <param name="parties"></param>
-        /// <returns></returns>
+        /// <returns>The buyer party.</returns>
         public BusinessType Buyer()
         {
             return this.Parties.BuyerParty;
         }
            
         /// <summary>
-        /// Calculates the electronic totals
+        /// Calculates the electronic totals.
         /// </summary>
-        /// <param name="eInvoice">The electronic invoice</param>
         /// <returns></returns>
         public Facturae CalculateTotals()
         {
@@ -156,10 +164,9 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sums the invoice total
+        /// Sums the invoice total.
         /// </summary>
-        /// <param name="eInvoice">The electronic invoice</param>
-        /// <returns>An instance of AmountType</returns>
+        /// <returns>An instance of AmountType.</returns>
         public AmountType SumTotalAmounts()
         {
             return new AmountType
@@ -170,10 +177,9 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sums the electronic invoice outstanding amount
+        /// Sums the electronic invoice outstanding amount.
         /// </summary>
-        /// <param name="eInvoice">The electronic invoice</param>
-        /// <returns>An instance of AmountType</returns>
+        /// <returns>An instance of AmountType.</returns>
         public AmountType SumTotalOutstandingAmount()
         {
             return new AmountType
@@ -184,10 +190,9 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sums the electronic invoice executable amount
+        /// Sums the electronic invoice executable amount.
         /// </summary>
-        /// <param name="eInvoice">The electronic invoice</param>
-        /// <returns>An instance of AmountType</returns>
+        /// <returns>An instance of AmountType.</returns>
         public AmountType SumTotalExecutableAmount()
         {
             return new AmountType
@@ -198,10 +203,9 @@ namespace FacturaE
         }
         
         /// <summary>
-        /// Creates a new invoice
+        /// Creates a new invoice.
         /// </summary>
-        /// <param name="eInvoice"></param>
-        /// <returns></returns>
+        /// <returns>The new invoice.</returns>
         public InvoiceType CreateInvoice()
         {
             var invoice = new InvoiceType
@@ -223,9 +227,8 @@ namespace FacturaE
         #region · XML Validation Extensions ·
 
         /// <summary>
-        /// Validates the electronic invoice XML
+        /// Validates the electronic invoice XML.
         /// </summary>
-        /// <param name="eInvoice">The electronic invoice</param>
         /// <returns></returns>
         public Facturae Validate()
         {
@@ -237,18 +240,6 @@ namespace FacturaE
             return this;
         }
 
-        static void XmlValidationEventHandler(object sender, ValidationEventArgs e)
-        {
-            if (e.Severity == XmlSeverityType.Error)
-            {
-                throw e.Exception;
-            }
-            else
-            {
-                Trace.Write(String.Format("Warning while validating XML '{0}'", e.Message));
-            }
-        }
-
         #endregion
 
         #region · XML Signature Extensions ·
@@ -256,8 +247,7 @@ namespace FacturaE
         /// <summary>
         /// Signs the electronic invoice using the given certificate.
         /// </summary>
-        /// <param name="eInvoice">The electronic invoice</param>
-        /// <param name="certificate">The certificate</param>
+        /// <param name="certificate">The certificate.</param>
         /// <returns></returns>
         public XAdESSignatureVerifier Sign(X509Certificate2 certificate)
         {
@@ -270,12 +260,11 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Signs the electronic invoice using the given certificate & RSA key
+        /// Signs the electronic invoice using the given certificate & RSA key.
         /// </summary>
-        /// <param name="eInvoice">The electronic invoice</param>
-        /// <param name="certificate">The certificate</param>
-        /// <param name="key">The RSA Key</param>
-        /// <returns></returns>
+        /// <param name="certificate">The certificate.</param>
+        /// <param name="key">The RSA Key.</param>
+        /// <returns>The XAdES signature verifier.</returns>
         public XAdESSignatureVerifier Sign(X509Certificate2 certificate, RSA key)
         {
             if (certificate == null)
@@ -309,10 +298,9 @@ namespace FacturaE
         #region · IO Extensions ·
 
         /// <summary>
-        /// Writes the electronic invoice to the given path
+        /// Writes the electronic invoice to the given path.
         /// </summary>
-        /// <param name="eInvoice">The electronic invoice</param>
-        /// <param name="path">The file path</param>
+        /// <param name="path">The file path.</param>
         /// <returns></returns>
         public Facturae WriteToFile(string path)
         {
@@ -360,10 +348,9 @@ namespace FacturaE
         #region · InvoiceType Extensions ·
 
         /// <summary>
-        /// Set the invoice series code
+        /// Set the invoice series code.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
-        /// <param name="seriesCode">The invoice series code</param>
+        /// <param name="seriesCode">The invoice series code.</param>
         /// <returns></returns>
         public InvoiceType SetInvoiceSeries(string seriesCode)
         {
@@ -373,10 +360,9 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice number
+        /// Sets the invoice number.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
-        /// <param name="invoiceNumber">The invoice number</param>
+        /// <param name="invoiceNumber">The invoice number.</param>
         /// <returns></returns>
         public InvoiceType SetInvoiceNumber(string invoiceNumber)
         {
@@ -386,9 +372,8 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice class as a complete invoice
+        /// Sets the invoice class as a complete invoice.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
         /// <returns></returns>
         public InvoiceType IsComplete()
         {
@@ -398,9 +383,8 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice class as a abbreviated invoice
+        /// Sets the invoice class as a abbreviated invoice.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
         /// <returns></returns>
         public InvoiceType IsAbbreviated()
         {
@@ -410,9 +394,8 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice class as a self invoice
+        /// Sets the invoice class as a self invoice.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
         /// <returns></returns>
         public InvoiceType IsSelfInvoice()
         {
@@ -422,9 +405,8 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice class as a original invoice
+        /// Sets the invoice class as a original invoice.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
         /// <returns></returns>
         public InvoiceType IsOriginal()
         {
@@ -434,9 +416,8 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice class as a corrective invoice
+        /// Sets the invoice class as a corrective invoice.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
         /// <returns></returns>
         public InvoiceType IsCorrective()
         {
@@ -446,9 +427,8 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice class as summary of original invoice
+        /// Sets the invoice class as summary of original invoice.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
         /// <returns></returns>
         public InvoiceType IsSummaryOriginal()
         {
@@ -458,9 +438,8 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice class as copy of original invoice
+        /// Sets the invoice class as copy of original invoice.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
         /// <returns></returns>
         public InvoiceType IsCopyOfOriginal()
         {
@@ -470,9 +449,8 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice class as copy of corrective invoice
+        /// Sets the invoice class as copy of corrective invoice.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
         /// <returns></returns>
         public InvoiceType IsCopyOfCorrective()
         {
@@ -482,9 +460,8 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice class as copy of summary invoice
+        /// Sets the invoice class as copy of summary invoice.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
         /// <returns></returns>
         public InvoiceType IsCopyOfSummary()
         {
@@ -494,12 +471,11 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice issue date
+        /// Sets the invoice issue date.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
-        /// <param name="date">The invoice issue date</param>
+        /// <param name="date">The invoice issue date.</param>
         /// <returns></returns>
-        public InvoiceType GiveIssueDate(DateTime date)
+        public InvoiceType SetIssueDate(DateTime date)
         {
             this.InvoiceIssueData.IssueDate = date;
 
@@ -507,10 +483,9 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice operation date
+        /// Sets the invoice operation date.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
-        /// <param name="date">The invoice operation date</param>
+        /// <param name="date">The invoice operation date.</param>
         /// <returns></returns>
         public InvoiceType SetOperationDate(DateTime date)
         {
@@ -520,11 +495,10 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Set the invoice place of issue
+        /// Set the invoice place of issue.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
-        /// <param name="description">The place of issue description</param>
-        /// <param name="postCode">The place of issue post code</param>
+        /// <param name="description">The place of issue description.</param>
+        /// <param name="postCode">The place of issue post code.</param>
         /// <returns></returns>
         public InvoiceType SetPlaceOfIssue(string description, string postCode)
         {
@@ -538,11 +512,10 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoicing period of an invoice
+        /// Sets the invoicing period of an invoice.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
-        /// <param name="startDate">The start date</param>
-        /// <param name="endDate">The end date</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
         /// <returns></returns>
         public InvoiceType SetInvoicingPeriod(DateTime startDate, DateTime endDate)
         {
@@ -556,10 +529,9 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice currency
+        /// Sets the invoice currency.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
-        /// <param name="currency">The invoice currency</param>
+        /// <param name="currency">The invoice currency.</param>
         /// <returns></returns>
         public InvoiceType SetCurrency(CurrencyCodeType currency)
         {
@@ -569,27 +541,26 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice currency exchange rate
+        /// Sets the invoice currency exchange rate.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
-        /// <param name="exchangeRate">The exchange rate</param>
-        /// <param name="exchangeDate">The exchange date</param>
+        /// <param name="exchangeRate">The exchange rate.</param>
+        /// <param name="exchangeDate">The exchange date.</param>
         /// <returns></returns>
         public InvoiceType SetExchangeRate(double exchangeRate, DateTime exchangeDate)
         {
             this.InvoiceIssueData.ExchangeRateDetails = new ExchangeRateDetailsType
             {
-                ExchangeRate = exchangeRate
+                ExchangeRate     = exchangeRate
+              , ExchangeRateDate = exchangeDate
             };
             
             return this;
         }
 
         /// <summary>
-        /// Sets the invoice tax currency
+        /// Sets the invoice tax currency.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
-        /// <param name="taxCurrency">The invoice currency</param>
+        /// <param name="taxCurrency">The invoice currency.</param>
         /// <returns></returns>
         public InvoiceType SetTaxCurrency(CurrencyCodeType taxCurrency)
         {
@@ -599,10 +570,9 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the invoice language
+        /// Sets the invoice language.
         /// </summary>
-        /// <param name="invoice">The invoice</param>
-        /// <param name="language">The invoice language</param>
+        /// <param name="language">The invoice language.</param>
         /// <returns></returns>
         public InvoiceType SetLanguage(LanguageCodeType language)
         {
@@ -611,12 +581,18 @@ namespace FacturaE
             return this;
         }
 
-        public InvoiceLineType AddInvoiceItem(string articleCode, string productDescription)
+        /// <summary>
+        /// Adds a new line to an invoice.
+        /// </summary>
+        /// <param name="productCode">The product code.</param>
+        /// <param name="productDescription">The product description.</param>
+        /// <returns></returns>
+        public InvoiceLineType AddInvoiceItem(string productCode, string productDescription)
         {
             var item = new InvoiceLineType
             {
                 Parent          = this
-              , ArticleCode     = articleCode
+              , ArticleCode     = productCode
               , ItemDescription = productDescription
             };
 
@@ -626,9 +602,8 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Calculates the invoice totals
+        /// Calculates the invoice totals.
         /// </summary>
-        /// <param name="invoice"></param>
         /// <returns></returns>
         public Facturae CalculateTotals()
         {
@@ -685,7 +660,7 @@ namespace FacturaE
                                                        - this.InvoiceTotals.TotalTaxesWithheld, 2);
 
             // Total de gastos financieros
-#warning TODO: Hacer un extension method para que se pueda indicar
+#warning TODO: Implement as an extension method
             this.InvoiceTotals.TotalFinancialExpenses = 0;
             
             if (this.InvoiceTotals.Subsidies != null)
@@ -819,7 +794,7 @@ namespace FacturaE
             return this;
         }
 
-        public InvoiceLineType GiveDiscount(double discountRate)
+        public InvoiceLineType GiveDiscount(double discountRate, string discountReason = "Descuento")
         {
             if (this.DiscountsAndRebates == null)
             {
@@ -829,7 +804,7 @@ namespace FacturaE
             var discount = new DiscountType
             {
                 DiscountRate   = discountRate
-              , DiscountReason = "Descuento"
+              , DiscountReason = discountReason
             };
 
             this.DiscountsAndRebates.Add(discount);
@@ -937,8 +912,8 @@ namespace FacturaE
         /// </summary>
         public BusinessType(Facturae parent)
         {
-            this.parent            = parent;
-            this.TaxIdentification = new TaxIdentificationType();
+            this.parent             = parent;
+            this.TaxIdentification  = new TaxIdentificationType();
         }
 
         #endregion
@@ -951,10 +926,9 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the identification of a invoice business party
+        /// Sets the identification of a invoice business party.
         /// </summary>
-        /// <param name="party">The business party</param>
-        /// <param name="identification">The identification</param>
+        /// <param name="identification">The identification.</param>
         /// <returns></returns>
         public BusinessType SetIdentification(string identification)
         {
@@ -966,9 +940,8 @@ namespace FacturaE
         /// <summary>
         /// Sets an invoice business party as an individual
         /// </summary>
-        /// <param name="party">The business party</param>
         /// <returns></returns>
-        public IndividualType IsIndividual()
+        public IndividualType AsIndividual()
         {
             var individual = new IndividualType { Parent = this };
 
@@ -976,11 +949,7 @@ namespace FacturaE
 
             if (this.TaxIdentification.ResidenceTypeCode == ResidenceTypeCodeType.ResidentInSpain)
             {
-                AddressType address = new AddressType();
-                    
-                address.CountryCode = CountryType.ESP;
-                    
-                individual.Item = address;
+                individual.Item = new AddressType { CountryCode = CountryType.ESP };
             }
             else
             {
@@ -993,10 +962,9 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the identification number
+        /// Sets the identification number.
         /// </summary>
-        /// <param name="taxIdentification">The tax identification</param>
-        /// <param name="identificationNumber">The identification number</param>
+        /// <param name="identificationNumber">The identification number.</param>
         /// <returns></returns>
         public BusinessType SetIdentificationNumber(string identificationNumber)
         {
@@ -1005,7 +973,11 @@ namespace FacturaE
             return this;
         }
 
-        public LegalEntityType IsLegalEntity()
+        /// <summary>
+        /// Sets an invoice business party as a legal entity.
+        /// </summary>
+        /// <returns></returns>
+        public LegalEntityType AsLegalEntity()
         {
             var legalEntity = new LegalEntityType(this);
 
@@ -1017,11 +989,7 @@ namespace FacturaE
 
                 if (this.TaxIdentification.ResidenceTypeCode == ResidenceTypeCodeType.ResidentInSpain)
                 {
-                    AddressType address = new AddressType();
-
-                    address.CountryCode = CountryType.ESP;
-
-                    legalEntity.Item = address;
+                    legalEntity.Item = new AddressType { CountryCode = CountryType.ESP };
                 }
                 else
                 {
@@ -1033,11 +1001,10 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the tax identification as a foreigner entity identification
+        /// Sets the tax identification as a foreigner entity identification.
         /// </summary>
-        /// <param name="taxIdentification">The tax identification</param>
         /// <returns></returns>
-        public BusinessType IsForeigner()
+        public BusinessType AsForeigner()
         {
             this.TaxIdentification.ResidenceTypeCode = ResidenceTypeCodeType.Foreigner;
   
@@ -1045,11 +1012,10 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the tax identification as an spain tax identification
+        /// Sets the tax identification as an spain tax identification.
         /// </summary>
-        /// <param name="taxIdentification">The tax identification</param>
         /// <returns></returns>
-        public BusinessType IsResidentInSpain()
+        public BusinessType AsResidentInSpain()
         {
             this.TaxIdentification.ResidenceTypeCode = ResidenceTypeCodeType.ResidentInSpain;
   
@@ -1057,11 +1023,10 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets the tax identification as an EU tax identification
+        /// Sets the tax identification as an EU tax identification.
         /// </summary>
-        /// <param name="taxIdentification">The tax identification</param>
         /// <returns></returns>
-        public BusinessType IsResidentInEU()
+        public BusinessType AsResidentInEU()
         {
             this.TaxIdentification.ResidenceTypeCode = ResidenceTypeCodeType.ResidentInEU;
   
@@ -1069,25 +1034,25 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Adds an administrative centre
+        /// Adds an administrative centre.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The new administrative centre</returns>
         public AdministrativeCentreType AddAdministrativeCentre()
         {
             var centre = new AdministrativeCentreType(this);
 
-            this.AdministrativeCentres = new List<AdministrativeCentreType>();
+            if (this.AdministrativeCentres == null)
+            {
+                this.AdministrativeCentres = new List<AdministrativeCentreType>();
+            }
+            
             this.AdministrativeCentres.Add(centre);
 
             if (this.TaxIdentification != null)
             {
                 if (this.TaxIdentification.ResidenceTypeCode == ResidenceTypeCodeType.ResidentInSpain)
                 {
-                    AddressType address = new AddressType();
-
-                    address.CountryCode = CountryType.ESP;
-
-                    centre.Item = address;
+                    centre.Item = new AddressType { CountryCode = CountryType.ESP };
                 }
                 else
                 {
@@ -1095,7 +1060,7 @@ namespace FacturaE
                 }
             }
 
-            return this.AdministrativeCentres.Last();
+            return centre;
         } 
 
         #endregion
@@ -1106,9 +1071,8 @@ namespace FacturaE
         #region · Individual Type Extensions ·
 
         /// <summary>
-        /// Gets the individual parent party
+        /// Gets the individual parent party.
         /// </summary>
-        /// <param name="individual">The individual</param>
         /// <returns></returns>
         public BusinessType Party()
         {
@@ -1116,10 +1080,9 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets an individual name
+        /// Sets an individual name.
         /// </summary>
-        /// <param name="individual">The individual</param>
-        /// <param name="name">The individual name</param>
+        /// <param name="name">The individual name.</param>
         /// <returns></returns>
         public IndividualType SetName(string name)
         {
@@ -1129,10 +1092,9 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets an individual first surname
+        /// Sets an individual first surname.
         /// </summary>
-        /// <param name="individual">The individual</param>
-        /// <param name="name">The individual first surname</param>
+        /// <param name="firstSurname">The individual first surname.</param>
         /// <returns></returns>
         public IndividualType SetFirstSurname(string firstSurname)
         {
@@ -1142,10 +1104,9 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets an individual second surname
+        /// Sets an individual second surname.
         /// </summary>
-        /// <param name="individual">The individual</param>
-        /// <param name="name">The individual second surname</param>
+        /// <param name="secondSurname">The individual second surname.</param>
         /// <returns></returns>
         public IndividualType SetSecondSurname(string secondSurname)
         {
@@ -1155,60 +1116,57 @@ namespace FacturaE
         }
 
         /// <summary>
-        /// Sets an individual party address
+        /// Sets an individual party address.
         /// </summary>
-        /// <param name="party">The business party</param>
-        /// <param name="address">The address</param>
+        /// <param name="address">The address.</param>
         /// <returns></returns>
         public IndividualType SetAddress(string address)
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).Address = address;
+                (this.Item as AddressType).Address = address;
             }
             else
             {
-                ((OverseasAddressType)this.Item).Address = address;
+                (this.Item as OverseasAddressType).Address = address;
             }
 
             return this;
         }
 
         /// <summary>
-        /// Sets an individual party post code
+        /// Sets an individual party post code.
         /// </summary>
-        /// <param name="party">The business party</param>
-        /// <param name="address">The post code</param>
+        /// <param name="postCode">The post code.</param>
         /// <returns></returns>
         public IndividualType SetPostCode(string postCode)
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).PostCode = postCode;
+                (this.Item as AddressType).PostCode = postCode;
             }
             else
             {
-                ((OverseasAddressType)this.Item).PostCodeAndTown = postCode;
+                (this.Item as OverseasAddressType).PostCodeAndTown = postCode;
             }
 
             return this;
         }
 
         /// <summary>
-        /// Sets an individual party country code
+        /// Sets an individual party country code.
         /// </summary>
-        /// <param name="party">The business party</param>
-        /// <param name="address">The country code</param>
+        /// <param name="countryCode">The country code.</param>
         /// <returns></returns>
         public IndividualType SetCountryCode(CountryType countryCode)
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).CountryCode = countryCode;
+                (this.Item as AddressType).CountryCode = countryCode;
             }
             else
             {
-                ((OverseasAddressType)this.Item).CountryCode = countryCode;
+                (this.Item as OverseasAddressType).CountryCode = countryCode;
             }
 
             return this;
@@ -1217,50 +1175,47 @@ namespace FacturaE
         /// <summary>
         /// Sets an individual party town
         /// </summary>
-        /// <param name="party">The business party</param>
-        /// <param name="address">The town</param>
+        /// <param name="town">The town</param>
         /// <returns></returns>
-        public IndividualType SetTown(string postCode)
+        public IndividualType SetTown(string town)
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).Town = postCode;
+                (this.Item as AddressType).Town = town;
             }
 
             return this;
         }
 
         /// <summary>
-        /// Sets an individual party post code & town 
+        /// Sets an individual party post code & town.
         /// </summary>
-        /// <param name="party">The business party</param>
-        /// <param name="address">The post code & towm</param>
+        /// <param name="postCodeAndTown">The post code & town.</param>
         /// <returns></returns>
         public IndividualType SetPostCodeAndTown(string postCodeAndTown)
         {
             if (this.Item is OverseasAddressType)
             {
-                ((OverseasAddressType)this.Item).PostCodeAndTown = postCodeAndTown;
+                (this.Item as OverseasAddressType).PostCodeAndTown = postCodeAndTown;
             }
 
             return this;
         }
 
         /// <summary>
-        /// Sets an individual party province
+        /// Sets an individual party province.
         /// </summary>
-        /// <param name="party">The business party</param>
-        /// <param name="address">The province</param>
+        /// <param name="province">The province.</param>
         /// <returns></returns>
         public IndividualType SetProvince(string province)
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).Province = province;
+                (this.Item as AddressType).Province = province;
             }
             else
             {
-                ((OverseasAddressType)this.Item).Province = province;
+                (this.Item as OverseasAddressType).Province = province;
             }
 
             return this;
@@ -1299,37 +1254,44 @@ namespace FacturaE
 
         public AdministrativeCentreType SetRoleCodeType(string roleCodeType)
         {
-            RoleTypeCodeType role = RoleTypeCodeType.Item01;
+            var role = RoleTypeCodeType.Item01;
 
             switch (roleCodeType)
             {
                 case "02":
                     role = RoleTypeCodeType.Item02;
                     break;
+
                 case "03":
                     role = RoleTypeCodeType.Item03;
                     break;
+
                 case "04":
                     role = RoleTypeCodeType.Item04;
                     break;
+
                 case "05":
                     role = RoleTypeCodeType.Item05;
                     break;
+
                 case "06":
                     role = RoleTypeCodeType.Item06;
                     break;
+
                 case "07":
                     role = RoleTypeCodeType.Item07;
                     break;
+
                 case "08":
                     role = RoleTypeCodeType.Item08;
                     break;
+
                 case "09":
                     role = RoleTypeCodeType.Item09;
                     break;
             }
 
-            this.RoleTypeCode = role;
+            this.RoleTypeCode          = role;
             this.RoleTypeCodeSpecified = true;
 
             return this;
@@ -1388,11 +1350,11 @@ namespace FacturaE
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).Address = address;
+                (this.Item as AddressType).Address = address;
             }
             else
             {
-                ((OverseasAddressType)this.Item).Address = address;
+                (this.Item as OverseasAddressType).Address = address;
             }
 
             return this;
@@ -1402,11 +1364,11 @@ namespace FacturaE
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).PostCode = postCode;
+                (this.Item as AddressType).PostCode = postCode;
             }
             else
             {
-                ((OverseasAddressType)this.Item).PostCodeAndTown = postCode;
+                (this.Item as OverseasAddressType).PostCodeAndTown = postCode;
             }
 
             return this;
@@ -1416,11 +1378,11 @@ namespace FacturaE
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).CountryCode = countryCode;
+                (this.Item as AddressType).CountryCode = countryCode;
             }
             else
             {
-                ((OverseasAddressType)this.Item).CountryCode = countryCode;
+                (this.Item as OverseasAddressType).CountryCode = countryCode;
             }
 
             return this;
@@ -1430,7 +1392,7 @@ namespace FacturaE
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).Town = town;
+                (this.Item as AddressType).Town = town;
             }
 
             return this;
@@ -1440,7 +1402,7 @@ namespace FacturaE
         {
             if (this.Item is OverseasAddressType)
             {
-                ((OverseasAddressType)this.Item).PostCodeAndTown = postCodeAndTown;
+                (this.Item as OverseasAddressType).PostCodeAndTown = postCodeAndTown;
             }
 
             return this;
@@ -1450,7 +1412,7 @@ namespace FacturaE
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).Province = province;
+                (this.Item as AddressType).Province = province;
             }
             else
             {
@@ -1475,13 +1437,11 @@ namespace FacturaE
 
         public LegalEntityType()
         {
-
         }
 
         public LegalEntityType(BusinessType parent)
         {
             this.parent = parent;
-
         }
 
         #endregion
@@ -1511,11 +1471,11 @@ namespace FacturaE
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).Address = address;
+                (this.Item as AddressType).Address = address;
             }
             else
             {
-                ((OverseasAddressType)this.Item).Address = address;
+                (this.Item as OverseasAddressType).Address = address;
             }
 
             return this;
@@ -1525,11 +1485,11 @@ namespace FacturaE
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).PostCode = postCode;
+                (this.Item as AddressType).PostCode = postCode;
             }
             else
             {
-                ((OverseasAddressType)this.Item).PostCodeAndTown = postCode;
+                (this.Item as OverseasAddressType).PostCodeAndTown = postCode;
             }
 
             return this;
@@ -1539,11 +1499,11 @@ namespace FacturaE
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).CountryCode = countryCode;
+                (this.Item as AddressType).CountryCode = countryCode;
             }
             else
             {
-                ((OverseasAddressType)this.Item).CountryCode = countryCode;
+                (this.Item as OverseasAddressType).CountryCode = countryCode;
             }
 
             return this;
@@ -1553,7 +1513,7 @@ namespace FacturaE
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).Town = postCode;
+                (this.Item as AddressType).Town = postCode;
             }
 
             return this;
@@ -1563,7 +1523,7 @@ namespace FacturaE
         {
             if (this.Item is OverseasAddressType)
             {
-                ((OverseasAddressType)this.Item).PostCodeAndTown = postCodeAndTown;
+                (this.Item as OverseasAddressType).PostCodeAndTown = postCodeAndTown;
             }
 
             return this;
@@ -1573,11 +1533,11 @@ namespace FacturaE
         {
             if (this.Item is AddressType)
             {
-                ((AddressType)this.Item).Province = province;
+                (this.Item as AddressType).Province = province;
             }
             else
             {
-                ((OverseasAddressType)this.Item).Province = province;
+                (this.Item as OverseasAddressType).Province = province;
             }
 
             return this;
@@ -1585,5 +1545,4 @@ namespace FacturaE
 
         #endregion
     }
-
 }

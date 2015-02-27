@@ -21,7 +21,6 @@
  * THE SOFTWARE.
  */
 
-using FacturaE.Extensions;
 using System;
 using System.Security.Cryptography.X509Certificates;
 
@@ -38,9 +37,9 @@ namespace FacturaE
             var isValid = eInvoice
                 .Seller()
                     .SetIdentification("00001")
-                    .IsResidentInSpain()
+                    .AsResidentInSpain()
                     .SetIdentificationNumber("555888555")
-                    .IsIndividual()
+                    .AsIndividual()
                         .SetName("JOHN")
                         .SetFirstSurname("DOE")
                         .SetAddress("8585 FIRST STREET")
@@ -52,8 +51,16 @@ namespace FacturaE
                     .Invoice()
                 .Buyer()
                     .SetIdentification("00002")
-                    .IsResidentInSpain()
+                    .AsResidentInSpain()
                     .SetIdentificationNumber("555888555")
+                    .AsLegalEntity()
+                        .SetCorporateName("JOHN")
+                        .SetAddress("8585 FIRST STREET")
+                        .SetProvince("MADRID")
+                        .SetTown("MADRID")
+                        .SetPostCode("99900")
+                        .SetCountryCode(CountryType.ESP)
+                    .Party()
                     .AddAdministrativeCentre()
                         .SetCentreCode("1")
                         .SetRoleCodeType("02")
@@ -64,14 +71,6 @@ namespace FacturaE
                         .SetTown("MADRID")
                         .SetPostCode("99900")
                         .SetCountryCode(CountryType.ESP)
-                    .Party()
-                        .IsLegalEntity()
-                            .SetCorporateName("JOHN")
-                            .SetAddress("8585 FIRST STREET")
-                            .SetProvince("MADRID")
-                            .SetTown("MADRID")
-                            .SetPostCode("99900")
-                            .SetCountryCode(CountryType.ESP)
                    .Party()
                 .Invoice()
                 .CreateInvoice()
@@ -85,9 +84,9 @@ namespace FacturaE
                     .SetInvoiceSeries("0")
                     .SetInvoiceNumber("1000")
                     .AddInvoiceItem("XX", "XX")
-                        .GiveQuantity(1)
+                        .GiveQuantity(1.0)
                         .GiveUnitPriceWithoutTax(100.01)
-                        .GiveDiscount(10.01)
+                        .GiveDiscount(10.01, "Line Discount")
                         .GiveTax(18.00)
                         .CalculateTotals()
                     .AddInvoiceItem("XXX", "XXX")
