@@ -111,7 +111,7 @@ namespace FacturaE.XAdES
                   , IssuerSerial = new XAdES.X509IssuerSerialType
                     {
                         X509IssuerName   = X501.ToString(new ASN1(certificate.IssuerName.RawData)) // RFC2253 Encoded
-                      , X509SerialNumber = Int32.Parse(certificate.SerialNumber, NumberStyles.HexNumber).ToString()
+                      , X509SerialNumber = Int64.Parse(certificate.SerialNumber, NumberStyles.HexNumber).ToString()
                     }
                 }
             };

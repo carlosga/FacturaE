@@ -72,11 +72,11 @@
     <Compile Include="DataType\DoubleFourDecimalType.cs" />
     <Compile Include="DataType\DoubleSixDecimalType.cs" />
     <Compile Include="DataType\DoubleUpToEightDecimalType.cs" />
-    <None Include="Certificates\ANF_PF_Activo.pfx">
+    <None Include="Certificates\PFActivoFirSHA256.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Facturaev321.cs" />
-    <Compile Include="Facturae.cs" />
+    <Compile Include="Facturaev321.cs" />
+    <None Include="Facturae.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="FacturaeExtensions.cs" />
@@ -137,9 +137,9 @@
     <None Include="license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Schemas\Facturaev3_2_1.xsd">
+    <EmbeddedResource Include="Schemas\Facturaev3_2_1.xsd">
       <SubType>Designer</SubType>
-    </None>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

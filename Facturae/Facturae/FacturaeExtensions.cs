@@ -70,7 +70,7 @@ namespace FacturaE
             this.FileHeader = new FileHeaderType
             {
                 Batch         = new BatchType()
-              , SchemaVersion = SchemaVersionType.Item32
+              , SchemaVersion = SchemaVersionType.Item321
             };
             this.Parties = new PartiesType
             {

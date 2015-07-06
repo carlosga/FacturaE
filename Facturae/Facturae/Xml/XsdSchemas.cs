@@ -37,14 +37,14 @@ namespace FacturaE.Xml
     {
         #region · Constants ·
 
-        internal const string FacturaeNamespaceUrl   = "http://www.facturae.es/Facturae/2009/v3.2/Facturae";
+        internal const string FacturaeNamespaceUrl   = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae";
         internal const string XmlDsigNamespaceUrl    = "http://www.w3.org/2000/09/xmldsig#";
         internal const string XadesNamespaceUrl      = "http://uri.etsi.org/01903/v1.3.2#";
         internal const string FacturaePrefix         = "fe";
         internal const string XmlDsigPrefix          = "ds";
         internal const string XadesPrefix            = "";
         internal const string XmlDsigSchemaResource  = "FacturaE.Schemas.xmldsig-core-schema.xsd";
-        internal const string FacturaeSchemaResource = "FacturaE.Schemas.Facturaev3_2.xsd";
+        internal const string FacturaeSchemaResource = "FacturaE.Schemas.Facturaev3_2_1.xsd";
         internal const string XAdESSchemaResource    = "FacturaE.Schemas.XAdES.xsd";
 
         #endregion

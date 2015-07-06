@@ -3737,7 +3737,7 @@ namespace FacturaE
 
         private List<ReimbursableExpensesType> reimbursableExpensesField;
 
-        private DoubleUpToEightDecimalType totalFinancialExpensesField;
+        private DoubleTwoDecimalType totalFinancialExpensesField;
 
         private bool totalFinancialExpensesFieldSpecified;
 
@@ -3978,7 +3978,7 @@ namespace FacturaE
         /// Always to two decimal points.
         /// </summary>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TotalFinancialExpenses
+        public DoubleTwoDecimalType TotalFinancialExpenses
         {
             get
             {

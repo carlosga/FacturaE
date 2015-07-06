@@ -31,7 +31,7 @@ namespace FacturaE
         static void Main(string[] args)
         {
             var eInvoice = new Facturae();
-            var cert     = new X509Certificate2(@"Certificates/ANF_PF_Activo.pfx", "12341234");
+            var cert     = new X509Certificate2(@"Certificates/PFActivoFirSHA256.pfx", "12341234");
 
             // Create a new facturae invoice & sign it
             var isValid = eInvoice
