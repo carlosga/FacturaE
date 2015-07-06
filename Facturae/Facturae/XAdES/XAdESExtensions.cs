@@ -85,7 +85,6 @@ namespace FacturaE.XAdES
 
         public static SignedSignaturePropertiesType SetSigningTime(this SignedSignaturePropertiesType signedSignatureProperties)
         {
-            // signedSignatureProperties.SigningTime = XsdSchemas.NowInCanonicalRepresentation();
             signedSignatureProperties.SigningTime = DateTime.Now;
 
             return signedSignatureProperties;
