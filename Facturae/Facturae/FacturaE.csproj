@@ -75,8 +75,7 @@
     <None Include="Certificates\PFActivoFirSHA256.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Compile Include="Facturaev321.cs" />
-    <None Include="Facturae.cs" />
+    <Compile Include="Facturae.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="FacturaeExtensions.cs" />
@@ -94,7 +93,6 @@
     <Compile Include="Extensions\ArrayExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Schemas\Facturaev3_2.xsd" />
     <EmbeddedResource Include="Schemas\xmldsig-core-schema.xsd" />
   </ItemGroup>
   <ItemGroup>
