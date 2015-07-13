@@ -85,7 +85,16 @@ namespace FacturaE.XAdES
 
         public static SignedSignaturePropertiesType SetSigningTime(this SignedSignaturePropertiesType signedSignatureProperties)
         {
-            signedSignatureProperties.SigningTime = DateTime.Now;
+            signedSignatureProperties.SigningTime          = DateTime.Now;
+            signedSignatureProperties.SigningTimeSpecified = true;
+
+            return signedSignatureProperties;
+        }
+
+        public static SignedSignaturePropertiesType SetSignerRole(this SignedSignaturePropertiesType signedSignatureProperties
+                                                                , SignerRoleType                     signerRole)
+        {
+            signedSignatureProperties.SignerRole = signerRole;
 
             return signedSignatureProperties;
         }

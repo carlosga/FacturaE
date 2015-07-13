@@ -41,6 +41,7 @@ namespace FacturaE.XAdES
         #region · Fields ·
 
         private readonly List<DataObject> dataObjects = new List<DataObject>();
+        private SignerRoleType            signerRole  = null;
 
         #endregion
 
@@ -142,7 +143,14 @@ namespace FacturaE.XAdES
             return this;
         }
 
-        public XAdESSignedXml SetKeyInfo(X509Certificate certificate, RSA key)
+        public XAdESSignedXml SetSignerRole(SignerRoleType signerRole)
+        {
+            this.signerRole = signerRole;
+
+            return this;
+        }
+
+        public XAdESSignedXml SetKeyInfo(X509Certificate2 certificate, RSA key)
         {
             this.KeyInfo    = new KeyInfo();
             this.KeyInfo.Id = XsdSchemas.FormatId("Certificate");
@@ -151,6 +159,8 @@ namespace FacturaE.XAdES
             this.KeyInfo.AddClause(new RSAKeyValue(key));
 
             this.AddReference(new Reference { Uri = String.Format("#{0}", this.KeyInfo.Id) });
+
+            this.SetQualifyingPropertiesObject(certificate);
 
             return this;
         }
@@ -171,13 +181,14 @@ namespace FacturaE.XAdES
 
         #region · XAdES Methods ·
 
-        public XAdESSignedXml SetQualifyingPropertiesObject(X509Certificate2 certificate)
+        private XAdESSignedXml SetQualifyingPropertiesObject(X509Certificate2 certificate)
         {
             var qualifyingProperties      = CreateQualifyingProperties();
             var signedProperties          = qualifyingProperties.CreateSignedProperties(this);
             var signedSignatureProperties = signedProperties.CreateSignedSignatureProperties();
 
             signedSignatureProperties.SetSigningTime()
+                                     .SetSignerRole(this.signerRole)
                                      .SetSigningCertificate(certificate)
                                      .SetSignaturePolicyIdentifier();
 

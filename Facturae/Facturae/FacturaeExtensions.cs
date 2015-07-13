@@ -251,12 +251,7 @@ namespace FacturaE
         /// <returns></returns>
         public XAdESSignatureVerifier Sign(X509Certificate2 certificate)
         {
-            if (certificate == null)
-            {
-                throw new ArgumentNullException("certificate cannot be null");
-            }
-
-            return this.Sign(certificate, (RSA)certificate.PrivateKey);
+            return this.Sign(certificate, null);
         }
 
         /// <summary>
@@ -264,8 +259,26 @@ namespace FacturaE
         /// </summary>
         /// <param name="certificate">The certificate.</param>
         /// <param name="key">The RSA Key.</param>
+        /// <param name="signerRole"></param>
         /// <returns>The XAdES signature verifier.</returns>
-        public XAdESSignatureVerifier Sign(X509Certificate2 certificate, RSA key)
+        public XAdESSignatureVerifier Sign(X509Certificate2 certificate, SignerRoleType signerRole)
+        {
+            if (certificate == null)
+            {
+                throw new ArgumentNullException("certificate cannot be null");
+            }
+
+            return this.Sign(certificate, (RSA)certificate.PrivateKey, signerRole);
+        }
+
+        /// <summary>
+        /// Signs the electronic invoice using the given certificate & RSA key.
+        /// </summary>
+        /// <param name="certificate">The certificate.</param>
+        /// <param name="key">The RSA Key.</param>
+        /// <param name="signerRole"></param>
+        /// <returns>The XAdES signature verifier.</returns>
+        private XAdESSignatureVerifier Sign(X509Certificate2 certificate, RSA key, SignerRoleType signerRole)
         {
             if (certificate == null)
             {
@@ -283,8 +296,8 @@ namespace FacturaE
             signedXml.SigningKey = key;
 
             signedXml.SetSignatureInfo()
+                     .SetSignerRole(signerRole)                                 // XAdES Signer Role
                      .SetKeyInfo(certificate, (RSA)certificate.PublicKey.Key)   // Key Info
-                     .SetQualifyingPropertiesObject(certificate)                // Add XAdES references
                      .ComputeSignature();                                       // Compute Signature
             
             // Import the signed XML node 
