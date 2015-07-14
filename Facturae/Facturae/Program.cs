@@ -21,9 +21,9 @@
  * THE SOFTWARE.
  */
 
+using FacturaE.XAdES;
 using System;
 using System.Security.Cryptography.X509Certificates;
-using FacturaE.XAdES;
 
 namespace FacturaE
 {
@@ -99,7 +99,7 @@ namespace FacturaE
                     .CalculateTotals()
                 .CalculateTotals()
                 .Validate()
-                .Sign(cert)
+                .Sign(cert, ClaimedRole.Supplier)
                 .WriteToFile(@"Sample.xsig")
                 .CheckSignature();
 

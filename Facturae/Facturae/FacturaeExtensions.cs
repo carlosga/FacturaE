@@ -251,7 +251,7 @@ namespace FacturaE
         /// <returns></returns>
         public XAdESSignatureVerifier Sign(X509Certificate2 certificate)
         {
-            return this.Sign(certificate, null);
+            return this.Sign(certificate, ClaimedRole.Supplier);
         }
 
         /// <summary>
@@ -259,9 +259,9 @@ namespace FacturaE
         /// </summary>
         /// <param name="certificate">The certificate.</param>
         /// <param name="key">The RSA Key.</param>
-        /// <param name="signerRole"></param>
+        /// <param name="signerRole">Rol del "firmante" de la factura</param>
         /// <returns>The XAdES signature verifier.</returns>
-        public XAdESSignatureVerifier Sign(X509Certificate2 certificate, SignerRoleType signerRole)
+        public XAdESSignatureVerifier Sign(X509Certificate2 certificate, ClaimedRole signerRole)
         {
             if (certificate == null)
             {
@@ -276,9 +276,9 @@ namespace FacturaE
         /// </summary>
         /// <param name="certificate">The certificate.</param>
         /// <param name="key">The RSA Key.</param>
-        /// <param name="signerRole"></param>
+        /// <param name="signerRole">Rol del "firmante" de la factura</param>
         /// <returns>The XAdES signature verifier.</returns>
-        private XAdESSignatureVerifier Sign(X509Certificate2 certificate, RSA key, SignerRoleType signerRole)
+        private XAdESSignatureVerifier Sign(X509Certificate2 certificate, RSA key, ClaimedRole signerRole)
         {
             if (certificate == null)
             {

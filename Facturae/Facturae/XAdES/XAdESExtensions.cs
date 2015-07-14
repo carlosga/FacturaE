@@ -25,6 +25,7 @@ using FacturaE.Xml;
 using Mono.Security;
 using Mono.Security.X509;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -92,9 +93,12 @@ namespace FacturaE.XAdES
         }
 
         public static SignedSignaturePropertiesType SetSignerRole(this SignedSignaturePropertiesType signedSignatureProperties
-                                                                , SignerRoleType                     signerRole)
+                                                                , ClaimedRole                        signerRole)
         {
-            signedSignatureProperties.SignerRole = signerRole;
+            signedSignatureProperties.SignerRole = new SignerRoleType
+            {
+                ClaimedRoles = new List<ClaimedRole> { signerRole }
+            };
 
             return signedSignatureProperties;
         }

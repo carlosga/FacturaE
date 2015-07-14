@@ -41,7 +41,7 @@ namespace FacturaE.XAdES
         #region · Fields ·
 
         private readonly List<DataObject> dataObjects = new List<DataObject>();
-        private SignerRoleType            signerRole  = null;
+        private ClaimedRole               signerRole;
 
         #endregion
 
@@ -143,7 +143,7 @@ namespace FacturaE.XAdES
             return this;
         }
 
-        public XAdESSignedXml SetSignerRole(SignerRoleType signerRole)
+        public XAdESSignedXml SetSignerRole(ClaimedRole signerRole)
         {
             this.signerRole = signerRole;
 
@@ -163,18 +163,6 @@ namespace FacturaE.XAdES
             this.SetQualifyingPropertiesObject(certificate);
 
             return this;
-        }
-
-        public Reference SetSignatureTransformReference()
-        {
-            Reference reference = new Reference(String.Empty);
-
-            reference.Id = XsdSchemas.FormatId("Reference", "ID-");
-            reference.AddTransform(new XmlDsigEnvelopedSignatureTransform());
-
-            this.AddReference(reference);
-
-            return reference;
         }
 
         #endregion
@@ -243,6 +231,18 @@ namespace FacturaE.XAdES
             };
 
             return this;
+        }
+
+        private Reference SetSignatureTransformReference()
+        {
+            Reference reference = new Reference(String.Empty);
+
+            reference.Id = XsdSchemas.FormatId("Reference", "ID-");
+            reference.AddTransform(new XmlDsigEnvelopedSignatureTransform());
+
+            this.AddReference(reference);
+
+            return reference;
         }
 
         private QualifyingPropertiesType CreateQualifyingProperties()
