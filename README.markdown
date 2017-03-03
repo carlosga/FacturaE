@@ -1,8 +1,15 @@
-### Facturae
+# FacturaE
 
-FacturaE (http://www.facturae.gob.es/) electronic invoice signing using pure C#
+[**FacturaE**](http://www.facturae.gob.es/) electronic invoice signing using pure C#
 
-It uses some code from mono project (http://www.mono-project.com/)
+## Authors
 
-* License.
-    * [**MIT License**](https://opensource.org/licenses/MIT)
+* **Carlos Guzmán Alvarez** - *Initial work* - [carlosga](https://gitlab.com/carlosga)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+## Acknowledgments
+
+* It uses some code from mono project (http://www.mono-project.com/)
