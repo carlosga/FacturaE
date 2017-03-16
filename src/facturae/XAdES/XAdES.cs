@@ -15,8 +15,6 @@ using System.Collections.Generic;
 
 namespace FacturaE.XAdES
 {
-
-
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
     [System.SerializableAttribute()]

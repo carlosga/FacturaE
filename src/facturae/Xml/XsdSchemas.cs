@@ -1,25 +1,5 @@
-﻿/* FacturaE - The MIT License (MIT)
- * 
- * Copyright (c) 2012-2014 Carlos Guzmán Álvarez
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+﻿// Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Globalization;
@@ -35,8 +15,6 @@ namespace FacturaE.Xml
     /// </summary>
     internal static class XsdSchemas
     {
-        #region · Constants ·
-
         internal const string FacturaeNamespaceUrl   = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae";
         internal const string XmlDsigNamespaceUrl    = "http://www.w3.org/2000/09/xmldsig#";
         internal const string XadesNamespaceUrl      = "http://uri.etsi.org/01903/v1.3.2#";
@@ -46,19 +24,15 @@ namespace FacturaE.Xml
         internal const string XmlDsigSchemaResource  = "FacturaE.Schemas.xmldsig-core-schema.xsd";
         internal const string FacturaeSchemaResource = "FacturaE.Schemas.Facturaev3_2_1.xsd";
         internal const string XAdESSchemaResource    = "FacturaE.Schemas.XAdES.xsd";
-
-        #endregion
-
-        #region · Methods ·
-        
+       
         /// <summary>
         /// Formats a new identifier with the given string
         /// </summary>
         /// <param name="firstPart">First part of the identifier to be generated</param>
         /// <returns>A new identifier</returns>
-        public static string FormatId(string firstPart)
+        internal static string FormatId(string firstPart)
         {
-            return String.Format("{0}{1}", firstPart, DateTime.Today.ToString("yyyyMMdd", CultureInfo.InvariantCulture));
+            return $"{firstPart}{DateTime.Today.ToString("yyyyMMdd", CultureInfo.InvariantCulture)}";
         }
 
         /// <summary>
@@ -66,9 +40,9 @@ namespace FacturaE.Xml
         /// </summary>
         /// <param name="firstPart">First part of the identifier to be generated</param>
         /// <returns>A new identifier</returns>
-        public static string FormatId(string firstPart, string secondPart)
+        internal static string FormatId(string firstPart, string secondPart)
         {
-            return String.Format("{0}-{1}{2}", firstPart, secondPart, DateTime.Today.ToString("yyyyMMdd", CultureInfo.InvariantCulture));
+            return $"{firstPart}-{secondPart}{DateTime.Today.ToString("yyyyMMdd", CultureInfo.InvariantCulture)}";
         }
 
         /// <summary>
@@ -76,7 +50,7 @@ namespace FacturaE.Xml
         /// </summary>
         /// <param name="document">The Xml Document</param>
         /// <returns>A new instance of <see cref="XmlNamespaceManager"/></returns>
-        public static XmlNamespaceManager CreateXadesNamespaceManager(XmlDocument document)
+        internal static XmlNamespaceManager CreateXadesNamespaceManager(XmlDocument document)
         {
             var nsmgr = new XmlNamespaceManager(document.NameTable);
             
@@ -92,7 +66,7 @@ namespace FacturaE.Xml
         /// </summary>
         /// <param name="document">The Xml Document</param>
         /// <returns>A new instance of <see cref="XmlNamespaceManager"/></returns>
-        public static XmlSerializerNamespaces CreateXadesSerializerNamespace()
+        internal static XmlSerializerNamespaces CreateXadesSerializerNamespace()
         {
             var ns = new XmlSerializerNamespaces();
 
@@ -110,7 +84,7 @@ namespace FacturaE.Xml
         /// <param name="envDoc"></param>
         /// <param name="inputElement"></param>
         /// <returns></returns>
-        public static XmlElement FixupNamespaces(XmlDocument envDoc, XmlElement inputElement)
+        internal static XmlElement FixupNamespaces(XmlDocument envDoc, XmlElement inputElement)
         {
             var doc   = new XmlDocument { PreserveWhitespace = true };
             var nsmgr = XsdSchemas.CreateXadesNamespaceManager(doc);
@@ -125,11 +99,10 @@ namespace FacturaE.Xml
                     {
                         continue;
                     }
-
                     if (attr.LocalName == "xmlns")
                     {
                         continue;
-                    }              
+                    }
 
                     doc.DocumentElement.SetAttributeNode(doc.ImportNode(attr, true) as XmlAttribute);
                 }
@@ -143,7 +116,7 @@ namespace FacturaE.Xml
         /// </summary>
         /// <param name="nt">The name table.</param>
         /// <returns>A instance of <see cref="XmlSchemaSet"/></returns>
-        public static XmlSchemaSet BuildSchemaSet(XmlNameTable nt)
+        internal static XmlSchemaSet BuildSchemaSet(XmlNameTable nt)
         {
             var schemaSet = new XmlSchemaSet(nt);
 
@@ -156,13 +129,9 @@ namespace FacturaE.Xml
             return schemaSet;
         }
 
-        #endregion
-
-        #region · Private Methods ·
-
         private static XmlSchema ReadSchema(string resourceName)
         {
-            Assembly currentAssembly = Assembly.GetExecutingAssembly();
+            var currentAssembly = Assembly.GetExecutingAssembly();
 
             return XmlSchema.Read(currentAssembly.GetManifestResourceStream(resourceName), SchemaSetValidationEventHandler);
         }
@@ -170,7 +139,5 @@ namespace FacturaE.Xml
         private static void SchemaSetValidationEventHandler(object sender, ValidationEventArgs e)
         {
         }
-
-        #endregion
     }
 }

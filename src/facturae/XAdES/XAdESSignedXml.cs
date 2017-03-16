@@ -1,25 +1,5 @@
-﻿/* FacturaE - The MIT License (MIT)
- * 
- * Copyright (c) 2012-2014 Carlos Guzmán Álvarez
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+﻿// Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using FacturaE.Extensions;
 using FacturaE.Xml;
@@ -38,14 +18,8 @@ namespace FacturaE.XAdES
     public sealed class XAdESSignedXml
         : SignedXml
     {
-        #region · Fields ·
-
-        private readonly List<DataObject> dataObjects = new List<DataObject>();
-        private ClaimedRole               signerRole;
-
-        #endregion
-
-        #region · Constructors ·
+        private readonly List<DataObject> _dataObjects = new List<DataObject>();
+        private ClaimedRole               _signerRole;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XAdESSignedXml"/> class.
@@ -65,10 +39,6 @@ namespace FacturaE.XAdES
         {
         }
 
-        #endregion
-
-        #region · Methods ·
-
         /// <summary>
         /// Gets the id element.
         /// </summary>
@@ -77,39 +47,36 @@ namespace FacturaE.XAdES
         /// <returns></returns>
         public override XmlElement GetIdElement(XmlDocument document, string idValue)
         {
-            if (String.IsNullOrEmpty(idValue))
+            if (string.IsNullOrEmpty(idValue))
             {
                 return null;
             }
 
             var xmlElement = base.GetIdElement(document, idValue);
-            var nsmgr = XsdSchemas.CreateXadesNamespaceManager(document);
+            var nsmgr      = XsdSchemas.CreateXadesNamespaceManager(document);
 
             if (xmlElement != null)
             {
                 return XsdSchemas.FixupNamespaces(document, xmlElement);
             }
 
-            if (dataObjects.Count > 0)
+            if (_dataObjects != null && _dataObjects.Count > 0)
             {
-                if (this.dataObjects != null && this.dataObjects.Count > 0)
+                foreach (DataObject dataObject in _dataObjects)
                 {
-                    foreach (DataObject dataObject in this.dataObjects)
-                    {
-                        var nodeWithSameId = dataObject.GetXml().SelectNodes(".", nsmgr).FindNode("Id", idValue);
+                    var nodeWithSameId = dataObject.GetXml().SelectNodes(".", nsmgr).FindNode("Id", idValue);
 
-                        if (nodeWithSameId != null)
-                        {
-                            return XsdSchemas.FixupNamespaces(document, nodeWithSameId);
-                        }
+                    if (nodeWithSameId != null)
+                    {
+                        return XsdSchemas.FixupNamespaces(document, nodeWithSameId);
                     }
-                }                
+                }
             }
 
             // Search the KeyInfo Node
-            if (this.KeyInfo != null)
+            if (KeyInfo != null)
             {
-                var nodeWithSameId = this.KeyInfo.GetXml().SelectNodes(".", nsmgr).FindNode("Id", idValue);
+                var nodeWithSameId = KeyInfo.GetXml().SelectNodes(".", nsmgr).FindNode("Id", idValue);
 
                 if (nodeWithSameId != null)
                 {
@@ -127,47 +94,38 @@ namespace FacturaE.XAdES
         public new void AddObject(DataObject dataObject)
         {
             base.AddObject(dataObject);
-            this.dataObjects.Add(dataObject);
+            _dataObjects.Add(dataObject);
         }
-
-        #endregion
-
-        #region · Signature Helper Methods ·
 
         public XAdESSignedXml SetSignatureInfo()
         {
             // Set nodes identifiers
-            this.Signature.Id  = XsdSchemas.FormatId("Signature");
-            this.SignedInfo.Id = XsdSchemas.FormatId("Signature", "SignedInfo");
+            Signature.Id  = XsdSchemas.FormatId("Signature");
+            SignedInfo.Id = XsdSchemas.FormatId("Signature", "SignedInfo");
 
             return this;
         }
 
         public XAdESSignedXml SetSignerRole(ClaimedRole signerRole)
         {
-            this.signerRole = signerRole;
+            _signerRole = signerRole;
 
             return this;
         }
 
         public XAdESSignedXml SetKeyInfo(X509Certificate2 certificate, RSA key)
         {
-            this.KeyInfo    = new KeyInfo();
-            this.KeyInfo.Id = XsdSchemas.FormatId("Certificate");
+            KeyInfo = new KeyInfo { Id = XsdSchemas.FormatId("Certificate") };
 
-            this.KeyInfo.AddClause(new KeyInfoX509Data(certificate));
-            this.KeyInfo.AddClause(new RSAKeyValue(key));
+            KeyInfo.AddClause(new KeyInfoX509Data(certificate));
+            KeyInfo.AddClause(new RSAKeyValue(key));
 
-            this.AddReference(new Reference { Uri = String.Format("#{0}", this.KeyInfo.Id) });
+            AddReference(new Reference { Uri = $"#{KeyInfo.Id}" });
 
-            this.SetQualifyingPropertiesObject(certificate);
+            SetQualifyingPropertiesObject(certificate);
 
             return this;
         }
-
-        #endregion
-
-        #region · XAdES Methods ·
 
         private XAdESSignedXml SetQualifyingPropertiesObject(X509Certificate2 certificate)
         {
@@ -176,13 +134,13 @@ namespace FacturaE.XAdES
             var signedSignatureProperties = signedProperties.CreateSignedSignatureProperties();
 
             signedSignatureProperties.SetSigningTime()
-                                     .SetSignerRole(this.signerRole)
+                                     .SetSignerRole(_signerRole)
                                      .SetSigningCertificate(certificate)
                                      .SetSignaturePolicyIdentifier();
 
-            return this.SetSignedDataObjectProperties(signedProperties)
-                       .SetSignatureDataObject(qualifyingProperties)
-                       .SetSignedPropertiesReference(signedProperties);
+            return SetSignedDataObjectProperties(signedProperties)
+                  .SetSignatureDataObject(qualifyingProperties)
+                  .SetSignedPropertiesReference(signedProperties);
         }
 
         private XAdESSignedXml SetSignedPropertiesReference(SignedPropertiesType signedProperties)
@@ -190,11 +148,11 @@ namespace FacturaE.XAdES
             var reference = new Reference
             {
                 Id   = XsdSchemas.FormatId("SignedPropertiesID")
-              , Uri  = String.Format("#{0}", signedProperties.Id)
+              , Uri  = $"#{signedProperties.Id}"
               , Type = "http://uri.etsi.org/01903#SignedProperties"
             };
 
-            this.AddReference(reference);
+            AddReference(reference);
 
             return this;
         }
@@ -203,19 +161,20 @@ namespace FacturaE.XAdES
         {
             var document   = qualifyingProperties.ToXmlDocument();
             var nsMgr      = XsdSchemas.CreateXadesNamespaceManager(document);
-            var dataObject = new DataObject();
+            var dataObject = new DataObject
+            {
+                Id   = XsdSchemas.FormatId(Signature.Id, "Object"),
+                Data = document.DocumentElement.SelectNodes(".", nsMgr)
+            };
 
-            dataObject.Id = XsdSchemas.FormatId(this.Signature.Id, "Object");
-            dataObject.Data = document.DocumentElement.SelectNodes(".", nsMgr);
-
-            this.AddObject(dataObject);
+            AddObject(dataObject);
 
             return this;
         }
 
         private XAdESSignedXml SetSignedDataObjectProperties(SignedPropertiesType signedProperties)
         {
-            var transformReference = this.SetSignatureTransformReference();
+            var transformReference = SetSignatureTransformReference();
 
             signedProperties.SignedDataObjectProperties = new SignedDataObjectPropertiesType
             {
@@ -225,7 +184,7 @@ namespace FacturaE.XAdES
                     {
                         Description     = "Description"
                       , MimeType        = "text/xml"
-                      , ObjectReference = "#" + transformReference.Id
+                      , ObjectReference = $"#{transformReference.Id}"
                     }
                 }
             };
@@ -235,24 +194,19 @@ namespace FacturaE.XAdES
 
         private Reference SetSignatureTransformReference()
         {
-            Reference reference = new Reference(String.Empty);
+            var reference = new Reference(string.Empty);
 
             reference.Id = XsdSchemas.FormatId("Reference", "ID-");
             reference.AddTransform(new XmlDsigEnvelopedSignatureTransform());
 
-            this.AddReference(reference);
+            AddReference(reference);
 
             return reference;
         }
 
         private QualifyingPropertiesType CreateQualifyingProperties()
         {
-            return new QualifyingPropertiesType
-            {
-                Target = String.Format("#{0}", this.Signature.Id)
-            };
+            return new QualifyingPropertiesType { Target = $"#{Signature.Id}" };
         }
-
-        #endregion
     }
 }
