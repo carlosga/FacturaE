@@ -2,8 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using FacturaE.Xml;
-using Mono.Security;
-using Mono.Security.X509;
+using X500;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -86,7 +85,7 @@ namespace FacturaE.XAdES
                     }
                   , IssuerSerial = new XAdES.X509IssuerSerialType
                     {
-                        X509IssuerName   = X501.ToString(new ASN1(certificate.IssuerName.RawData)) // RFC2253 Encoded
+                        X509IssuerName   = X500.X500DistinguishedName.Format(DistinguishedNameFormat.RFC2253, certificate.IssuerName.RawData)
                       , X509SerialNumber = BigInteger.Parse(certificate.SerialNumber, NumberStyles.HexNumber).ToString()
                     }
                 }
