@@ -146,7 +146,7 @@ namespace X500
             _rawData = rawData;
         }
 
-        public string GetPreferredEncoding() => RawData.ByteArrayToHex();
+        public string GetPreferredEncoding() => _rawData.ByteArrayToHex();
 
         public string Format(DistinguishedNameFormat format) => Format(format, _rawData);
 
