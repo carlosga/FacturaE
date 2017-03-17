@@ -53,8 +53,8 @@ namespace FacturaE.Extensions
                     return attribute.Value;
                 }
             }
-            
+
             return null;
-        }        
+        }
     }
 }

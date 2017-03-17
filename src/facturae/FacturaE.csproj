@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Certificates\PFActivoFirSHA256.pfx">
+    <None Include="Certificates\ANCERTCCP_FIRMA.p12">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

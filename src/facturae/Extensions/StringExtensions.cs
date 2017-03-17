@@ -8,7 +8,7 @@ namespace System
     /// <summary>
     /// String conversions helper.
     /// </summary>
-    public static class StringExtensions
+    internal static class StringExtensions
     {
         /// <summary>
         /// Returns a byte buffer from the given hexadecimal string.
@@ -19,7 +19,7 @@ namespace System
         {
             var hex = hexString;
 
-            if (!String.IsNullOrEmpty(delimiter))
+            if (!string.IsNullOrEmpty(delimiter))
             {
                 hex = hex.Replace(delimiter, String.Empty);
             }

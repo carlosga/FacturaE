@@ -20,7 +20,8 @@ namespace FacturaE
     /// </summary>
     public partial class Facturae
     {
-        private static readonly XmlSerializer FacturaeSerializer = new XmlSerializer(typeof(Facturae));
+        private static readonly XmlSerializer s_serializer = new XmlSerializer(typeof(Facturae));
+        private static readonly Encoding      s_encoding   = new UTF8Encoding(false);
 
         private static void XmlValidationEventHandler(object sender, ValidationEventArgs e)
         {
@@ -124,16 +125,16 @@ namespace FacturaE
 
         private string ToXml()
         {
-            var settings = new XmlWriterSettings { Encoding = new UTF8Encoding(false) };
+            var settings = new XmlWriterSettings { Encoding = s_encoding };
             
             using (var buffer = new MemoryStream())
             { 
                 using (var writer = XmlWriter.Create(buffer, settings))
                 {
-                    FacturaeSerializer.Serialize(writer, this, XsdSchemas.CreateXadesSerializerNamespace());
+                    s_serializer.Serialize(writer, this, XsdSchemas.XadesSerializerNamespaces);
                 }
 
-                return Encoding.UTF8.GetString(buffer.ToArray());
+                return s_encoding.GetString(buffer.ToArray());
             }
         }
 

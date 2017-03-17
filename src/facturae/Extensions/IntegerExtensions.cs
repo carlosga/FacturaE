@@ -14,17 +14,5 @@ namespace System
 
             return (value & (1 << (bitIndex - 1))) != 0;
         }
-
-        internal static bool AreBitsSet(this int value, byte index, byte offset)
-        {
-            bool result = true;
-
-            for (byte i = index; i <= offset; i++)
-            {
-                result = result && value.IsBitSet(i);
-            }
-
-            return result;
-        }
     }
 }

@@ -117,8 +117,8 @@ namespace FacturaE
         {
             return new AmountType
             {
-                TotalAmount       = Math.Round(Invoices.Sum(il => il.InvoiceTotals.InvoiceTotal), 2)
-              , EquivalentInEuros = Math.Round(Invoices.Sum(il => il.InvoiceTotals.InvoiceTotal), 2)
+                TotalAmount       = Invoices.Sum(il => il.InvoiceTotals.InvoiceTotal).Round()
+              , EquivalentInEuros = Invoices.Sum(il => il.InvoiceTotals.InvoiceTotal).Round()
             };
         }
 
@@ -130,8 +130,8 @@ namespace FacturaE
         {
             return new AmountType
             {
-                TotalAmount       = Math.Round(Invoices.Sum(il => il.InvoiceTotals.TotalOutstandingAmount), 2)
-              , EquivalentInEuros = Math.Round(Invoices.Sum(il => il.InvoiceTotals.TotalOutstandingAmount), 2)
+                TotalAmount       = Invoices.Sum(il => il.InvoiceTotals.TotalOutstandingAmount).Round()
+              , EquivalentInEuros = Invoices.Sum(il => il.InvoiceTotals.TotalOutstandingAmount).Round()
             };
         }
 
@@ -143,8 +143,8 @@ namespace FacturaE
         {
             return new AmountType
             {
-                TotalAmount       = Math.Round(Invoices.Sum(il => il.InvoiceTotals.TotalExecutableAmount), 2)
-              , EquivalentInEuros = Math.Round(Invoices.Sum(il => il.InvoiceTotals.TotalExecutableAmount), 2)
+                TotalAmount       = Invoices.Sum(il => il.InvoiceTotals.TotalExecutableAmount).Round()
+              , EquivalentInEuros = Invoices.Sum(il => il.InvoiceTotals.TotalExecutableAmount).Round()
             };
         }
         
@@ -441,13 +441,13 @@ namespace FacturaE
                         TaxRate     = g.Key,
                         TaxableBase = new AmountType 
                         { 
-                            TotalAmount       = Math.Round(g.Sum(gtax => gtax.TaxableBase.TotalAmount), 2),
-                            EquivalentInEuros = Math.Round(g.Sum(gtax => gtax.TaxableBase.EquivalentInEuros), 2)
+                            TotalAmount       = g.Sum(gtax => gtax.TaxableBase.TotalAmount).Round(),
+                            EquivalentInEuros = g.Sum(gtax => gtax.TaxableBase.EquivalentInEuros).Round()
                         },
                         TaxAmount   = new AmountType 
                         { 
-                            TotalAmount       = Math.Round(g.Sum(gtax => gtax.TaxAmount.TotalAmount), 2),
-                            EquivalentInEuros = Math.Round(g.Sum(gtax => gtax.TaxAmount.EquivalentInEuros), 2)
+                            TotalAmount       = g.Sum(gtax => gtax.TaxAmount.TotalAmount).Round(),
+                            EquivalentInEuros = g.Sum(gtax => gtax.TaxAmount.EquivalentInEuros).Round()
                         },
                         TaxTypeCode = TaxTypeCodeType.Item01,
                     };
@@ -458,15 +458,15 @@ namespace FacturaE
             InvoiceTotals = new InvoiceTotalsType();
 
             // Calculate totals
-            InvoiceTotals.TotalGrossAmount = Math.Round(Items.Sum(it => it.GrossAmount), 2);
+            InvoiceTotals.TotalGrossAmount = Items.Sum(it => it.GrossAmount).Round();
 
             CalculateGeneralDiscountTotals();
 
             CalculateGeneralSurchargesTotals();
 
-            InvoiceTotals.TotalGrossAmountBeforeTaxes = Math.Round(InvoiceTotals.TotalGrossAmount      
-                                                                      - InvoiceTotals.TotalGeneralDiscounts 
-                                                                      + InvoiceTotals.TotalGeneralSurcharges, 2);
+            InvoiceTotals.TotalGrossAmountBeforeTaxes = (InvoiceTotals.TotalGrossAmount
+                                                       - InvoiceTotals.TotalGeneralDiscounts 
+                                                       + InvoiceTotals.TotalGeneralSurcharges).Round();
 
             CalculatePaymentsOnAccountTotals();
 
@@ -479,9 +479,9 @@ namespace FacturaE
             // Surcharges. Always to two decimal points.
             InvoiceTotals.TotalTaxOutputs = Math.Round(CalculateTaxOutputTotal(), 2);
 
-            InvoiceTotals.InvoiceTotal = Math.Round(InvoiceTotals.TotalGrossAmountBeforeTaxes   
-                                                       + InvoiceTotals.TotalTaxOutputs               
-                                                       - InvoiceTotals.TotalTaxesWithheld, 2);
+            InvoiceTotals.InvoiceTotal = (InvoiceTotals.TotalGrossAmountBeforeTaxes
+                                        + InvoiceTotals.TotalTaxOutputs
+                                        - InvoiceTotals.TotalTaxesWithheld).Round();
 
             // Total de gastos financieros
 #warning TODO: Implement as an extension method
@@ -491,18 +491,14 @@ namespace FacturaE
             {
                 CalculateSubsidyAmounts();
 
-                subsidyAmount = Math.Round(InvoiceTotals.Subsidies.Sum(s => s.SubsidyAmount), 2);
+                subsidyAmount = InvoiceTotals.Subsidies.Sum(s => s.SubsidyAmount).Round();
             }
 
-            InvoiceTotals.TotalOutstandingAmount = Math.Round
-            (
-                InvoiceTotals.InvoiceTotal - (subsidyAmount + InvoiceTotals.TotalPaymentsOnAccount), 2
-            );
-
-            InvoiceTotals.TotalExecutableAmount = Math.Round(InvoiceTotals.TotalOutstandingAmount
-                                                                - InvoiceTotals.TotalTaxesWithheld
-                                                                + InvoiceTotals.TotalReimbursableExpenses
-                                                                + InvoiceTotals.TotalFinancialExpenses, 2);
+            InvoiceTotals.TotalOutstandingAmount = (InvoiceTotals.InvoiceTotal  - (subsidyAmount + InvoiceTotals.TotalPaymentsOnAccount)).Round();
+            InvoiceTotals.TotalExecutableAmount  = (InvoiceTotals.TotalOutstandingAmount
+                                                 - InvoiceTotals.TotalTaxesWithheld
+                                                 + InvoiceTotals.TotalReimbursableExpenses
+                                                 + InvoiceTotals.TotalFinancialExpenses).Round();
 
             return Parent;
         }
@@ -510,31 +506,27 @@ namespace FacturaE
         private void CalculateSubsidyAmounts()
         {
             // Rate applied to the Invoice Total.
-            InvoiceTotals.Subsidies.ForEach
-            (
-                s => s.SubsidyAmount = Math.Round(InvoiceTotals.InvoiceTotal * s.SubsidyRate / 100, 2)
-            );
+            InvoiceTotals.Subsidies.ForEach(s => s.SubsidyAmount = (InvoiceTotals.InvoiceTotal * s.SubsidyRate / 100).Round());
         }
 
         private void CalculateTotalTaxesWithheldTotals()
         {
-            InvoiceTotals.TotalTaxesWithheld = Math.Round
+            var taxes = Items.Sum
             (
-                Items.Sum
-                (
-                    il =>
+                il =>
+                {
+                    double total = 0;
+
+                    if (il.TaxesWithheld != null)
                     {
-                        double total = 0;
-
-                        if (il.TaxesWithheld != null)
-                        {
-                            total = Math.Round(il.TaxesWithheld.Sum(tw => tw.TaxAmount.TotalAmount), 2);
-                        }
-
-                        return total;
+                        total = il.TaxesWithheld.Sum(tw => tw.TaxAmount.TotalAmount).Round();
                     }
-                )
+
+                    return total;
+                }
             );
+
+            InvoiceTotals.TotalTaxesWithheld = taxes.Round();
         }
 
         private void CalculateReimbursableExpensesTotals()
@@ -542,10 +534,8 @@ namespace FacturaE
             // Total de suplidos
             if (InvoiceTotals.ReimbursableExpenses != null)
             {
-                InvoiceTotals.TotalReimbursableExpenses = Math.Round
-                (
-                    InvoiceTotals.ReimbursableExpenses.Sum(re => re.ReimbursableExpensesAmount), 2
-                );
+                InvoiceTotals.TotalReimbursableExpenses = 
+                    InvoiceTotals.ReimbursableExpenses.Sum(re => re.ReimbursableExpensesAmount).Round();
             }
         }
 
@@ -553,10 +543,8 @@ namespace FacturaE
         {
             if (InvoiceTotals.PaymentsOnAccount != null)
             {
-                InvoiceTotals.TotalPaymentsOnAccount = Math.Round
-                (
-                    InvoiceTotals.PaymentsOnAccount.Sum(poa => poa.PaymentOnAccountAmount), 2
-                );
+                InvoiceTotals.TotalPaymentsOnAccount = 
+                    InvoiceTotals.PaymentsOnAccount.Sum(poa => poa.PaymentOnAccountAmount).Round();
             }
         }
 
@@ -566,13 +554,10 @@ namespace FacturaE
             {
                 InvoiceTotals.GeneralSurcharges.ForEach
                 (
-                    gs => gs.ChargeAmount = Math.Round((InvoiceTotals.TotalGrossAmount * gs.ChargeRate) / 100, 2)
+                    gs => gs.ChargeAmount = ((InvoiceTotals.TotalGrossAmount * gs.ChargeRate) / 100).Round()
                 );
 
-                InvoiceTotals.TotalGeneralSurcharges = Math.Round
-                (
-                    InvoiceTotals.GeneralSurcharges.Sum(gs => gs.ChargeAmount), 2
-                );
+                InvoiceTotals.TotalGeneralSurcharges = InvoiceTotals.GeneralSurcharges.Sum(gs => gs.ChargeAmount).Round();
             }
         }
 
@@ -582,19 +567,16 @@ namespace FacturaE
             {
                 InvoiceTotals.GeneralDiscounts.ForEach
                 (
-                    gd => gd.DiscountAmount = Math.Round((InvoiceTotals.TotalGrossAmount * gd.DiscountRate) / 100, 2)
+                    gd => gd.DiscountAmount = ((InvoiceTotals.TotalGrossAmount * gd.DiscountRate) / 100).Round()
                 );
 
-                InvoiceTotals.TotalGeneralDiscounts = Math.Round
-                (
-                    InvoiceTotals.GeneralDiscounts.Sum(gd => gd.DiscountAmount), 2
-                );
+                InvoiceTotals.TotalGeneralDiscounts = InvoiceTotals.GeneralDiscounts.Sum(gd => gd.DiscountAmount).Round();
             }
         }
 
         private double CalculateTaxOutputTotal()
         {
-            return TaxesOutputs.Sum(to => to.TaxAmount.TotalAmount);
+            return TaxesOutputs.Sum(to => to.TaxAmount.TotalAmount).Round();
         }
     }
 
@@ -655,7 +637,7 @@ namespace FacturaE
             double totalDiscounts = 0;
             double totalCharges   = 0;
 
-            TotalCost = Math.Round(Quantity * UnitPriceWithoutTax, 2);
+            TotalCost = (Quantity * UnitPriceWithoutTax).Round();
 
             if (DiscountsAndRebates != null)
             {
@@ -663,8 +645,8 @@ namespace FacturaE
                 (
                     dar => 
                     {
-                        dar.DiscountAmount = Math.Round(TotalCost * dar.DiscountRate / 100, 2);
-                        totalDiscounts     = Math.Round(totalDiscounts + dar.DiscountAmount, 2);
+                        dar.DiscountAmount = (TotalCost * dar.DiscountRate / 100).Round();
+                        totalDiscounts     = (totalDiscounts + dar.DiscountAmount).Round();
                     }
                 );
             }
@@ -675,8 +657,8 @@ namespace FacturaE
                 (
                     chr =>
                     {
-                        chr.ChargeAmount = Math.Round(TotalCost * chr.ChargeRate / 100, 2);
-                        totalCharges     = Math.Round(totalCharges + chr.ChargeAmount, 2);
+                        chr.ChargeAmount = (TotalCost * chr.ChargeRate / 100).Round();
+                        totalCharges     = (totalCharges + chr.ChargeAmount).Round();
                     }
                 );
             }
@@ -700,7 +682,7 @@ namespace FacturaE
                         tax.TaxAmount = new AmountType();
                     }
 
-                    tax.TaxAmount.TotalAmount = Math.Round(tax.TaxableBase.TotalAmount * tax.TaxRate / 100, 2);
+                    tax.TaxAmount.TotalAmount = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100).Round();
                 }
             );
 

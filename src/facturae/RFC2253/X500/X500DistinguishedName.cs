@@ -101,9 +101,8 @@ namespace X500
             // DC      domainComponent        (0.9.2342.19200300.100.1.25)
             // UID     userId                 (0.9.2342.19200300.100.1.1)
 
+            // RFC1779
             s_rfc1179 = new Dictionary<string, string>(10);
-            s_rfc2253 = new Dictionary<string, string>(10);
-            s_rfc2459 = new Dictionary<string, string>(10);
 
             s_rfc1179.Add("2.5.4.3" , "CN");                        // commonName
             s_rfc1179.Add("2.5.4.6" , "C");                         // countryName
@@ -113,11 +112,13 @@ namespace X500
             s_rfc1179.Add("2.5.4.10", "O");                         // organizationName
             s_rfc1179.Add("2.5.4.11", "OU");                        // organizationalUnitName
 
+            // RFC2253
             s_rfc2253 = new Dictionary<string, string>(s_rfc1179);
 
             s_rfc2253.Add("0.9.2342.19200300.100.1.25", "DC");      // domainComponent
             s_rfc2253.Add("0.9.2342.19200300.100.1.1" , "UID");     // userid
 
+            // RFC2459
             s_rfc2459 = new Dictionary<string, string>(s_rfc2253);
 
             s_rfc2459.Add("2.5.4.4"             , "SN");            // surname

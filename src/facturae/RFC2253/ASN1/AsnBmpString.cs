@@ -21,10 +21,7 @@ namespace ASN1
             {
                 return s_encoding1201.GetString(buffer);
             }
-            else
-            {
-                return s_encoding1200.GetString(buffer);
-            }
+            return s_encoding1200.GetString(buffer);
         }
 
         public AsnBmpString(AsnIdentifier id, byte[] buffer)

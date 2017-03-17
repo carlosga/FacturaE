@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System.Diagnostics;
-
 namespace System.IO
 {
-    public static class StreamExtensions
+    internal static class StreamExtensions
     {
         internal static byte[] ReadBytes(this Stream stream, int count)
         {
@@ -42,23 +40,6 @@ namespace System.IO
             stream.Position = currentPosition;
 
             return buffer;
-        }
-
-        internal static byte PeekByte(this Stream stream)
-        {
-            Debug.Assert(stream != null);
-
-            var currentPosition = stream.Position;
-            var result          = stream.ReadByte();
-
-            stream.Position = currentPosition;
-
-            return (byte)result;
-        }
-
-        internal static void SkipBytes(this Stream stream, int offset)
-        {
-            stream.Seek(offset, SeekOrigin.Current);
         }
     }
 }

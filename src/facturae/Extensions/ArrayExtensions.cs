@@ -9,14 +9,14 @@ namespace System
     /// <summary>
     /// Extension methods
     /// </summary>
-    public static class ArrayExtensions
+    internal static class ArrayExtensions
     {
         /// <summary>
         /// Computes the SHA1 hash of a given byte array
         /// </summary>
         /// <param name="buffer"></param>
         /// <returns></returns>
-        public static byte[] ComputeSHA1Hash(this byte[] buffer)
+        internal static byte[] ComputeSHA1Hash(this byte[] buffer)
         {
             if (buffer == null)
             {
@@ -80,7 +80,7 @@ namespace System
                 throw new ArgumentOutOfRangeException();
             }
 
-            var result = new StringBuilder();
+            var result = new StringBuilder(buffer.Length * 2);
             var aseps  = !string.IsNullOrEmpty(separator);
 
             for (int i = offset; i < count; i++)

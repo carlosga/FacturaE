@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Xml;
@@ -15,16 +16,26 @@ namespace FacturaE.Xml
     /// </summary>
     internal static class XsdSchemas
     {
-        internal const string FacturaeNamespaceUrl   = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae";
-        internal const string XmlDsigNamespaceUrl    = "http://www.w3.org/2000/09/xmldsig#";
-        internal const string XadesNamespaceUrl      = "http://uri.etsi.org/01903/v1.3.2#";
-        internal const string FacturaePrefix         = "fe";
-        internal const string XmlDsigPrefix          = "ds";
-        internal const string XadesPrefix            = "";
-        internal const string XmlDsigSchemaResource  = "FacturaE.Schemas.xmldsig-core-schema.xsd";
-        internal const string FacturaeSchemaResource = "FacturaE.Schemas.Facturaev3_2_1.xsd";
-        internal const string XAdESSchemaResource    = "FacturaE.Schemas.XAdES.xsd";
-       
+        private const string FacturaeNamespaceUrl   = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae";
+        private const string XmlDsigNamespaceUrl    = "http://www.w3.org/2000/09/xmldsig#";
+        private const string XadesNamespaceUrl      = "http://uri.etsi.org/01903/v1.3.2#";
+        private const string FacturaePrefix         = "fe";
+        private const string XmlDsigPrefix          = "ds";
+        private const string XadesPrefix            = "";
+        private const string XmlDsigSchemaResource  = "FacturaE.Schemas.xmldsig-core-schema.xsd";
+        private const string FacturaeSchemaResource = "FacturaE.Schemas.Facturaev3_2_1.xsd";
+        private const string XAdESSchemaResource    = "FacturaE.Schemas.XAdES.xsd";
+
+        internal readonly static XmlSerializerNamespaces XadesSerializerNamespaces = new XmlSerializerNamespaces
+        (
+            new XmlQualifiedName[] 
+            {
+                new XmlQualifiedName(XsdSchemas.FacturaePrefix, XsdSchemas.FacturaeNamespaceUrl),
+                new XmlQualifiedName(XsdSchemas.XmlDsigPrefix , XsdSchemas.XmlDsigNamespaceUrl),
+                new XmlQualifiedName(XsdSchemas.XadesPrefix   , XsdSchemas.XadesNamespaceUrl)
+            }
+        );
+
         /// <summary>
         /// Formats a new identifier with the given string
         /// </summary>
@@ -59,22 +70,6 @@ namespace FacturaE.Xml
             nsmgr.AddNamespace(XsdSchemas.XadesPrefix   , XsdSchemas.XadesNamespaceUrl);
 
             return nsmgr;
-        }
-
-        /// <summary>
-        /// Creates a new <see cref="XmlNamespaceManager"/> with desig and facturae namespaces defined.
-        /// </summary>
-        /// <param name="document">The Xml Document</param>
-        /// <returns>A new instance of <see cref="XmlNamespaceManager"/></returns>
-        internal static XmlSerializerNamespaces CreateXadesSerializerNamespace()
-        {
-            var ns = new XmlSerializerNamespaces();
-
-            ns.Add(XsdSchemas.FacturaePrefix, XsdSchemas.FacturaeNamespaceUrl);
-            ns.Add(XsdSchemas.XmlDsigPrefix , XsdSchemas.XmlDsigNamespaceUrl);
-            ns.Add(XsdSchemas.XadesPrefix   , XsdSchemas.XadesNamespaceUrl);
-
-            return ns;
         }
 
         /// <summary>
@@ -120,10 +115,9 @@ namespace FacturaE.Xml
         {
             var schemaSet = new XmlSchemaSet(nt);
 
-            schemaSet.XmlResolver = new XmlUrlResolver();
             schemaSet.Add(ReadSchema(XmlDsigSchemaResource));
-            schemaSet.Add(ReadSchema(FacturaeSchemaResource));
             schemaSet.Add(ReadSchema(XAdESSchemaResource));
+            schemaSet.Add(ReadSchema(FacturaeSchemaResource));
             schemaSet.Compile();
 
             return schemaSet;
@@ -138,6 +132,14 @@ namespace FacturaE.Xml
 
         private static void SchemaSetValidationEventHandler(object sender, ValidationEventArgs e)
         {
+            if (e.Severity == XmlSeverityType.Error)
+            {
+                throw e.Exception;
+            }
+            else
+            {
+                Trace.Write($"Warning while validating XML Schema '{e.Message}'");
+            }
         }
     }
 }

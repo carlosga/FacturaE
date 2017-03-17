@@ -48,7 +48,7 @@ namespace ASN1
         public int DataLength
         {
             get;
-            internal set;
+            private set;
         }
 
         public AsnIdentifier(int octect)

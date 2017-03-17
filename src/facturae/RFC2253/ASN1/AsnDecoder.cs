@@ -16,10 +16,7 @@ namespace ASN1
     {
         private MemoryStream _stream;
 
-        public bool EOF
-        {
-            get { return (_stream == null || _stream.Position >= _stream.Length); }
-        }
+        public bool EOF => (_stream == null || _stream.Position >= _stream.Length);
 
         public AsnDecoder(byte[] buffer)
         {
