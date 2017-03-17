@@ -14,79 +14,6 @@ namespace X500
         private static readonly Dictionary<string, string> s_rfc2253;
         private static readonly Dictionary<string, string> s_rfc2459;
 
-        public static string Format(DistinguishedNameFormat format, string hexstring)
-        {
-            return Format(format, hexstring.HexToByteArray());
-        }
-
-        public static string Format(DistinguishedNameFormat format, byte[] buffer)
-        {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException("buffer");
-            }
-
-            using (var dec = new AsnDecoder(buffer))
-            {
-                var result = Format(format, dec.MoveNext());
-
-                if (!string.IsNullOrEmpty(result))
-                {
-                    result = result.Trim().Substring(0, result.Length - 2);
-                }
-
-                return result;
-            }
-        }
-
-        private static string Format(DistinguishedNameFormat format, AsnObject root)
-        {
-            var buffer = new StringBuilder();
-
-            if (root is IEnumerable<AsnObject>)
-            {
-                foreach (var item in (root as IEnumerable<AsnObject>))
-                {
-                    buffer.Append(Format(format, item));
-                }
-            }
-            else if (root is AsnObjectIdentifier)
-            {
-                buffer.AppendFormat("{0}=", TranslateOid(format, (root as AsnObjectIdentifier).Value));
-            }
-            else if (root is IAsnValueObject)
-            {
-                buffer.AppendFormat("{0}, ", (root as IAsnValueObject).Value);
-            }
-
-            return buffer.ToString();
-        }
-
-        private static string TranslateOid(DistinguishedNameFormat format, string oid)
-        {
-            Dictionary<string, string> oids = null;
-
-            switch (format)
-            {
-            case DistinguishedNameFormat.RFC1779:
-                oids = s_rfc1179;
-                break;
-            case DistinguishedNameFormat.RFC2253:
-                oids = s_rfc2253;
-                break;
-            case DistinguishedNameFormat.RFC2459:
-                oids = s_rfc2459;
-                break;
-            }
-
-            if (oids.ContainsKey(oid))
-            {
-                return oids[oid];
-            }
-
-            return oid;
-        }
-
         static X500DistinguishedName()
         {
             // http://www.alvestrand.no/objectid/2.5.4.html
@@ -131,26 +58,97 @@ namespace X500
             s_rfc2459.Add("1.2.840.113549.1.9.1", "E");             // e-mailAddress
         }
 
-        private readonly AsnObject _dn;
+        public static string Format(DistinguishedNameFormat format, string hexstring)
+        {
+            return Format(format, hexstring.HexToByteArray());
+        }
 
-        public byte[] RawData => _dn.RawData;
+        public static string Format(DistinguishedNameFormat format, byte[] rawData)
+        {
+            if (rawData == null)
+            {
+                throw new ArgumentNullException("rawData");
+            }
+            if (rawData.Length == 0)
+            {
+                throw new ArgumentException("rawData cannot be empty");
+            }
+
+            using (var dec = new AsnDecoder(rawData))
+            {
+                var builder = new StringBuilder();
+
+                Format(format, dec.MoveNext(), ref builder);
+
+                return builder.ToString();
+            }
+        }
+
+        private static void Format(DistinguishedNameFormat format, AsnObject root, ref StringBuilder builder)
+        {
+            if (root is IEnumerable<AsnObject>)
+            {
+                foreach (var item in (root as IEnumerable<AsnObject>))
+                {
+                    Format(format, item, ref builder);
+                }
+            }
+            else if (root is AsnObjectIdentifier)
+            {
+                if (builder.Length > 0)
+                {
+                    builder.Append(",");
+                }
+                builder.Append($"{TranslateOid(format, (root as AsnObjectIdentifier).Value)}=");
+            }
+            else if (root is IAsnValueObject)
+            {
+                builder.Append($"{(root as IAsnValueObject).Value}");
+            }
+        }
+
+        private static string TranslateOid(DistinguishedNameFormat format, string oid)
+        {
+            Dictionary<string, string> oids = null;
+
+            switch (format)
+            {
+            case DistinguishedNameFormat.RFC1779:
+                oids = s_rfc1179;
+                break;
+            case DistinguishedNameFormat.RFC2253:
+                oids = s_rfc2253;
+                break;
+            case DistinguishedNameFormat.RFC2459:
+                oids = s_rfc2459;
+                break;
+            }
+
+            if (oids.ContainsKey(oid))
+            {
+                return oids[oid];
+            }
+
+            return oid;
+        }
+
+        private readonly byte[] _rawData;
+
+        public byte[] RawData => _rawData;
 
         public X500DistinguishedName(string encodingHex)
             : this(encodingHex.HexToByteArray())
         {
         }
 
-        public X500DistinguishedName(byte[] buffer)
+        public X500DistinguishedName(byte[] rawData)
         {
-            using (var dec = new AsnDecoder(buffer))
-            {
-                _dn = dec.MoveNext();
-            }
+            _rawData = rawData;
         }
 
         public string GetPreferredEncoding() => RawData.ByteArrayToHex();
 
-        public string Format(DistinguishedNameFormat format) => Format(format, _dn.RawData);
+        public string Format(DistinguishedNameFormat format) => Format(format, _rawData);
 
         public override string ToString() => Format(DistinguishedNameFormat.RFC2253);
     }

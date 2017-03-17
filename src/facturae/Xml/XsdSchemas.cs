@@ -43,7 +43,7 @@ namespace FacturaE.Xml
         /// <returns>A new identifier</returns>
         internal static string FormatId(string firstPart)
         {
-            return $"{firstPart}{DateTime.Today.ToString("yyyyMMdd", CultureInfo.InvariantCulture)}";
+            return $"{firstPart}-{DateTime.Now.ToString("yyyyMMddmmssfff", CultureInfo.InvariantCulture)}";
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace FacturaE.Xml
         /// <returns>A new identifier</returns>
         internal static string FormatId(string firstPart, string secondPart)
         {
-            return $"{firstPart}-{secondPart}{DateTime.Today.ToString("yyyyMMdd", CultureInfo.InvariantCulture)}";
+            return $"{firstPart}-{secondPart}-{DateTime.Now.ToString("yyyyMMddmmssfff", CultureInfo.InvariantCulture)}";
         }
 
         /// <summary>
