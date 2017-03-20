@@ -47,6 +47,7 @@ CMakeLists.txt.user
 .idea
 
 # Visual studio code
+.vscode
 .browse.VC.*
 
 # Project files to be ignored
