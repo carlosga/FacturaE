@@ -132,10 +132,11 @@ namespace FacturaE.XAdES
             var signedProperties          = qualifyingProperties.CreateSignedProperties(this);
             var signedSignatureProperties = signedProperties.CreateSignedSignatureProperties();
 
-            signedSignatureProperties.SetSigningTime()
-                                     .SetSignerRole(_signerRole)
-                                     .SetSigningCertificate(certificate)
-                                     .SetSignaturePolicyIdentifier();
+            signedSignatureProperties
+                .SetSigningTime()
+                .SetSignerRole(_signerRole)
+                .SetSigningCertificate(certificate)
+                .SetSignaturePolicyIdentifier();
 
             return SetSignedDataObjectProperties(signedProperties)
                   .SetSignatureDataObject(qualifyingProperties)

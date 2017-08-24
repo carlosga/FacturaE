@@ -484,7 +484,6 @@ namespace FacturaE
                                         - InvoiceTotals.TotalTaxesWithheld).Round();
 
             // Total de gastos financieros
-#warning TODO: Implement as an extension method
             InvoiceTotals.TotalFinancialExpenses = 0;
             
             if (InvoiceTotals.Subsidies != null)

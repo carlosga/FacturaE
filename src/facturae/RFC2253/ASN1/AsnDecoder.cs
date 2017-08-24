@@ -53,7 +53,7 @@ namespace ASN1
             var id     = ReadAsnIdentifier();
             var length = ReadLength();
 
-#warning TODO: Handle custom constructed types ( for example constructed bit strings )
+            // TODO: Handle custom constructed types ( for example constructed bit strings )
             return this.ReadPrimitiveType(id, length);
         }
 

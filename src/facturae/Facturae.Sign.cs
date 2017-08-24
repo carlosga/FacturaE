@@ -100,11 +100,12 @@ namespace FacturaE
             // Set the key to sign
             signedXml.SigningKey = key;
 
-            signedXml.SetSignatureInfo()
-                     .SetSignerRole(signerRole)                                 // XAdES Signer Role
-                     .SetKeyInfo(certificate, (RSA)certificate.PublicKey.Key)   // Key Info
-                     .ComputeSignature();                                       // Compute Signature
-            
+            signedXml
+                .SetSignatureInfo()
+                .SetSignerRole(signerRole)                                 // XAdES Signer Role
+                .SetKeyInfo(certificate, (RSA)certificate.PublicKey.Key)   // Key Info
+                .ComputeSignature();                                       // Compute Signature
+
             // Import the signed XML node 
             document.DocumentElement.AppendChild(document.ImportNode(signedXml.GetXml(), true));            
 
