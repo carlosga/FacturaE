@@ -55,3 +55,4 @@ ConnectionString.xml
 *.lock.json
 *.repro
 *.out
+*.xsig
