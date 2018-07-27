@@ -117,10 +117,13 @@ namespace FacturaE
         /// <returns>An instance of AmountType.</returns>
         public AmountType SumTotalAmounts()
         {
+            var totalAmount = Invoices.Sum(il => il.InvoiceTotals.InvoiceTotal).Round();
+
             return new AmountType
             {
-                TotalAmount       = Invoices.Sum(il => il.InvoiceTotals.InvoiceTotal).Round()
-              , EquivalentInEuros = Invoices.Sum(il => il.InvoiceTotals.InvoiceTotal).Round()
+                TotalAmount                = totalAmount
+              , EquivalentInEuros          = totalAmount
+              , EquivalentInEurosSpecified = true
             };
         }
 
@@ -130,10 +133,13 @@ namespace FacturaE
         /// <returns>An instance of AmountType.</returns>
         public AmountType SumTotalOutstandingAmount()
         {
+            var totalAmount = Invoices.Sum(il => il.InvoiceTotals.TotalOutstandingAmount).Round();
+
             return new AmountType
             {
-                TotalAmount       = Invoices.Sum(il => il.InvoiceTotals.TotalOutstandingAmount).Round()
-              , EquivalentInEuros = Invoices.Sum(il => il.InvoiceTotals.TotalOutstandingAmount).Round()
+                TotalAmount                = totalAmount
+              , EquivalentInEuros          = totalAmount
+              , EquivalentInEurosSpecified = true
             };
         }
 
@@ -143,10 +149,13 @@ namespace FacturaE
         /// <returns>An instance of AmountType.</returns>
         public AmountType SumTotalExecutableAmount()
         {
+            var totalAmount = Invoices.Sum(il => il.InvoiceTotals.TotalExecutableAmount).Round();
+
             return new AmountType
             {
-                TotalAmount       = Invoices.Sum(il => il.InvoiceTotals.TotalExecutableAmount).Round()
-              , EquivalentInEuros = Invoices.Sum(il => il.InvoiceTotals.TotalExecutableAmount).Round()
+                TotalAmount                = totalAmount
+              , EquivalentInEuros          = totalAmount
+              , EquivalentInEurosSpecified = true
             };
         }
         
@@ -437,24 +446,36 @@ namespace FacturaE
 
             // Taxes Outputs
             var q = from tax in Items.SelectMany(x => x.TaxesOutputs)
-                    group tax by new { tax.TaxTypeCode, tax.TaxRate } into g
+                    group tax by new { tax.TaxTypeCode, tax.TaxRate, tax.EquivalenceSurcharge } into g
                     select new TaxOutputType
                     {
                         TaxRate     = g.Key.TaxRate,
                         TaxableBase = new AmountType 
                         { 
-                            TotalAmount       = g.Sum(gtax => gtax.TaxableBase.TotalAmount).Round(),
-                            EquivalentInEuros = g.Sum(gtax => gtax.TaxableBase.EquivalentInEuros).Round()
+                            TotalAmount                = g.Sum(gtax => gtax.TaxableBase.TotalAmount).Round(),
+                            EquivalentInEuros          = g.Sum(gtax => gtax.TaxableBase.EquivalentInEuros).Round(),
+                            EquivalentInEurosSpecified = true
                         },
                         TaxAmount   = new AmountType 
                         { 
-                            TotalAmount       = g.Sum(gtax => gtax.TaxAmount.TotalAmount).Round(),
-                            EquivalentInEuros = g.Sum(gtax => gtax.TaxAmount.EquivalentInEuros).Round()
+                            TotalAmount                = g.Sum(gtax => gtax.TaxAmount.TotalAmount).Round(),
+                            EquivalentInEuros          = g.Sum(gtax => gtax.TaxAmount.EquivalentInEuros).Round(),
+                            EquivalentInEurosSpecified = true
                         },
-                        TaxTypeCode = g.Key.TaxTypeCode,
+                        EquivalenceSurcharge          = g.Key.EquivalenceSurcharge,
+                        EquivalenceSurchargeSpecified = g.Any(gtax => gtax.EquivalenceSurchargeSpecified),
+                        EquivalenceSurchargeAmount    = new AmountType
+                        {
+                            TotalAmount                = g.Where(gtax => gtax.EquivalenceSurchargeSpecified)
+                                                          .Sum(gtax => gtax.EquivalenceSurchargeAmount.TotalAmount).Round(),
+                            EquivalentInEuros          = g.Where(gtax => gtax.EquivalenceSurchargeSpecified)
+                                                          .Sum(gtax => gtax.EquivalenceSurchargeAmount.EquivalentInEuros).Round(),
+                            EquivalentInEurosSpecified = true
+                        },
+                        TaxTypeCode = g.Key.TaxTypeCode
                     };
 
-            TaxesOutputs = q.OrderBy(x => x.TaxTypeCode).ThenBy(x => x.TaxRate).ToList();
+            TaxesOutputs = q.OrderBy(x => x.TaxTypeCode).ThenBy(x => x.TaxRate).ThenBy(x => x.EquivalenceSurcharge).ToList();
 
             // Taxes Withheld
             var w = from tax in Items.SelectMany(x => x.TaxesWithheld)
@@ -472,7 +493,7 @@ namespace FacturaE
                             TotalAmount       = g.Sum(gtax => gtax.TaxAmount.TotalAmount).Round(),
                             EquivalentInEuros = g.Sum(gtax => gtax.TaxAmount.EquivalentInEuros).Round()
                         },
-                        TaxTypeCode = g.Key.TaxTypeCode,
+                        TaxTypeCode = g.Key.TaxTypeCode
                     };
 
             TaxesWithheld = w.OrderBy(x => x.TaxTypeCode).ThenBy(x => x.TaxRate).ToList();
@@ -584,7 +605,7 @@ namespace FacturaE
 
         private DoubleUpToEightDecimalType CalculateTaxOutputTotal()
         {
-            return TaxesOutputs?.Sum(to => to.TaxAmount.TotalAmount).Round() ?? 0;
+            return TaxesOutputs?.Sum(to => to.TaxAmount.TotalAmount + (to.EquivalenceSurchargeAmount?.TotalAmount ?? 0.0)).Round() ?? 0;
         }
 
         private DoubleUpToEightDecimalType CalculateTaxWithheldTotal()
@@ -618,8 +639,9 @@ namespace FacturaE
 
             var discount = new DiscountType
             {
-                DiscountRate   = discountRate
-              , DiscountReason = discountReason
+                DiscountRate          = discountRate
+              , DiscountRateSpecified = true
+              , DiscountReason        = discountReason
             };
 
             DiscountsAndRebates.Add(discount);
@@ -627,29 +649,28 @@ namespace FacturaE
             return this;
         }
 
-        public InvoiceLineType GiveVATRate(DoubleUpToEightDecimalType taxRate)
+        public InvoiceLineType GiveVATRate(DoubleUpToEightDecimalType taxRate, DoubleTwoDecimalType? equivalenceSurcharge = null)
         {
-            return GiveTaxRate(taxRate, TaxTypeCodeType.ValueAddedTax);
+            AddTaxOutput(taxRate, equivalenceSurcharge, TaxTypeCodeType.ValueAddedTax);
+            
+            return this;
         }
 
         public InvoiceLineType GiveTaxRate(DoubleUpToEightDecimalType taxRate, TaxTypeCodeType taxType)
         {
-            switch (taxType)
+            if (taxType.IsTaxWithheld())
             {
-                case TaxTypeCodeType.ValueAddedTax:
-                case TaxTypeCodeType.IGIC:
-                    AddTaxOutput(taxRate, taxType);
-                    break;
-
-                case TaxTypeCodeType.PersonalIncomeTax:
-                    AddTaxWithheld(taxRate, taxType);
-                    break;
+                AddTaxWithheld(taxRate, taxType);
+            }
+            else
+            {
+                AddTaxOutput(taxRate, null, taxType);
             }
 
             return this;
         }
 
-        private void AddTaxOutput(DoubleUpToEightDecimalType taxRate, TaxTypeCodeType taxType)
+        private void AddTaxOutput(DoubleUpToEightDecimalType taxRate, DoubleTwoDecimalType? equivalenceSurcharge, TaxTypeCodeType taxType)
         {
             if (TaxesOutputs == null)
             {
@@ -658,8 +679,10 @@ namespace FacturaE
 
             var tax = new InvoiceLineTypeTax
             {
-                TaxTypeCode = taxType
-              , TaxRate     = taxRate
+                TaxTypeCode                   = taxType
+              , TaxRate                       = taxRate
+              , EquivalenceSurcharge          = (equivalenceSurcharge.HasValue) ? equivalenceSurcharge.Value.Value : 0.0
+              , EquivalenceSurchargeSpecified = equivalenceSurcharge.HasValue
             };
 
             TaxesOutputs.Add(tax);
@@ -724,15 +747,29 @@ namespace FacturaE
                         tax.TaxableBase = new AmountType();
                     }
 
-                    tax.TaxableBase.TotalAmount       = GrossAmount;
-                    tax.TaxableBase.EquivalentInEuros = GrossAmount;
+                    tax.TaxableBase.TotalAmount                = GrossAmount;
+                    tax.TaxableBase.EquivalentInEuros          = GrossAmount;
+                    tax.TaxableBase.EquivalentInEurosSpecified = true;
 
                     if (tax.TaxAmount == null)
                     {
                         tax.TaxAmount = new AmountType();
                     }
 
-                    tax.TaxAmount.TotalAmount = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100).Round();
+                    tax.TaxAmount.TotalAmount       = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100).Round();
+                    tax.TaxAmount.EquivalentInEuros = tax.TaxAmount.TotalAmount;
+
+                    if (tax.EquivalenceSurchargeSpecified)
+                    {
+                        if (tax.EquivalenceSurchargeAmount == null)
+                        {
+                            tax.EquivalenceSurchargeAmount = new AmountType();
+                        }
+                        
+                        tax.EquivalenceSurchargeAmount.TotalAmount       = (tax.TaxableBase.TotalAmount * tax.EquivalenceSurcharge / 100).Round();
+                        tax.EquivalenceSurchargeAmount.EquivalentInEuros = tax.EquivalenceSurchargeAmount.TotalAmount;
+                        tax.EquivalenceSurchargeAmount.EquivalentInEurosSpecified = true;
+                    }
                 }
             );
 
@@ -747,15 +784,18 @@ namespace FacturaE
                         tax.TaxableBase = new AmountType();
                     }
 
-                    tax.TaxableBase.TotalAmount       = GrossAmount;
-                    tax.TaxableBase.EquivalentInEuros = GrossAmount;
+                    tax.TaxableBase.TotalAmount                = GrossAmount;
+                    tax.TaxableBase.EquivalentInEuros          = GrossAmount;
+                    tax.TaxableBase.EquivalentInEurosSpecified = true;
 
                     if (tax.TaxAmount == null)
                     {
                         tax.TaxAmount = new AmountType();
                     }
 
-                    tax.TaxAmount.TotalAmount = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100).Round();
+                    tax.TaxAmount.TotalAmount                = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100).Round();
+                    tax.TaxAmount.EquivalentInEuros          = tax.TaxAmount.TotalAmount;
+                    tax.TaxAmount.EquivalentInEurosSpecified = true;
                 }
             );
 

@@ -2,13 +2,18 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using FacturaE.XAdES;
+using FacturaE.Xml;
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace FacturaE
 {
     public class Program
     {
+        static readonly string s_Filename = "sample.xsig";
+
         static void Main(string[] args)
         {
             var eInvoice = new Facturae();
@@ -68,24 +73,22 @@ namespace FacturaE
                         .GiveQuantity(1.0)
                         .GiveUnitPriceWithoutTax(100.01)
                         .GiveDiscount(10.01, "Line Discount")
-                        .GiveVATRate(21.00)
+                        .GiveVATRate(21.00, 5.20)
                         .GiveTaxRate(9.00, TaxTypeCodeType.PersonalIncomeTax)
                         .CalculateTotals()
                     .AddInvoiceItem("XXX", "XXX")
                         .GiveQuantity(1)
                         .GiveUnitPriceWithoutTax(100.01)
                         .GiveDiscount(10.01)
-                        .GiveVATRate(21.00)
+                        .GiveVATRate(21.00, 5.20)
                         .GiveTaxRate(9.00, TaxTypeCodeType.PersonalIncomeTax)
                         .CalculateTotals()
                     .CalculateTotals()
                 .CalculateTotals()
                 .Validate()
                 .Sign(cert, ClaimedRole.Supplier)
-                .WriteToFile(@"Sample.xsig")
+                .WriteToFile(s_Filename)
                 .CheckSignature();
-
-            System.Console.WriteLine(isValid);
         }
     }
 }

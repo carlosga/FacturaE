@@ -285,16 +285,13 @@ namespace FacturaE.DataType
         {
             if (reader != null)
             {
-                _value = XmlConvert.ToDouble(reader.ReadString());
+                _value = reader.ReadElementContentAsDouble();
             }
         }
 
         public void WriteXml(XmlWriter writer)
         {
-            if (writer != null)
-            {
-                writer.WriteString(ToString());
-            }
+            writer?.WriteString(ToString());
         }
     }
 }

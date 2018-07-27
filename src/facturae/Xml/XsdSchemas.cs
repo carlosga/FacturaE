@@ -16,25 +16,20 @@ namespace FacturaE.Xml
     /// </summary>
     internal static class XsdSchemas
     {
-        private const string FacturaeNamespaceUrl   = "http://www.facturae.es/Facturae/2014/v3.2.2/Facturae";
-        private const string XmlDsigNamespaceUrl    = "http://www.w3.org/2000/09/xmldsig#";
-        private const string XadesNamespaceUrl      = "http://uri.etsi.org/01903/v1.3.2#";
-        private const string FacturaePrefix         = "fe";
-        private const string XmlDsigPrefix          = "ds";
-        private const string XadesPrefix            = "";
-        private const string XmlDsigSchemaResource  = "FacturaE.Schemas.xmldsig-core-schema.xsd";
-        private const string FacturaeSchemaResource = "FacturaE.Schemas.Facturaev3_2_2.xsd";
-        private const string XAdESSchemaResource    = "FacturaE.Schemas.XAdES.xsd";
+        private static readonly string s_FacturaeNamespaceUrl   = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml";
+        private static readonly string s_XmlDsigNamespaceUrl    = "http://www.w3.org/2000/09/xmldsig#";
+        private static readonly string s_FacturaePrefix         = "fe";
+        private static readonly string s_XmlDsigPrefix          = "ds";
+        private static readonly string s_XmlDsigSchemaResource  = "FacturaE.Schemas.xmldsig-core-schema.xsd";
+        private static readonly string s_FacturaeSchemaResource = "FacturaE.Schemas.Facturaev3_2_2.xsd";
 
-        internal readonly static XmlSerializerNamespaces XadesSerializerNamespaces = new XmlSerializerNamespaces
-        (
-            new XmlQualifiedName[] 
-            {
-                new XmlQualifiedName(XsdSchemas.FacturaePrefix, XsdSchemas.FacturaeNamespaceUrl),
-                new XmlQualifiedName(XsdSchemas.XmlDsigPrefix , XsdSchemas.XmlDsigNamespaceUrl),
-                new XmlQualifiedName(XsdSchemas.XadesPrefix   , XsdSchemas.XadesNamespaceUrl)
-            }
-        );
+        internal static readonly XmlQualifiedName[] Namespaces = new XmlQualifiedName[] 
+        {
+            new XmlQualifiedName(XsdSchemas.s_FacturaePrefix, XsdSchemas.s_FacturaeNamespaceUrl),
+            new XmlQualifiedName(XsdSchemas.s_XmlDsigPrefix , XsdSchemas.s_XmlDsigNamespaceUrl),
+        };
+
+        internal readonly static XmlSerializerNamespaces XadesSerializerNamespaces = new XmlSerializerNamespaces(Namespaces);
 
         /// <summary>
         /// Formats a new identifier with the given string
@@ -63,11 +58,15 @@ namespace FacturaE.Xml
         /// <returns>A new instance of <see cref="XmlNamespaceManager"/></returns>
         internal static XmlNamespaceManager CreateXadesNamespaceManager(XmlDocument document)
         {
-            var nsmgr = new XmlNamespaceManager(document.NameTable);
+            return CreateXadesNamespaceManager(document.NameTable);
+        }
+
+        internal static XmlNamespaceManager CreateXadesNamespaceManager(XmlNameTable nameTable)
+        {
+            var nsmgr = new XmlNamespaceManager(nameTable);
             
-            nsmgr.AddNamespace(XsdSchemas.FacturaePrefix, XsdSchemas.FacturaeNamespaceUrl);
-            nsmgr.AddNamespace(XsdSchemas.XmlDsigPrefix , XsdSchemas.XmlDsigNamespaceUrl);
-            nsmgr.AddNamespace(XsdSchemas.XadesPrefix   , XsdSchemas.XadesNamespaceUrl);
+            nsmgr.AddNamespace(XsdSchemas.s_FacturaePrefix, XsdSchemas.s_FacturaeNamespaceUrl);
+            nsmgr.AddNamespace(XsdSchemas.s_XmlDsigPrefix , XsdSchemas.s_XmlDsigNamespaceUrl);
 
             return nsmgr;
         }
@@ -115,9 +114,8 @@ namespace FacturaE.Xml
         {
             var schemaSet = new XmlSchemaSet(nt);
 
-            schemaSet.Add(ReadSchema(XmlDsigSchemaResource));
-            schemaSet.Add(ReadSchema(XAdESSchemaResource));
-            schemaSet.Add(ReadSchema(FacturaeSchemaResource));
+            schemaSet.Add(ReadSchema(s_FacturaeSchemaResource));
+            schemaSet.Add(ReadSchema(s_XmlDsigSchemaResource));
             schemaSet.Compile();
 
             return schemaSet;
