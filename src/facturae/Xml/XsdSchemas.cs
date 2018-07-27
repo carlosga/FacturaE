@@ -16,14 +16,14 @@ namespace FacturaE.Xml
     /// </summary>
     internal static class XsdSchemas
     {
-        private const string FacturaeNamespaceUrl   = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae";
+        private const string FacturaeNamespaceUrl   = "http://www.facturae.es/Facturae/2014/v3.2.2/Facturae";
         private const string XmlDsigNamespaceUrl    = "http://www.w3.org/2000/09/xmldsig#";
         private const string XadesNamespaceUrl      = "http://uri.etsi.org/01903/v1.3.2#";
         private const string FacturaePrefix         = "fe";
         private const string XmlDsigPrefix          = "ds";
         private const string XadesPrefix            = "";
         private const string XmlDsigSchemaResource  = "FacturaE.Schemas.xmldsig-core-schema.xsd";
-        private const string FacturaeSchemaResource = "FacturaE.Schemas.Facturaev3_2_1.xsd";
+        private const string FacturaeSchemaResource = "FacturaE.Schemas.Facturaev3_2_2.xsd";
         private const string XAdESSchemaResource    = "FacturaE.Schemas.XAdES.xsd";
 
         internal readonly static XmlSerializerNamespaces XadesSerializerNamespaces = new XmlSerializerNamespaces

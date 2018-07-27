@@ -1,9 +1,10 @@
-﻿// Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
+﻿﻿// Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace FacturaE
+namespace FacturaE 
 {
     using FacturaE.DataType;
+    using FacturaE.XAdES;
     using System;
     using System.CodeDom.Compiler;
     using System.Collections.Generic;
@@ -14,224 +15,133 @@ namespace FacturaE
     using System.Xml.Serialization;
 
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    [XmlRootAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae", IsNullable = false)]
-    public partial class Facturae
+    [XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    [XmlRootAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml", IsNullable=false)]
+    public partial class Facturae 
     {
-
-        private FileHeaderType fileHeaderField;
-
-        private PartiesType partiesField;
-
-        private List<InvoiceType> invoicesField;
-
-        private ExtensionsType extensionsField;
-
-        private SignatureType signatureField;
-
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public FileHeaderType FileHeader
+        public FileHeaderType FileHeader 
         {
-            get
-            {
-                return this.fileHeaderField;
-            }
-            set
-            {
-                this.fileHeaderField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public PartiesType Parties
+        public PartiesType Parties 
         {
-            get
-            {
-                return this.partiesField;
-            }
-            set
-            {
-                this.partiesField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("Invoice", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<InvoiceType> Invoices
+        [XmlArrayItemAttribute("Invoice", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<InvoiceType> Invoices 
         {
-            get
-            {
-                return this.invoicesField;
-            }
-            set
-            {
-                this.invoicesField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public ExtensionsType Extensions
+        public ExtensionsType Extensions 
         {
-            get
-            {
-                return this.extensionsField;
-            }
-            set
-            {
-                this.extensionsField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-        public SignatureType Signature
+        public SignatureType Signature 
         {
-            get
-            {
-                return this.signatureField;
-            }
-            set
-            {
-                this.signatureField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class FileHeaderType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class FileHeaderType 
     {
-
-        private SchemaVersionType schemaVersionField;
-
-        private ModalityType modalityField;
-
-        private InvoiceIssuerTypeType invoiceIssuerTypeField;
-
-        private ThirdPartyType thirdPartyField;
-
-        private BatchType batchField;
-
-        private FactoringAssignmentDataType factoringAssignmentDataField;
-
-        public FileHeaderType()
+        public FileHeaderType() 
         {
-            this.schemaVersionField = SchemaVersionType.Item321;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public SchemaVersionType SchemaVersion
+        public SchemaVersionType SchemaVersion 
         {
-            get
-            {
-                return this.schemaVersionField;
-            }
-            set
-            {
-                this.schemaVersionField = value;
-            }
-        }
-
+            get;
+            set;
+        } = SchemaVersionType.Item322;
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public ModalityType Modality
+        public ModalityType Modality 
         {
-            get
-            {
-                return this.modalityField;
-            }
-            set
-            {
-                this.modalityField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public InvoiceIssuerTypeType InvoiceIssuerType
+        public InvoiceIssuerTypeType InvoiceIssuerType 
         {
-            get
-            {
-                return this.invoiceIssuerTypeField;
-            }
-            set
-            {
-                this.invoiceIssuerTypeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public ThirdPartyType ThirdParty
+        public ThirdPartyType ThirdParty 
         {
-            get
-            {
-                return this.thirdPartyField;
-            }
-            set
-            {
-                this.thirdPartyField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public BatchType Batch
+        public BatchType Batch 
         {
-            get
-            {
-                return this.batchField;
-            }
-            set
-            {
-                this.batchField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public FactoringAssignmentDataType FactoringAssignmentData
+        public FactoringAssignmentDataType FactoringAssignmentData 
         {
-            get
-            {
-                return this.factoringAssignmentDataField;
-            }
-            set
-            {
-                this.factoringAssignmentDataField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum SchemaVersionType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum SchemaVersionType 
     {
         /// <remarks/>
-        [XmlEnumAttribute("3.2.1")]
-        Item321,
+        [XmlEnumAttribute("3.2.2")]
+        Item322,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum ModalityType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum ModalityType 
     {
         /// <remarks/>
         [XmlEnumAttribute("I")]
@@ -241,132 +151,96 @@ namespace FacturaE
         [XmlEnumAttribute("L")]
         Batch,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum InvoiceIssuerTypeType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum InvoiceIssuerTypeType 
     {
-
-        /// <remarks/>
-        EM,
-
-        /// <remarks/>
-        RE,
-
-        /// <remarks/>
-        TE,
+        /// <summary>
+        /// Seller (Sender) / Proveedor (Emisor)
+        /// </summary>
+        [XmlEnumAttribute("EM")]
+        Seller,
+        
+        /// <summary>
+        /// Buyer (Receiver) / Cliente (Receptor)
+        /// </summary>
+        [XmlEnumAttribute("RE")]
+        Buyer,
+        
+        /// <summary>
+        /// Third Party
+        /// </summary>
+        [XmlEnumAttribute("TE")]
+        ThirdParty
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class ThirdPartyType
-    {
-
-        private TaxIdentificationType taxIdentificationField;
-
-        private object itemField;
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class ThirdPartyType 
+    {        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public TaxIdentificationType TaxIdentification
+        public TaxIdentificationType TaxIdentification 
         {
-            get
-            {
-                return this.taxIdentificationField;
-            }
-            set
-            {
-                this.taxIdentificationField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute("Individual", typeof(IndividualType), Form = XmlSchemaForm.Unqualified)]
         [XmlElementAttribute("LegalEntity", typeof(LegalEntityType), Form = XmlSchemaForm.Unqualified)]
-        public object Item
+        public object Item 
         {
-            get
-            {
-                return this.itemField;
-            }
-            set
-            {
-                this.itemField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class TaxIdentificationType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class TaxIdentificationType 
     {
-
-        private PersonTypeCodeType personTypeCodeField;
-
-        private ResidenceTypeCodeType residenceTypeCodeField;
-
-        private string taxIdentificationNumberField;
-
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public PersonTypeCodeType PersonTypeCode
+        public PersonTypeCodeType PersonTypeCode 
         {
-            get
-            {
-                return this.personTypeCodeField;
-            }
-            set
-            {
-                this.personTypeCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public ResidenceTypeCodeType ResidenceTypeCode
-        {
-            get
-            {
-                return this.residenceTypeCodeField;
-            }
-            set
-            {
-                this.residenceTypeCodeField = value;
-            }
+        public ResidenceTypeCodeType ResidenceTypeCode {
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string TaxIdentificationNumber
+        public string TaxIdentificationNumber 
         {
-            get
-            {
-                return this.taxIdentificationNumberField;
-            }
-            set
-            {
-                this.taxIdentificationNumberField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum PersonTypeCodeType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum PersonTypeCodeType 
     {
-
         /// <remarks/>
         [XmlEnumAttribute("F")]
         Individual,
@@ -375,14 +249,13 @@ namespace FacturaE
         [XmlEnumAttribute("J")]
         LegalEntity
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum ResidenceTypeCodeType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum ResidenceTypeCodeType 
     {
-
         /// <remarks/>
         [XmlEnumAttribute("E")]
         Foreigner,
@@ -393,1707 +266,287 @@ namespace FacturaE
 
         /// <remarks/>
         [XmlEnumAttribute("U")]
-        ResidentInEU,
+        ResidentInEU,    
     }
 
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("Object", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class ObjectType
-    {
-
-        private XmlNode[] anyField;
-
-        private string idField;
-
-        private string mimeTypeField;
-
-        private string encodingField;
-
-        /// <remarks/>
-        [XmlTextAttribute()]
-        [XmlAnyElementAttribute()]
-        public XmlNode[] Any
-        {
-            get
-            {
-                return this.anyField;
-            }
-            set
-            {
-                this.anyField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "ID")]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute()]
-        public string MimeType
-        {
-            get
-            {
-                return this.mimeTypeField;
-            }
-            set
-            {
-                this.mimeTypeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "anyURI")]
-        public string Encoding
-        {
-            get
-            {
-                return this.encodingField;
-            }
-            set
-            {
-                this.encodingField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("SPKIData", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SPKIDataType
-    {
-
-        private byte[] sPKISexpField;
-
-        private System.Xml.XmlElement anyField;
-
-        /// <remarks/>
-        [XmlElementAttribute("SPKISexp", DataType = "base64Binary")]
-        public byte[] SPKISexp
-        {
-            get
-            {
-                return this.sPKISexpField;
-            }
-            set
-            {
-                this.sPKISexpField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAnyElementAttribute()]
-        public System.Xml.XmlElement Any
-        {
-            get
-            {
-                return this.anyField;
-            }
-            set
-            {
-                this.anyField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("PGPData", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class PGPDataType
-    {
-
-        private object[] itemsField;
-
-        private ItemsChoiceType1[] itemsElementNameField;
-
-        /// <remarks/>
-        [XmlAnyElementAttribute()]
-        [XmlElementAttribute("PGPKeyID", typeof(byte[]), DataType = "base64Binary")]
-        [XmlElementAttribute("PGPKeyPacket", typeof(byte[]), DataType = "base64Binary")]
-        [XmlChoiceIdentifierAttribute("ItemsElementName")]
-        public object[] Items
-        {
-            get
-            {
-                return this.itemsField;
-            }
-            set
-            {
-                this.itemsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute("ItemsElementName")]
-        [XmlIgnoreAttribute()]
-        public ItemsChoiceType1[] ItemsElementName
-        {
-            get
-            {
-                return this.itemsElementNameField;
-            }
-            set
-            {
-                this.itemsElementNameField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#", IncludeInSchema = false)]
-    public enum ItemsChoiceType1
-    {
-
-        /// <remarks/>
-        [XmlEnumAttribute("##any:")]
-        Item,
-
-        /// <remarks/>
-        PGPKeyID,
-
-        /// <remarks/>
-        PGPKeyPacket,
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    public partial class X509IssuerSerialType
-    {
-
-        private string x509IssuerNameField;
-
-        private string x509SerialNumberField;
-
-        /// <remarks/>
-        public string X509IssuerName
-        {
-            get
-            {
-                return this.x509IssuerNameField;
-            }
-            set
-            {
-                this.x509IssuerNameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute(DataType = "integer")]
-        public string X509SerialNumber
-        {
-            get
-            {
-                return this.x509SerialNumberField;
-            }
-            set
-            {
-                this.x509SerialNumberField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("X509Data", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class X509DataType
-    {
-
-        private object[] itemsField;
-
-        private ItemsChoiceType[] itemsElementNameField;
-
-        /// <remarks/>
-        [XmlAnyElementAttribute()]
-        [XmlElementAttribute("X509CRL", typeof(byte[]), DataType = "base64Binary")]
-        [XmlElementAttribute("X509Certificate", typeof(byte[]), DataType = "base64Binary")]
-        [XmlElementAttribute("X509IssuerSerial", typeof(X509IssuerSerialType))]
-        [XmlElementAttribute("X509SKI", typeof(byte[]), DataType = "base64Binary")]
-        [XmlElementAttribute("X509SubjectName", typeof(string))]
-        [XmlChoiceIdentifierAttribute("ItemsElementName")]
-        public object[] Items
-        {
-            get
-            {
-                return this.itemsField;
-            }
-            set
-            {
-                this.itemsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute("ItemsElementName")]
-        [XmlIgnoreAttribute()]
-        public ItemsChoiceType[] ItemsElementName
-        {
-            get
-            {
-                return this.itemsElementNameField;
-            }
-            set
-            {
-                this.itemsElementNameField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#", IncludeInSchema = false)]
-    public enum ItemsChoiceType
-    {
-
-        /// <remarks/>
-        [XmlEnumAttribute("##any:")]
-        Item,
-
-        /// <remarks/>
-        X509CRL,
-
-        /// <remarks/>
-        X509Certificate,
-
-        /// <remarks/>
-        X509IssuerSerial,
-
-        /// <remarks/>
-        X509SKI,
-
-        /// <remarks/>
-        X509SubjectName,
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("RetrievalMethod", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class RetrievalMethodType
-    {
-
-        private List<TransformType> transformsField;
-
-        private string uRIField;
-
-        private string typeField;
-
-        /// <remarks/>
-        [XmlArrayItemAttribute("Transform", IsNullable = false)]
-        public List<TransformType> Transforms
-        {
-            get
-            {
-                return this.transformsField;
-            }
-            set
-            {
-                this.transformsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "anyURI")]
-        public string URI
-        {
-            get
-            {
-                return this.uRIField;
-            }
-            set
-            {
-                this.uRIField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "anyURI")]
-        public string Type
-        {
-            get
-            {
-                return this.typeField;
-            }
-            set
-            {
-                this.typeField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("Transform", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class TransformType
-    {
-
-        private object[] itemsField;
-
-        private string[] textField;
-
-        private string algorithmField;
-
-        /// <remarks/>
-        [XmlAnyElementAttribute()]
-        [XmlElementAttribute("XPath", typeof(string))]
-        public object[] Items
-        {
-            get
-            {
-                return this.itemsField;
-            }
-            set
-            {
-                this.itemsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlTextAttribute()]
-        public string[] Text
-        {
-            get
-            {
-                return this.textField;
-            }
-            set
-            {
-                this.textField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "anyURI")]
-        public string Algorithm
-        {
-            get
-            {
-                return this.algorithmField;
-            }
-            set
-            {
-                this.algorithmField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("RSAKeyValue", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class RSAKeyValueType
-    {
-
-        private byte[] modulusField;
-
-        private byte[] exponentField;
-
-        /// <remarks/>
-        [XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Modulus
-        {
-            get
-            {
-                return this.modulusField;
-            }
-            set
-            {
-                this.modulusField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Exponent
-        {
-            get
-            {
-                return this.exponentField;
-            }
-            set
-            {
-                this.exponentField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("DSAKeyValue", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class DSAKeyValueType
-    {
-
-        private byte[] pField;
-
-        private byte[] qField;
-
-        private byte[] gField;
-
-        private byte[] yField;
-
-        private byte[] jField;
-
-        private byte[] seedField;
-
-        private byte[] pgenCounterField;
-
-        /// <remarks/>
-        [XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] P
-        {
-            get
-            {
-                return this.pField;
-            }
-            set
-            {
-                this.pField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Q
-        {
-            get
-            {
-                return this.qField;
-            }
-            set
-            {
-                this.qField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] G
-        {
-            get
-            {
-                return this.gField;
-            }
-            set
-            {
-                this.gField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Y
-        {
-            get
-            {
-                return this.yField;
-            }
-            set
-            {
-                this.yField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] J
-        {
-            get
-            {
-                return this.jField;
-            }
-            set
-            {
-                this.jField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] Seed
-        {
-            get
-            {
-                return this.seedField;
-            }
-            set
-            {
-                this.seedField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] PgenCounter
-        {
-            get
-            {
-                return this.pgenCounterField;
-            }
-            set
-            {
-                this.pgenCounterField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("KeyValue", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class KeyValueType
-    {
-
-        private object itemField;
-
-        private List<string> textField;
-
-        /// <remarks/>
-        [XmlAnyElementAttribute()]
-        [XmlElementAttribute("DSAKeyValue", typeof(DSAKeyValueType))]
-        [XmlElementAttribute("RSAKeyValue", typeof(RSAKeyValueType))]
-        public object Item
-        {
-            get
-            {
-                return this.itemField;
-            }
-            set
-            {
-                this.itemField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlTextAttribute()]
-        public List<string> Text
-        {
-            get
-            {
-                return this.textField;
-            }
-            set
-            {
-                this.textField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("KeyInfo", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class KeyInfoType
-    {
-
-        private object[] itemsField;
-
-        private ItemsChoiceType2[] itemsElementNameField;
-
-        private string[] textField;
-
-        private string idField;
-
-        /// <remarks/>
-        [XmlAnyElementAttribute()]
-        [XmlElementAttribute("KeyName", typeof(string))]
-        [XmlElementAttribute("KeyValue", typeof(KeyValueType))]
-        [XmlElementAttribute("MgmtData", typeof(string))]
-        [XmlElementAttribute("PGPData", typeof(PGPDataType))]
-        [XmlElementAttribute("RetrievalMethod", typeof(RetrievalMethodType))]
-        [XmlElementAttribute("SPKIData", typeof(SPKIDataType))]
-        [XmlElementAttribute("X509Data", typeof(X509DataType))]
-        [XmlChoiceIdentifierAttribute("ItemsElementName")]
-        public object[] Items
-        {
-            get
-            {
-                return this.itemsField;
-            }
-            set
-            {
-                this.itemsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute("ItemsElementName")]
-        [XmlIgnoreAttribute()]
-        public ItemsChoiceType2[] ItemsElementName
-        {
-            get
-            {
-                return this.itemsElementNameField;
-            }
-            set
-            {
-                this.itemsElementNameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlTextAttribute()]
-        public string[] Text
-        {
-            get
-            {
-                return this.textField;
-            }
-            set
-            {
-                this.textField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "ID")]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#", IncludeInSchema = false)]
-    public enum ItemsChoiceType2
-    {
-
-        /// <remarks/>
-        [XmlEnumAttribute("##any:")]
-        Item,
-
-        /// <remarks/>
-        KeyName,
-
-        /// <remarks/>
-        KeyValue,
-
-        /// <remarks/>
-        MgmtData,
-
-        /// <remarks/>
-        PGPData,
-
-        /// <remarks/>
-        RetrievalMethod,
-
-        /// <remarks/>
-        SPKIData,
-
-        /// <remarks/>
-        X509Data,
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("SignatureValue", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SignatureValueType
-    {
-
-        private string idField;
-
-        private byte[] valueField;
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "ID")]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlTextAttribute(DataType = "base64Binary")]
-        public byte[] Value
-        {
-            get
-            {
-                return this.valueField;
-            }
-            set
-            {
-                this.valueField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("DigestMethod", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class DigestMethodType
-    {
-
-        private XmlNode[] anyField;
-
-        private string algorithmField;
-
-        /// <remarks/>
-        [XmlTextAttribute()]
-        [XmlAnyElementAttribute()]
-        public XmlNode[] Any
-        {
-            get
-            {
-                return this.anyField;
-            }
-            set
-            {
-                this.anyField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "anyURI")]
-        public string Algorithm
-        {
-            get
-            {
-                return this.algorithmField;
-            }
-            set
-            {
-                this.algorithmField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("Reference", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class ReferenceType
-    {
-
-        private List<TransformType> transformsField;
-
-        private DigestMethodType digestMethodField;
-
-        private byte[] digestValueField;
-
-        private string idField;
-
-        private string uRIField;
-
-        private string typeField;
-
-        /// <remarks/>
-        [XmlArrayItemAttribute("Transform", IsNullable = false)]
-        public List<TransformType> Transforms
-        {
-            get
-            {
-                return this.transformsField;
-            }
-            set
-            {
-                this.transformsField = value;
-            }
-        }
-
-        /// <remarks/>
-        public DigestMethodType DigestMethod
-        {
-            get
-            {
-                return this.digestMethodField;
-            }
-            set
-            {
-                this.digestMethodField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute(DataType = "base64Binary")]
-        public byte[] DigestValue
-        {
-            get
-            {
-                return this.digestValueField;
-            }
-            set
-            {
-                this.digestValueField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "ID")]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "anyURI")]
-        public string URI
-        {
-            get
-            {
-                return this.uRIField;
-            }
-            set
-            {
-                this.uRIField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "anyURI")]
-        public string Type
-        {
-            get
-            {
-                return this.typeField;
-            }
-            set
-            {
-                this.typeField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("SignatureMethod", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SignatureMethodType
-    {
-
-        private string hMACOutputLengthField;
-
-        private XmlNode[] anyField;
-
-        private string algorithmField;
-
-        /// <remarks/>
-        [XmlElementAttribute(DataType = "integer")]
-        public string HMACOutputLength
-        {
-            get
-            {
-                return this.hMACOutputLengthField;
-            }
-            set
-            {
-                this.hMACOutputLengthField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlTextAttribute()]
-        [XmlAnyElementAttribute()]
-        public XmlNode[] Any
-        {
-            get
-            {
-                return this.anyField;
-            }
-            set
-            {
-                this.anyField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "anyURI")]
-        public string Algorithm
-        {
-            get
-            {
-                return this.algorithmField;
-            }
-            set
-            {
-                this.algorithmField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("CanonicalizationMethod", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class CanonicalizationMethodType
-    {
-
-        private XmlNode[] anyField;
-
-        private string algorithmField;
-
-        /// <remarks/>
-        [XmlTextAttribute()]
-        [XmlAnyElementAttribute()]
-        public XmlNode[] Any
-        {
-            get
-            {
-                return this.anyField;
-            }
-            set
-            {
-                this.anyField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "anyURI")]
-        public string Algorithm
-        {
-            get
-            {
-                return this.algorithmField;
-            }
-            set
-            {
-                this.algorithmField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("SignedInfo", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SignedInfoType
-    {
-
-        private CanonicalizationMethodType canonicalizationMethodField;
-
-        private SignatureMethodType signatureMethodField;
-
-        private List<ReferenceType> referenceField;
-
-        private string idField;
-
-        /// <remarks/>
-        public CanonicalizationMethodType CanonicalizationMethod
-        {
-            get
-            {
-                return this.canonicalizationMethodField;
-            }
-            set
-            {
-                this.canonicalizationMethodField = value;
-            }
-        }
-
-        /// <remarks/>
-        public SignatureMethodType SignatureMethod
-        {
-            get
-            {
-                return this.signatureMethodField;
-            }
-            set
-            {
-                this.signatureMethodField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute("Reference")]
-        public List<ReferenceType> Reference
-        {
-            get
-            {
-                return this.referenceField;
-            }
-            set
-            {
-                this.referenceField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "ID")]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("Signature", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SignatureType
-    {
-
-        private SignedInfoType signedInfoField;
-
-        private SignatureValueType signatureValueField;
-
-        private KeyInfoType keyInfoField;
-
-        private List<ObjectType> objectField;
-
-        private string idField;
-
-        /// <remarks/>
-        public SignedInfoType SignedInfo
-        {
-            get
-            {
-                return this.signedInfoField;
-            }
-            set
-            {
-                this.signedInfoField = value;
-            }
-        }
-
-        /// <remarks/>
-        public SignatureValueType SignatureValue
-        {
-            get
-            {
-                return this.signatureValueField;
-            }
-            set
-            {
-                this.signatureValueField = value;
-            }
-        }
-
-        /// <remarks/>
-        public KeyInfoType KeyInfo
-        {
-            get
-            {
-                return this.keyInfoField;
-            }
-            set
-            {
-                this.keyInfoField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute("Object")]
-        public List<ObjectType> Object
-        {
-            get
-            {
-                return this.objectField;
-            }
-            set
-            {
-                this.objectField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "ID")]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class AttachmentType
     {
-
-        private AttachmentCompressionAlgorithmType attachmentCompressionAlgorithmField;
-
-        private bool attachmentCompressionAlgorithmFieldSpecified;
-
-        private AttachmentFormatType attachmentFormatField;
-
-        private AttachmentEncodingType attachmentEncodingField;
-
-        private bool attachmentEncodingFieldSpecified;
-
-        private string attachmentDescriptionField;
-
-        private string attachmentDataField;
-
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AttachmentCompressionAlgorithmType AttachmentCompressionAlgorithm
+        public AttachmentCompressionAlgorithmType AttachmentCompressionAlgorithm 
         {
-            get
-            {
-                return this.attachmentCompressionAlgorithmField;
-            }
-            set
-            {
-                this.attachmentCompressionAlgorithmField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool AttachmentCompressionAlgorithmSpecified
+        public bool AttachmentCompressionAlgorithmSpecified 
         {
-            get
-            {
-                return this.attachmentCompressionAlgorithmFieldSpecified;
-            }
-            set
-            {
-                this.attachmentCompressionAlgorithmFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AttachmentFormatType AttachmentFormat
+        public AttachmentFormatType AttachmentFormat 
         {
-            get
-            {
-                return this.attachmentFormatField;
-            }
-            set
-            {
-                this.attachmentFormatField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AttachmentEncodingType AttachmentEncoding
+        public AttachmentEncodingType AttachmentEncoding 
         {
-            get
-            {
-                return this.attachmentEncodingField;
-            }
-            set
-            {
-                this.attachmentEncodingField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
         public bool AttachmentEncodingSpecified
         {
-            get
-            {
-                return this.attachmentEncodingFieldSpecified;
-            }
-            set
-            {
-                this.attachmentEncodingFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string AttachmentDescription
+        public string AttachmentDescription 
         {
-            get
-            {
-                return this.attachmentDescriptionField;
-            }
-            set
-            {
-                this.attachmentDescriptionField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string AttachmentData
         {
-            get
-            {
-                return this.attachmentDataField;
-            }
-            set
-            {
-                this.attachmentDataField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum AttachmentCompressionAlgorithmType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum AttachmentCompressionAlgorithmType 
     {
-
         /// <remarks/>
         ZIP,
-
+        
         /// <remarks/>
         GZIP,
-
+        
         /// <remarks/>
         NONE,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum AttachmentFormatType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum AttachmentFormatType 
     {
-
         /// <remarks/>
         xml,
-
+        
         /// <remarks/>
         doc,
-
+        
         /// <remarks/>
         gif,
-
+        
         /// <remarks/>
         rtf,
-
+        
         /// <remarks/>
         pdf,
-
+        
         /// <remarks/>
         xls,
-
+        
         /// <remarks/>
         jpg,
-
+        
         /// <remarks/>
         bmp,
-
+        
         /// <remarks/>
         tiff,
+        
+        /// <remarks/>
+        html,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public enum AttachmentEncodingType
     {
-
         /// <remarks/>
         BASE64,
-
+        
         /// <remarks/>
         BER,
-
+        
         /// <remarks/>
         DER,
-
+        
         /// <remarks/>
         NONE,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class AdditionalDataType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class AdditionalDataType 
     {
-
-        private string relatedInvoiceField;
-
-        private List<AttachmentType> relatedDocumentsField;
-
-        private string invoiceAdditionalInformationField;
-
-        private ExtensionsType extensionsField;
-
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string RelatedInvoice
+        public string RelatedInvoice 
         {
-            get
-            {
-                return this.relatedInvoiceField;
-            }
-            set
-            {
-                this.relatedInvoiceField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("Attachment", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<AttachmentType> RelatedDocuments
+        [XmlArrayItemAttribute("Attachment", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public AttachmentType[] RelatedDocuments 
         {
-            get
-            {
-                return this.relatedDocumentsField;
-            }
-            set
-            {
-                this.relatedDocumentsField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string InvoiceAdditionalInformation
+        public string InvoiceAdditionalInformation 
         {
-            get
-            {
-                return this.invoiceAdditionalInformationField;
-            }
-            set
-            {
-                this.invoiceAdditionalInformationField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public ExtensionsType Extensions
+        public ExtensionsType Extensions 
         {
-            get
-            {
-                return this.extensionsField;
-            }
-            set
-            {
-                this.extensionsField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class ExtensionsType
     {
-
-        private List<XmlElement> anyField;
-
         /// <remarks/>
         [XmlAnyElementAttribute()]
-        public List<XmlElement> Any
+        public XmlElement[] Any 
         {
-            get
-            {
-                return this.anyField;
-            }
-            set
-            {
-                this.anyField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class SpecialTaxableEventType
     {
-
-        private SpecialTaxableEventCodeType specialTaxableEventCodeField;
-
-        private string specialTaxableEventReasonField;
-
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public SpecialTaxableEventCodeType SpecialTaxableEventCode
+        public SpecialTaxableEventCodeType SpecialTaxableEventCode 
         {
-            get
-            {
-                return this.specialTaxableEventCodeField;
-            }
-            set
-            {
-                this.specialTaxableEventCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string SpecialTaxableEventReason
         {
-            get
-            {
-                return this.specialTaxableEventReasonField;
-            }
-            set
-            {
-                this.specialTaxableEventReasonField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public enum SpecialTaxableEventCodeType
     {
-
         /// <remarks/>
         [XmlEnumAttribute("01")]
-        Item01,
-
+        TaxableAndExemptFromTax,
+        
         /// <remarks/>
         [XmlEnumAttribute("02")]
-        Item02,
+        NonTaxable,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class DeliveryNoteType
     {
-
-        private string deliveryNoteNumberField;
-
-        private System.DateTime deliveryNoteDateField;
-
-        private bool deliveryNoteDateFieldSpecified;
-
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string DeliveryNoteNumber
         {
-            get
-            {
-                return this.deliveryNoteNumberField;
-            }
-            set
-            {
-                this.deliveryNoteNumberField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
         public System.DateTime DeliveryNoteDate
         {
-            get
-            {
-                return this.deliveryNoteDateField;
-            }
-            set
-            {
-                this.deliveryNoteDateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
         public bool DeliveryNoteDateSpecified
         {
-            get
-            {
-                return this.deliveryNoteDateFieldSpecified;
-            }
-            set
-            {
-                this.deliveryNoteDateFieldSpecified = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class InvoiceLineType
     {
-
-        private string issuerContractReferenceField;
-
-        private System.DateTime issuerContractDateField;
-
-        private bool issuerContractDateFieldSpecified;
-
-        private string issuerTransactionReferenceField;
-
-        private System.DateTime issuerTransactionDateField;
-
-        private bool issuerTransactionDateFieldSpecified;
-
-        private string receiverContractReferenceField;
-
-        private System.DateTime receiverContractDateField;
-
-        private bool receiverContractDateFieldSpecified;
-
-        private string receiverTransactionReferenceField;
-
-        private System.DateTime receiverTransactionDateField;
-
-        private bool receiverTransactionDateFieldSpecified;
-
-        private string fileReferenceField;
-
-        private System.DateTime fileDateField;
-
-        private bool fileDateFieldSpecified;
-
-        private double sequenceNumberField;
-
-        private bool sequenceNumberFieldSpecified;
-
-        private List<DeliveryNoteType> deliveryNotesReferencesField;
-
-        private string itemDescriptionField;
-
-        private double quantityField;
-
-        private UnitOfMeasureType unitOfMeasureField;
-
-        private bool unitOfMeasureFieldSpecified;
-
-        private DoubleUpToEightDecimalType unitPriceWithoutTaxField;
-
-        private DoubleUpToEightDecimalType totalCostField;
-
-        private List<DiscountType> discountsAndRebatesField;
-
-        private List<ChargeType> chargesField;
-
-        private DoubleUpToEightDecimalType grossAmountField;
-
-        private List<TaxType> taxesWithheldField;
-
-        private List<InvoiceLineTypeTax> taxesOutputsField;
-
-        private PeriodDates lineItemPeriodField;
-
-        private System.DateTime transactionDateField;
-
-        private bool transactionDateFieldSpecified;
-
-        private string additionalLineItemInformationField;
-
-        private SpecialTaxableEventType specialTaxableEventField;
-
-        private string articleCodeField;
-
-        private ExtensionsType extensionsField;
+        [XmlIgnore]
         internal InvoiceType Parent
         {
             get;
@@ -2104,5969 +557,4255 @@ namespace FacturaE
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string IssuerContractReference
         {
-            get
-            {
-                return this.issuerContractReferenceField;
-            }
-            set
-            {
-                this.issuerContractReferenceField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime IssuerContractDate
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime IssuerContractDate 
         {
-            get
-            {
-                return this.issuerContractDateField;
-            }
-            set
-            {
-                this.issuerContractDateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool IssuerContractDateSpecified
+        public bool IssuerContractDateSpecified 
         {
-            get
-            {
-                return this.issuerContractDateFieldSpecified;
-            }
-            set
-            {
-                this.issuerContractDateFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string IssuerTransactionReference
+        public string IssuerTransactionReference 
         {
-            get
-            {
-                return this.issuerTransactionReferenceField;
-            }
-            set
-            {
-                this.issuerTransactionReferenceField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime IssuerTransactionDate
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime IssuerTransactionDate 
         {
-            get
-            {
-                return this.issuerTransactionDateField;
-            }
-            set
-            {
-                this.issuerTransactionDateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool IssuerTransactionDateSpecified
+        public bool IssuerTransactionDateSpecified 
         {
-            get
-            {
-                return this.issuerTransactionDateFieldSpecified;
-            }
-            set
-            {
-                this.issuerTransactionDateFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string ReceiverContractReference
+        public string ReceiverContractReference 
         {
-            get
-            {
-                return this.receiverContractReferenceField;
-            }
-            set
-            {
-                this.receiverContractReferenceField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime ReceiverContractDate
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime ReceiverContractDate 
         {
-            get
-            {
-                return this.receiverContractDateField;
-            }
-            set
-            {
-                this.receiverContractDateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool ReceiverContractDateSpecified
+        public bool ReceiverContractDateSpecified 
         {
-            get
-            {
-                return this.receiverContractDateFieldSpecified;
-            }
-            set
-            {
-                this.receiverContractDateFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string ReceiverTransactionReference
+        public string ReceiverTransactionReference 
         {
-            get
-            {
-                return this.receiverTransactionReferenceField;
-            }
-            set
-            {
-                this.receiverTransactionReferenceField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime ReceiverTransactionDate
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime ReceiverTransactionDate 
         {
-            get
-            {
-                return this.receiverTransactionDateField;
-            }
-            set
-            {
-                this.receiverTransactionDateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool ReceiverTransactionDateSpecified
+        public bool ReceiverTransactionDateSpecified 
         {
-            get
-            {
-                return this.receiverTransactionDateFieldSpecified;
-            }
-            set
-            {
-                this.receiverTransactionDateFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string FileReference
+        public string FileReference 
         {
-            get
-            {
-                return this.fileReferenceField;
-            }
-            set
-            {
-                this.fileReferenceField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime FileDate
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime FileDate 
         {
-            get
-            {
-                return this.fileDateField;
-            }
-            set
-            {
-                this.fileDateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool FileDateSpecified
+        public bool FileDateSpecified 
         {
-            get
-            {
-                return this.fileDateFieldSpecified;
-            }
-            set
-            {
-                this.fileDateFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public double SequenceNumber
+        public double SequenceNumber 
         {
-            get
-            {
-                return this.sequenceNumberField;
-            }
-            set
-            {
-                this.sequenceNumberField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool SequenceNumberSpecified
+        public bool SequenceNumberSpecified 
         {
-            get
-            {
-                return this.sequenceNumberFieldSpecified;
-            }
-            set
-            {
-                this.sequenceNumberFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("DeliveryNote", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<DeliveryNoteType> DeliveryNotesReferences
+        [XmlArrayItemAttribute("DeliveryNote", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<DeliveryNoteType> DeliveryNotesReferences 
         {
-            get
-            {
-                return this.deliveryNotesReferencesField;
-            }
-            set
-            {
-                this.deliveryNotesReferencesField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string ItemDescription
+        public string ItemDescription 
         {
-            get
-            {
-                return this.itemDescriptionField;
-            }
-            set
-            {
-                this.itemDescriptionField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public double Quantity
+        public double Quantity 
         {
-            get
-            {
-                return this.quantityField;
-            }
-            set
-            {
-                this.quantityField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public UnitOfMeasureType UnitOfMeasure
+        public UnitOfMeasureType UnitOfMeasure 
         {
-            get
-            {
-                return this.unitOfMeasureField;
-            }
-            set
-            {
-                this.unitOfMeasureField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool UnitOfMeasureSpecified
+        public bool UnitOfMeasureSpecified 
         {
-            get
-            {
-                return this.unitOfMeasureFieldSpecified;
-            }
-            set
-            {
-                this.unitOfMeasureFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType UnitPriceWithoutTax
+        public DoubleUpToEightDecimalType UnitPriceWithoutTax 
         {
-            get
-            {
-                return this.unitPriceWithoutTaxField;
-            }
-            set
-            {
-                this.unitPriceWithoutTaxField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TotalCost
+        public DoubleUpToEightDecimalType TotalCost 
         {
-            get
-            {
-                return this.totalCostField;
-            }
-            set
-            {
-                this.totalCostField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("Discount", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<DiscountType> DiscountsAndRebates
+        [XmlArrayItemAttribute("Discount", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<DiscountType> DiscountsAndRebates 
         {
-            get
-            {
-                return this.discountsAndRebatesField;
-            }
-            set
-            {
-                this.discountsAndRebatesField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("Charge", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<ChargeType> Charges
+        [XmlArrayItemAttribute("Charge", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<ChargeType> Charges 
         {
-            get
-            {
-                return this.chargesField;
-            }
-            set
-            {
-                this.chargesField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType GrossAmount
+        public DoubleUpToEightDecimalType GrossAmount 
         {
-            get
-            {
-                return this.grossAmountField;
-            }
-            set
-            {
-                this.grossAmountField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("Tax", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<TaxType> TaxesWithheld
+        [XmlArrayItemAttribute("Tax", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<TaxType> TaxesWithheld 
         {
-            get
-            {
-                return this.taxesWithheldField;
-            }
-            set
-            {
-                this.taxesWithheldField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("Tax", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<InvoiceLineTypeTax> TaxesOutputs
+        [XmlArrayItemAttribute("Tax", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<InvoiceLineTypeTax> TaxesOutputs 
         {
-            get
-            {
-                return this.taxesOutputsField;
-            }
-            set
-            {
-                this.taxesOutputsField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public PeriodDates LineItemPeriod
+        public PeriodDates LineItemPeriod 
         {
-            get
-            {
-                return this.lineItemPeriodField;
-            }
-            set
-            {
-                this.lineItemPeriodField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime TransactionDate
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime TransactionDate 
         {
-            get
-            {
-                return this.transactionDateField;
-            }
-            set
-            {
-                this.transactionDateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
         public bool TransactionDateSpecified
         {
-            get
-            {
-                return this.transactionDateFieldSpecified;
-            }
-            set
-            {
-                this.transactionDateFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string AdditionalLineItemInformation
         {
-            get
-            {
-                return this.additionalLineItemInformationField;
-            }
-            set
-            {
-                this.additionalLineItemInformationField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public SpecialTaxableEventType SpecialTaxableEvent
         {
-            get
-            {
-                return this.specialTaxableEventField;
-            }
-            set
-            {
-                this.specialTaxableEventField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string ArticleCode
         {
-            get
-            {
-                return this.articleCodeField;
-            }
-            set
-            {
-                this.articleCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public ExtensionsType Extensions
         {
-            get
-            {
-                return this.extensionsField;
-            }
-            set
-            {
-                this.extensionsField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum UnitOfMeasureType
-    {
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum UnitOfMeasureType 
+    {        
         /// <remarks/>
         [XmlEnumAttribute("01")]
-        Item01,
-
+        Units,
+        
         /// <remarks/>
         [XmlEnumAttribute("02")]
-        Item02,
-
+        Hours,
+        
         /// <remarks/>
         [XmlEnumAttribute("03")]
-        Item03,
-
+        Kilograms,
+        
         /// <remarks/>
         [XmlEnumAttribute("04")]
-        Item04,
-
+        Liters,
+        
         /// <remarks/>
         [XmlEnumAttribute("05")]
-        Item05,
-
+        Other,
+        
         /// <remarks/>
         [XmlEnumAttribute("06")]
-        Item06,
-
+        Boxes,
+        
         /// <remarks/>
         [XmlEnumAttribute("07")]
-        Item07,
-
+        Trays,
+        
         /// <remarks/>
         [XmlEnumAttribute("08")]
-        Item08,
-
+        Barrels,
+        
         /// <remarks/>
         [XmlEnumAttribute("09")]
-        Item09,
-
+        Jerricans,
+        
         /// <remarks/>
         [XmlEnumAttribute("10")]
-        Item10,
-
+        Bags,
+        
         /// <remarks/>
         [XmlEnumAttribute("11")]
-        Item11,
-
+        Carboys,
+        
         /// <remarks/>
         [XmlEnumAttribute("12")]
-        Item12,
-
+        Bottles,
+        
         /// <remarks/>
         [XmlEnumAttribute("13")]
-        Item13,
-
+        Canisters,
+        
         /// <remarks/>
         [XmlEnumAttribute("14")]
-        Item14,
-
+        TetraBriks,
+        
         /// <remarks/>
         [XmlEnumAttribute("15")]
-        Item15,
-
+        Centiliters,
+        
         /// <remarks/>
         [XmlEnumAttribute("16")]
-        Item16,
-
+        Centimeters,
+        
         /// <remarks/>
         [XmlEnumAttribute("17")]
-        Item17,
-
+        Bins,
+        
         /// <remarks/>
         [XmlEnumAttribute("18")]
-        Item18,
-
+        Dozens,
+        
         /// <remarks/>
         [XmlEnumAttribute("19")]
-        Item19,
-
+        Cases,
+        
         /// <remarks/>
         [XmlEnumAttribute("20")]
-        Item20,
-
+        Demijohns,
+        
         /// <remarks/>
         [XmlEnumAttribute("21")]
-        Item21,
-
+        Grams,
+        
         /// <remarks/>
         [XmlEnumAttribute("22")]
-        Item22,
-
+        Kilometers,
+        
         /// <remarks/>
         [XmlEnumAttribute("23")]
-        Item23,
-
+        Cans,
+        
         /// <remarks/>
         [XmlEnumAttribute("24")]
-        Item24,
-
+        Bunches,
+        
         /// <remarks/>
         [XmlEnumAttribute("25")]
-        Item25,
-
+        Meters,
+        
         /// <remarks/>
         [XmlEnumAttribute("26")]
-        Item26,
-
+        Milimeters,
+        
         /// <remarks/>
         [XmlEnumAttribute("27")]
-        Item27,
-
+        SixPacks,
+        
         /// <remarks/>
         [XmlEnumAttribute("28")]
-        Item28,
-
+        Packages,
+        
         /// <remarks/>
         [XmlEnumAttribute("29")]
-        Item29,
-
+        Portions,
+        
         /// <remarks/>
         [XmlEnumAttribute("30")]
-        Item30,
-
+        Rolls,
+        
         /// <remarks/>
         [XmlEnumAttribute("31")]
-        Item31,
-
+        Envelopes,
+        
         /// <remarks/>
         [XmlEnumAttribute("32")]
-        Item32,
-
+        Tubs,
+        
         /// <remarks/>
         [XmlEnumAttribute("33")]
-        Item33,
-
+        CubicMeter,
+        
         /// <remarks/>
         [XmlEnumAttribute("34")]
-        Item34,
-
+        Second,
+        
         /// <remarks/>
         [XmlEnumAttribute("35")]
-        Item35,
+        Watt,
+        
+        /// <remarks/>
+        [XmlEnumAttribute("36")]
+        KilowattPerHour,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class DiscountType
-    {
-
-        private string discountReasonField;
-
-        private DoubleUpToEightDecimalType discountRateField;
-
-        private bool discountRateFieldSpecified;
-
-        private DoubleUpToEightDecimalType discountAmountField;
-
+    {       
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string DiscountReason
         {
-            get
-            {
-                return this.discountReasonField;
-            }
-            set
-            {
-                this.discountReasonField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public DoubleUpToEightDecimalType DiscountRate
         {
-            get
-            {
-                return this.discountRateField;
-            }
-            set
-            {
-                this.discountRateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool DiscountRateSpecified
-        {
-            get
-            {
-                return this.discountRateFieldSpecified;
-            }
-            set
-            {
-                this.discountRateFieldSpecified = value;
-            }
+        public bool DiscountRateSpecified {
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType DiscountAmount
-        {
-            get
-            {
-                return this.discountAmountField;
-            }
-            set
-            {
-                this.discountAmountField = value;
-            }
+        public DoubleUpToEightDecimalType DiscountAmount {
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class ChargeType
-    {
-
-        private string chargeReasonField;
-
-        private DoubleUpToEightDecimalType chargeRateField;
-
-        private bool chargeRateFieldSpecified;
-
-        private DoubleUpToEightDecimalType chargeAmountField;
-
+    {                
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string ChargeReason
         {
-            get
-            {
-                return this.chargeReasonField;
-            }
-            set
-            {
-                this.chargeReasonField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType ChargeRate
+        public DoubleUpToEightDecimalType ChargeRate 
         {
-            get
-            {
-                return this.chargeRateField;
-            }
-            set
-            {
-                this.chargeRateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool ChargeRateSpecified
+        public bool ChargeRateSpecified 
         {
-            get
-            {
-                return this.chargeRateFieldSpecified;
-            }
-            set
-            {
-                this.chargeRateFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType ChargeAmount
+        public DoubleUpToEightDecimalType ChargeAmount 
         {
-            get
-            {
-                return this.chargeAmountField;
-            }
-            set
-            {
-                this.chargeAmountField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class TaxType
-    {
-
-        private TaxTypeCodeType taxTypeCodeField;
-
-        private DoubleUpToEightDecimalType taxRateField;
-
-        private AmountType taxableBaseField;
-
-        private AmountType taxAmountField;
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class TaxType 
+    {                
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public TaxTypeCodeType TaxTypeCode
+        public TaxTypeCodeType TaxTypeCode 
         {
-            get
-            {
-                return this.taxTypeCodeField;
-            }
-            set
-            {
-                this.taxTypeCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TaxRate
+        public DoubleUpToEightDecimalType TaxRate 
         {
-            get
-            {
-                return this.taxRateField;
-            }
-            set
-            {
-                this.taxRateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AmountType TaxableBase
+        public AmountType TaxableBase 
         {
-            get
-            {
-                return this.taxableBaseField;
-            }
-            set
-            {
-                this.taxableBaseField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AmountType TaxAmount
+        public AmountType TaxAmount 
         {
-            get
-            {
-                return this.taxAmountField;
-            }
-            set
-            {
-                this.taxAmountField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum TaxTypeCodeType
-    {
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum TaxTypeCodeType 
+    {    
         /// <remarks/>
         [XmlEnumAttribute("01")]
-        Item01,
-
+        ValueAddedTax,
+        
         /// <remarks/>
         [XmlEnumAttribute("02")]
-        Item02,
-
+        IPSI,
+        
         /// <remarks/>
         [XmlEnumAttribute("03")]
-        Item03,
-
+        IGIC,
+        
         /// <remarks/>
         [XmlEnumAttribute("04")]
-        Item04,
-
+        PersonalIncomeTax,
+        
         /// <remarks/>
         [XmlEnumAttribute("05")]
-        Item05,
-
+        Other,
+        
         /// <remarks/>
         [XmlEnumAttribute("06")]
-        Item06,
-
+        ITPAJD,
+        
         /// <remarks/>
         [XmlEnumAttribute("07")]
-        Item07,
-
+        IE,
+        
         /// <remarks/>
         [XmlEnumAttribute("08")]
-        Item08,
-
+        CustomsDuties,
+        
         /// <remarks/>
         [XmlEnumAttribute("09")]
-        Item09,
-
+        IGTECM,
+        
         /// <remarks/>
         [XmlEnumAttribute("10")]
-        Item10,
-
+        IECDPCAC,
+        
         /// <remarks/>
         [XmlEnumAttribute("11")]
-        Item11,
-
+        IIIMAB,
+        
         /// <remarks/>
         [XmlEnumAttribute("12")]
-        Item12,
-
+        ICIO,
+        
         /// <remarks/>
         [XmlEnumAttribute("13")]
-        Item13,
-
+        IMVDN,
+        
         /// <remarks/>
         [XmlEnumAttribute("14")]
-        Item14,
-
+        IMSN,
+        
         /// <remarks/>
         [XmlEnumAttribute("15")]
-        Item15,
-
+        IMGSN,
+        
         /// <remarks/>
         [XmlEnumAttribute("16")]
-        Item16,
-
+        IMPN,
+        
         /// <remarks/>
         [XmlEnumAttribute("17")]
-        Item17,
-
+        REIVA,
+        
         /// <remarks/>
         [XmlEnumAttribute("18")]
-        Item18,
-
+        REIGIC,
+        
         /// <remarks/>
         [XmlEnumAttribute("19")]
-        Item19,
-
+        REIPSI,
+        
         /// <remarks/>
         [XmlEnumAttribute("20")]
-        Item20,
-
+        IPS,
+        
         /// <remarks/>
         [XmlEnumAttribute("21")]
-        Item21,
-
+        SWUA,
+        
         /// <remarks/>
         [XmlEnumAttribute("22")]
-        Item22,
-
+        IVPEE,
+        
         /// <remarks/>
         [XmlEnumAttribute("23")]
         Item23,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("24")]
         Item24,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("25")]
-        Item25,
-
+        IDEC,
+        
         /// <remarks/>
         [XmlEnumAttribute("26")]
         Item26,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("27")]
-        Item27,
-
+        IGFEI,
+        
         /// <remarks/>
         [XmlEnumAttribute("28")]
-        Item28,
-
+        IRNR,
+        
         /// <remarks/>
         [XmlEnumAttribute("29")]
-        Item29,
+        CorporationTax,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class AmountType
-    {
-
-        private DoubleUpToEightDecimalType totalAmountField;
-
-        private DoubleTwoDecimalType equivalentInEurosField;
-
-        private bool equivalentInEurosFieldSpecified;
-
+    {               
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TotalAmount
+        public DoubleUpToEightDecimalType TotalAmount 
         {
-            get
-            {
-                return this.totalAmountField;
-            }
-            set
-            {
-                this.totalAmountField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleTwoDecimalType EquivalentInEuros
+        public DoubleTwoDecimalType EquivalentInEuros 
         {
-            get
-            {
-                return this.equivalentInEurosField;
-            }
-            set
-            {
-                this.equivalentInEurosField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool EquivalentInEurosSpecified
+        public bool EquivalentInEurosSpecified 
         {
-            get
-            {
-                return this.equivalentInEurosFieldSpecified;
-            }
-            set
-            {
-                this.equivalentInEurosFieldSpecified = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class InvoiceLineTypeTax : TaxOutputType
+    [XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class InvoiceLineTypeTax : TaxOutputType 
     {
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class TaxOutputType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class TaxOutputType 
     {
-
-        private TaxTypeCodeType taxTypeCodeField;
-
-        private DoubleUpToEightDecimalType taxRateField;
-
-        private AmountType taxableBaseField;
-
-        private AmountType taxAmountField;
-
-        private AmountType specialTaxableBaseField;
-
-        private AmountType specialTaxAmountField;
-
-        private DoubleTwoDecimalType equivalenceSurchargeField;
-
-        private bool equivalenceSurchargeFieldSpecified;
-
-        private AmountType equivalenceSurchargeAmountField;
-
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public TaxTypeCodeType TaxTypeCode
+        public TaxTypeCodeType TaxTypeCode 
         {
-            get
-            {
-                return this.taxTypeCodeField;
-            }
-            set
-            {
-                this.taxTypeCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TaxRate
+        public DoubleUpToEightDecimalType TaxRate 
         {
-            get
-            {
-                return this.taxRateField;
-            }
-            set
-            {
-                this.taxRateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AmountType TaxableBase
+        public AmountType TaxableBase 
         {
-            get
-            {
-                return this.taxableBaseField;
-            }
-            set
-            {
-                this.taxableBaseField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AmountType TaxAmount
+        public AmountType TaxAmount 
         {
-            get
-            {
-                return this.taxAmountField;
-            }
-            set
-            {
-                this.taxAmountField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AmountType SpecialTaxableBase
+        public AmountType SpecialTaxableBase 
         {
-            get
-            {
-                return this.specialTaxableBaseField;
-            }
-            set
-            {
-                this.specialTaxableBaseField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AmountType SpecialTaxAmount
+        public AmountType SpecialTaxAmount 
         {
-            get
-            {
-                return this.specialTaxAmountField;
-            }
-            set
-            {
-                this.specialTaxAmountField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleTwoDecimalType EquivalenceSurcharge
+        public DoubleTwoDecimalType EquivalenceSurcharge 
         {
-            get
-            {
-                return this.equivalenceSurchargeField;
-            }
-            set
-            {
-                this.equivalenceSurchargeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool EquivalenceSurchargeSpecified
+        public bool EquivalenceSurchargeSpecified 
         {
-            get
-            {
-                return this.equivalenceSurchargeFieldSpecified;
-            }
-            set
-            {
-                this.equivalenceSurchargeFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AmountType EquivalenceSurchargeAmount
+        public AmountType EquivalenceSurchargeAmount 
         {
-            get
-            {
-                return this.equivalenceSurchargeAmountField;
-            }
-            set
-            {
-                this.equivalenceSurchargeAmountField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class PeriodDates
-    {
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class PeriodDates {
+        
         private System.DateTime startDateField;
-
+        
         private System.DateTime endDateField;
-
+        
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime StartDate
-        {
-            get
-            {
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime StartDate {
+            get {
                 return this.startDateField;
             }
-            set
-            {
+            set {
                 this.startDateField = value;
             }
         }
-
+        
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime EndDate
-        {
-            get
-            {
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime EndDate {
+            get {
                 return this.endDateField;
             }
-            set
-            {
+            set {
                 this.endDateField = value;
             }
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class AmountsWithheldType
-    {
-
-        private string withholdingReasonField;
-
-        private DoubleUpToEightDecimalType withholdingRateField;
-
-        private bool withholdingRateFieldSpecified;
-
-        private DoubleUpToEightDecimalType withholdingAmountField;
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class PaymentInKindType 
+    {       
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string WithholdingReason
+        public string PaymentInKindReason 
         {
-            get
-            {
-                return this.withholdingReasonField;
-            }
-            set
-            {
-                this.withholdingReasonField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType WithholdingRate
+        public DoubleUpToEightDecimalType PaymentInKindAmount 
         {
-            get
-            {
-                return this.withholdingRateField;
-            }
-            set
-            {
-                this.withholdingRateField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlIgnoreAttribute()]
-        public bool WithholdingRateSpecified
-        {
-            get
-            {
-                return this.withholdingRateFieldSpecified;
-            }
-            set
-            {
-                this.withholdingRateFieldSpecified = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType WithholdingAmount
-        {
-            get
-            {
-                return this.withholdingAmountField;
-            }
-            set
-            {
-                this.withholdingAmountField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class ReimbursableExpensesType
-    {
-
-        private TaxIdentificationType reimbursableExpensesSellerPartyField;
-
-        private TaxIdentificationType reimbursableExpensesBuyerPartyField;
-
-        private System.DateTime issueDateField;
-
-        private bool issueDateFieldSpecified;
-
-        private string invoiceNumberField;
-
-        private string invoiceSeriesCodeField;
-
-        private DoubleUpToEightDecimalType reimbursableExpensesAmountField;
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class AmountsWithheldType 
+    {        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public TaxIdentificationType ReimbursableExpensesSellerParty
+        public string WithholdingReason 
         {
-            get
-            {
-                return this.reimbursableExpensesSellerPartyField;
-            }
-            set
-            {
-                this.reimbursableExpensesSellerPartyField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public TaxIdentificationType ReimbursableExpensesBuyerParty
+        public DoubleUpToEightDecimalType WithholdingRate 
         {
-            get
-            {
-                return this.reimbursableExpensesBuyerPartyField;
-            }
-            set
-            {
-                this.reimbursableExpensesBuyerPartyField = value;
-            }
+            get;
+            set;
         }
-
-        /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime IssueDate
-        {
-            get
-            {
-                return this.issueDateField;
-            }
-            set
-            {
-                this.issueDateField = value;
-            }
-        }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool IssueDateSpecified
+        public bool WithholdingRateSpecified 
         {
-            get
-            {
-                return this.issueDateFieldSpecified;
-            }
-            set
-            {
-                this.issueDateFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string InvoiceNumber
+        public DoubleUpToEightDecimalType WithholdingAmount 
         {
-            get
-            {
-                return this.invoiceNumberField;
-            }
-            set
-            {
-                this.invoiceNumberField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string InvoiceSeriesCode
-        {
-            get
-            {
-                return this.invoiceSeriesCodeField;
-            }
-            set
-            {
-                this.invoiceSeriesCodeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType ReimbursableExpensesAmount
-        {
-            get
-            {
-                return this.reimbursableExpensesAmountField;
-            }
-            set
-            {
-                this.reimbursableExpensesAmountField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class PaymentOnAccountType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class ReimbursableExpensesType 
     {
-
-        private System.DateTime paymentOnAccountDateField;
-
-        private DoubleUpToEightDecimalType paymentOnAccountAmountField;
-
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime PaymentOnAccountDate
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public TaxIdentificationType ReimbursableExpensesSellerParty 
         {
-            get
-            {
-                return this.paymentOnAccountDateField;
-            }
-            set
-            {
-                this.paymentOnAccountDateField = value;
-            }
+            get;
+            set;
         }
-
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public TaxIdentificationType ReimbursableExpensesBuyerParty 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime IssueDate 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlIgnoreAttribute()]
+        public bool IssueDateSpecified 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string InvoiceNumber 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string InvoiceSeriesCode 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public DoubleUpToEightDecimalType ReimbursableExpensesAmount 
+        {
+            get;
+            set;
+        }
+    }
+    
+    /// <remarks/>
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
+    [SerializableAttribute()]
+    [DebuggerStepThroughAttribute()]
+    [DesignerCategoryAttribute("code")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class PaymentOnAccountType 
+    {
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime PaymentOnAccountDate 
+        {
+            get;
+            set;
+        }
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public DoubleUpToEightDecimalType PaymentOnAccountAmount
         {
-            get
-            {
-                return this.paymentOnAccountAmountField;
-            }
-            set
-            {
-                this.paymentOnAccountAmountField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class SubsidyType
-    {
-
-        private string subsidyDescriptionField;
-
-        private DoubleUpToEightDecimalType subsidyRateField;
-
-        private bool subsidyRateFieldSpecified;
-
-        private DoubleUpToEightDecimalType subsidyAmountField;
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class SubsidyType 
+    {        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string SubsidyDescription
+        public string SubsidyDescription 
         {
-            get
-            {
-                return this.subsidyDescriptionField;
-            }
-            set
-            {
-                this.subsidyDescriptionField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType SubsidyRate
+        public DoubleUpToEightDecimalType SubsidyRate 
         {
-            get
-            {
-                return this.subsidyRateField;
-            }
-            set
-            {
-                this.subsidyRateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool SubsidyRateSpecified
+        public bool SubsidyRateSpecified 
         {
-            get
-            {
-                return this.subsidyRateFieldSpecified;
-            }
-            set
-            {
-                this.subsidyRateFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType SubsidyAmount
+        public DoubleUpToEightDecimalType SubsidyAmount 
         {
-            get
-            {
-                return this.subsidyAmountField;
-            }
-            set
-            {
-                this.subsidyAmountField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class InvoiceTotalsType
-    {
-
-        private DoubleUpToEightDecimalType totalGrossAmountField;
-
-        private List<DiscountType> generalDiscountsField;
-
-        private List<ChargeType> generalSurchargesField;
-
-        private DoubleUpToEightDecimalType totalGeneralDiscountsField;
-
-        private bool totalGeneralDiscountsFieldSpecified;
-
-        private DoubleUpToEightDecimalType totalGeneralSurchargesField;
-
-        private bool totalGeneralSurchargesFieldSpecified;
-
-        private DoubleUpToEightDecimalType totalGrossAmountBeforeTaxesField;
-
-        private DoubleUpToEightDecimalType totalTaxOutputsField;
-
-        private double totalTaxesWithheldField;
-
-        private double invoiceTotalField;
-
-        private List<SubsidyType> subsidiesField;
-
-        private List<PaymentOnAccountType> paymentsOnAccountField;
-
-        private List<ReimbursableExpensesType> reimbursableExpensesField;
-
-        private DoubleTwoDecimalType totalFinancialExpensesField;
-
-        private bool totalFinancialExpensesFieldSpecified;
-
-        private DoubleUpToEightDecimalType totalOutstandingAmountField;
-
-        private DoubleUpToEightDecimalType totalPaymentsOnAccountField;
-
-        private bool totalPaymentsOnAccountFieldSpecified;
-
-        private AmountsWithheldType amountsWithheldField;
-
-        private DoubleUpToEightDecimalType totalExecutableAmountField;
-
-        private DoubleUpToEightDecimalType totalReimbursableExpensesField;
-
-        private bool totalReimbursableExpensesFieldSpecified;
-
-        /// <summary>
-        /// (TGA) Total sum of the gross amounts of the invoice 
-        /// items. Always to two decimal points.
-        /// </summary>
+    {        
+        /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TotalGrossAmount
+        public DoubleUpToEightDecimalType TotalGrossAmount 
         {
-            get
-            {
-                return this.totalGrossAmountField;
-            }
-            set
-            {
-                this.totalGrossAmountField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("Discount", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<DiscountType> GeneralDiscounts
+        [XmlArrayItemAttribute("Discount", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<DiscountType> GeneralDiscounts 
         {
-            get
-            {
-                return this.generalDiscountsField;
-            }
-            set
-            {
-                this.generalDiscountsField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("Charge", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<ChargeType> GeneralSurcharges
+        [XmlArrayItemAttribute("Charge", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<ChargeType> GeneralSurcharges 
         {
-            get
-            {
-                return this.generalSurchargesField;
-            }
-            set
-            {
-                this.generalSurchargesField = value;
-            }
+            get;
+            set;
         }
-
-         /// <summary>
-        /// Discounts on the Total Gross Amount. There will be as many blocks of fields GeneralDiscounts as there 
-        /// are different discount types applied to the same invoice. 
-        /// When there are different taxable bases, they will be applied proportionally, 
-        /// the final round-up to the nearest cent being carried out on the tax type of greatest value.
-        /// </summary>
+        
+        /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TotalGeneralDiscounts
+        public DoubleUpToEightDecimalType TotalGeneralDiscounts 
         {
-            get
-            {
-                return this.totalGeneralDiscountsField;
-            }
-            set
-            {
-                this.totalGeneralDiscountsField     = value;
-                this.TotalGeneralDiscountsSpecified = true;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool TotalGeneralDiscountsSpecified
+        public bool TotalGeneralDiscountsSpecified 
         {
-            get
-            {
-                return this.totalGeneralDiscountsFieldSpecified;
-            }
-            set
-            {
-                this.totalGeneralDiscountsFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
-        /// <summary>
-        /// Sum of different fields  GeneralSurcharges Always to two decimal points.
-        /// </summary>
+        
+        /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TotalGeneralSurcharges
+        public DoubleUpToEightDecimalType TotalGeneralSurcharges 
         {
-            get
-            {
-                return this.totalGeneralSurchargesField;
-            }
-            set
-            {
-                this.totalGeneralSurchargesField     = value;
-                this.TotalGeneralSurchargesSpecified = true;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool TotalGeneralSurchargesSpecified
+        public bool TotalGeneralSurchargesSpecified 
         {
-            get
-            {
-                return this.totalGeneralSurchargesFieldSpecified;
-            }
-            set
-            {
-                this.totalGeneralSurchargesFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
-        /// <summary>
-        /// Result: TotalGrossAmount - TotalGeneralDiscounts + TotalGeneralSurcharges Always to two decimal points.
-        /// </summary>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TotalGrossAmountBeforeTaxes
-        {
-            get
-            {
-                return this.totalGrossAmountBeforeTaxesField;
-            }
-            set
-            {
-                this.totalGrossAmountBeforeTaxesField = value;
-            }
-        }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TotalTaxOutputs
+        public DoubleUpToEightDecimalType TotalGrossAmountBeforeTaxes 
         {
-            get
-            {
-                return this.totalTaxOutputsField;
-            }
-            set
-            {
-                this.totalTaxOutputsField = value;
-            }
+            get;
+            set;
         }
-
-        /// <summary>
-        /// Sum of different fields TaxAmount. Always to two decimal points.
-        /// </summary>
+        
+        /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TotalTaxesWithheld
+        public DoubleUpToEightDecimalType TotalTaxOutputs 
         {
-            get
-            {
-                return this.totalTaxesWithheldField;
-            }
-            set
-            {
-                this.totalTaxesWithheldField = value;
-            }
+            get;
+            set;
         }
-
-        /// <summary>
-        /// Result: TotalGrossAmountBeforeTaxes + TotalTaxOutputs - TotalTaxesWithheld. Always to two decimal points.
-        /// </summary>
+        
+        /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType InvoiceTotal
+        public DoubleUpToEightDecimalType TotalTaxesWithheld 
         {
-            get
-            {
-                return this.invoiceTotalField;
-            }
-            set
-            {
-                this.invoiceTotalField = value;
-            }
+            get;
+            set;
         }
-
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public DoubleUpToEightDecimalType InvoiceTotal 
+        {
+            get;
+            set;
+        }
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("Subsidy", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<SubsidyType> Subsidies
+        [XmlArrayItemAttribute("Subsidy", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<SubsidyType> Subsidies 
         {
-            get
-            {
-                return this.subsidiesField;
-            }
-            set
-            {
-                this.subsidiesField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("PaymentOnAccount", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<PaymentOnAccountType> PaymentsOnAccount
+        [XmlArrayItemAttribute("PaymentOnAccount", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<PaymentOnAccountType> PaymentsOnAccount 
         {
-            get
-            {
-                return this.paymentsOnAccountField;
-            }
-            set
-            {
-                this.paymentsOnAccountField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("ReimbursableExpenses", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<ReimbursableExpensesType> ReimbursableExpenses
+        [XmlArrayItemAttribute("ReimbursableExpenses", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<ReimbursableExpensesType> ReimbursableExpenses 
         {
-            get
-            {
-                return this.reimbursableExpensesField;
-            }
-            set
-            {
-                this.reimbursableExpensesField = value;
-            }
+            get;
+            set;
         }
-
-        /// <summary>
-        /// Always to two decimal points.
-        /// </summary>
+        
+        /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleTwoDecimalType TotalFinancialExpenses
+        public DoubleTwoDecimalType TotalFinancialExpenses 
         {
-            get
-            {
-                return this.totalFinancialExpensesField;
-            }
-            set
-            {
-                this.totalFinancialExpensesField     = value;
-                this.TotalFinancialExpensesSpecified = true;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool TotalFinancialExpensesSpecified
+        public bool TotalFinancialExpensesSpecified 
         {
-            get
-            {
-                return this.totalFinancialExpensesFieldSpecified;
-            }
-            set
-            {
-                this.totalFinancialExpensesFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
-        /// <summary>
-        /// Result: InvoiceTotal - (SubsidyAmount + TotalPaymentsOnAccount). Always to two decimal points.
-        /// </summary>
+        
+        /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TotalOutstandingAmount
+        public DoubleUpToEightDecimalType TotalOutstandingAmount 
         {
-            get
-            {
-                return this.totalOutstandingAmountField;
-            }
-            set
-            {
-                this.totalOutstandingAmountField = value;
-            }
+            get;
+            set;
         }
-
-        /// <summary>
-        /// Sum of the fields PaymentOnAccountAmount. Always to two decimal points.
-        /// </summary>
+        
+        /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TotalPaymentsOnAccount
+        public DoubleUpToEightDecimalType TotalPaymentsOnAccount 
         {
-            get
-            {
-                return this.totalPaymentsOnAccountField;
-            }
-            set
-            {
-                this.totalPaymentsOnAccountField     = value;
-                this.TotalPaymentsOnAccountSpecified = true;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool TotalPaymentsOnAccountSpecified
+        public bool TotalPaymentsOnAccountSpecified 
         {
-            get
-            {
-                return this.totalPaymentsOnAccountFieldSpecified;
-            }
-            set
-            {
-                this.totalPaymentsOnAccountFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AmountsWithheldType AmountsWithheld
+        public AmountsWithheldType AmountsWithheld 
         {
-            get
-            {
-                return this.amountsWithheldField;
-            }
-            set
-            {
-                this.amountsWithheldField = value;
-            }
+            get;
+            set;
         }
-
-        /// <summary>
-        /// Result: TotalOutstandingAmount - WithholdingAmount + Reimbursable expenses + Financial expenses. Always to two decimal points
-        /// </summary>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TotalExecutableAmount
-        {
-            get
-            {
-                return this.totalExecutableAmountField;
-            }
-            set
-            {
-                this.totalExecutableAmountField = value;
-            }
-        }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType TotalReimbursableExpenses
+        public DoubleUpToEightDecimalType TotalExecutableAmount 
         {
-            get
-            {
-                return this.totalReimbursableExpensesField;
-            }
-            set
-            {
-                this.totalReimbursableExpensesField     = value;
-                this.TotalReimbursableExpensesSpecified = true;
-            }
+            get;
+            set;
         }
-
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public DoubleUpToEightDecimalType TotalReimbursableExpenses 
+        {
+            get;
+            set;
+        }
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool TotalReimbursableExpensesSpecified
+        public bool TotalReimbursableExpensesSpecified 
         {
-            get
-            {
-                return this.totalReimbursableExpensesFieldSpecified;
-            }
-            set
-            {
-                this.totalReimbursableExpensesFieldSpecified = value;
-            }
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public PaymentInKindType PaymentInKind 
+        {
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class ExchangeRateDetailsType
-    {
-
-        private DoubleUpToEightDecimalType exchangeRateField;
-
-        private System.DateTime exchangeRateDateField;
-
+    {        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleUpToEightDecimalType ExchangeRate
+        public DoubleUpToEightDecimalType ExchangeRate 
         {
-            get
-            {
-                return this.exchangeRateField;
-            }
-            set
-            {
-                this.exchangeRateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime ExchangeRateDate
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime ExchangeRateDate 
         {
-            get
-            {
-                return this.exchangeRateDateField;
-            }
-            set
-            {
-                this.exchangeRateDateField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class PlaceOfIssueType
-    {
-
-        private string postCodeField;
-
-        private string placeOfIssueDescriptionField;
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class PlaceOfIssueType 
+    {        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string PostCode
+        public string PostCode 
         {
-            get
-            {
-                return this.postCodeField;
-            }
-            set
-            {
-                this.postCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string PlaceOfIssueDescription
+        public string PlaceOfIssueDescription 
         {
-            get
-            {
-                return this.placeOfIssueDescriptionField;
-            }
-            set
-            {
-                this.placeOfIssueDescriptionField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class InvoiceIssueDataType
-    {
-
-        private System.DateTime issueDateField;
-
-        private System.DateTime operationDateField;
-
-        private bool operationDateFieldSpecified;
-
-        private PlaceOfIssueType placeOfIssueField;
-
-        private PeriodDates invoicingPeriodField;
-
-        private CurrencyCodeType invoiceCurrencyCodeField;
-
-        private ExchangeRateDetailsType exchangeRateDetailsField;
-
-        private CurrencyCodeType taxCurrencyCodeField;
-
-        private LanguageCodeType languageNameField;
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class InvoiceIssueDataType 
+    {        
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime IssueDate
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime IssueDate 
         {
-            get
-            {
-                return this.issueDateField;
-            }
-            set
-            {
-                this.issueDateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime OperationDate
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime OperationDate 
         {
-            get
-            {
-                return this.operationDateField;
-            }
-            set
-            {
-                this.operationDateField     = value;
-                this.OperationDateSpecified = true;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool OperationDateSpecified
+        public bool OperationDateSpecified 
         {
-            get
-            {
-                return this.operationDateFieldSpecified;
-            }
-            set
-            {
-                this.operationDateFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public PlaceOfIssueType PlaceOfIssue
+        public PlaceOfIssueType PlaceOfIssue 
         {
-            get
-            {
-                return this.placeOfIssueField;
-            }
-            set
-            {
-                this.placeOfIssueField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public PeriodDates InvoicingPeriod
+        public PeriodDates InvoicingPeriod 
         {
-            get
-            {
-                return this.invoicingPeriodField;
-            }
-            set
-            {
-                this.invoicingPeriodField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public CurrencyCodeType InvoiceCurrencyCode
+        public CurrencyCodeType InvoiceCurrencyCode 
         {
-            get
-            {
-                return this.invoiceCurrencyCodeField;
-            }
-            set
-            {
-                this.invoiceCurrencyCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public ExchangeRateDetailsType ExchangeRateDetails
+        public ExchangeRateDetailsType ExchangeRateDetails 
         {
-            get
-            {
-                return this.exchangeRateDetailsField;
-            }
-            set
-            {
-                this.exchangeRateDetailsField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public CurrencyCodeType TaxCurrencyCode
+        public CurrencyCodeType TaxCurrencyCode 
         {
-            get
-            {
-                return this.taxCurrencyCodeField;
-            }
-            set
-            {
-                this.taxCurrencyCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public LanguageCodeType LanguageName
+        public LanguageCodeType LanguageName 
         {
-            get
-            {
-                return this.languageNameField;
-            }
-            set
-            {
-                this.languageNameField = value;
-            }
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string InvoiceDescription 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string ReceiverTransactionReference 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string FileReference 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string ReceiverContractReference 
+        {
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum CurrencyCodeType
-    {
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum CurrencyCodeType 
+    {        
         /// <remarks/>
         AFN,
-
+        
         /// <remarks/>
         ALL,
-
+        
         /// <remarks/>
         AMD,
-
+        
         /// <remarks/>
         ANG,
-
+        
         /// <remarks/>
         AOA,
-
+        
         /// <remarks/>
         ARS,
-
+        
         /// <remarks/>
         AUD,
-
+        
         /// <remarks/>
         AWG,
-
+        
         /// <remarks/>
         AZN,
-
+        
         /// <remarks/>
         BAD,
-
+        
         /// <remarks/>
         BBD,
-
+        
         /// <remarks/>
         BDT,
-
+        
         /// <remarks/>
         BGN,
-
+        
         /// <remarks/>
         BHD,
-
+        
         /// <remarks/>
         BIF,
-
+        
         /// <remarks/>
         BMD,
-
+        
         /// <remarks/>
         BND,
-
+        
         /// <remarks/>
         BOB,
-
+        
         /// <remarks/>
         BRL,
-
+        
         /// <remarks/>
         BRR,
-
+        
         /// <remarks/>
         BSD,
-
+        
         /// <remarks/>
         BWP,
-
+        
         /// <remarks/>
         BYR,
-
+        
         /// <remarks/>
         BZD,
-
+        
         /// <remarks/>
         CAD,
-
+        
         /// <remarks/>
         CDF,
-
+        
         /// <remarks/>
         CDP,
-
+        
         /// <remarks/>
         CHF,
-
+        
         /// <remarks/>
         CLP,
-
+        
         /// <remarks/>
         CNY,
-
+        
         /// <remarks/>
         COP,
-
+        
         /// <remarks/>
         CRC,
-
+        
         /// <remarks/>
         CUP,
-
+        
         /// <remarks/>
         CVE,
-
+        
         /// <remarks/>
         CZK,
-
+        
         /// <remarks/>
         DJF,
-
+        
         /// <remarks/>
         DKK,
-
+        
         /// <remarks/>
         DOP,
-
+        
         /// <remarks/>
         DRP,
-
+        
         /// <remarks/>
         DZD,
-
+        
         /// <remarks/>
         EEK,
-
+        
         /// <remarks/>
         EGP,
-
+        
         /// <remarks/>
         ESP,
-
+        
         /// <remarks/>
         ETB,
-
+        
         /// <remarks/>
         EUR,
-
+        
         /// <remarks/>
         FJD,
-
+        
         /// <remarks/>
         FKP,
-
+        
         /// <remarks/>
         GBP,
-
+        
         /// <remarks/>
         GEK,
-
+        
         /// <remarks/>
         GHC,
-
+        
         /// <remarks/>
         GIP,
-
+        
         /// <remarks/>
         GMD,
-
+        
         /// <remarks/>
         GNF,
-
+        
         /// <remarks/>
         GTQ,
-
+        
         /// <remarks/>
         GWP,
-
+        
         /// <remarks/>
         GYD,
-
+        
         /// <remarks/>
         HKD,
-
+        
         /// <remarks/>
         HNL,
-
+        
         /// <remarks/>
         HRK,
-
+        
         /// <remarks/>
         HTG,
-
+        
         /// <remarks/>
         HUF,
-
+        
         /// <remarks/>
         IDR,
-
+        
         /// <remarks/>
         ILS,
-
+        
         /// <remarks/>
         INR,
-
+        
         /// <remarks/>
         IQD,
-
+        
         /// <remarks/>
         IRR,
-
+        
         /// <remarks/>
         ISK,
-
+        
         /// <remarks/>
         JMD,
-
+        
         /// <remarks/>
         JOD,
-
+        
         /// <remarks/>
         JPY,
-
+        
         /// <remarks/>
         KES,
-
+        
         /// <remarks/>
         KGS,
-
+        
         /// <remarks/>
         KHR,
-
+        
         /// <remarks/>
         KMF,
-
+        
         /// <remarks/>
         KPW,
-
+        
         /// <remarks/>
         KRW,
-
+        
         /// <remarks/>
         KWD,
-
+        
         /// <remarks/>
         KYD,
-
+        
         /// <remarks/>
         KZT,
-
+        
         /// <remarks/>
         LAK,
-
+        
         /// <remarks/>
         LBP,
-
+        
         /// <remarks/>
         LKR,
-
+        
         /// <remarks/>
         LRD,
-
+        
         /// <remarks/>
         LSL,
-
+        
         /// <remarks/>
         LTL,
-
+        
         /// <remarks/>
         LVL,
-
+        
         /// <remarks/>
         LYD,
-
+        
         /// <remarks/>
         MAD,
-
+        
         /// <remarks/>
         MDL,
-
+        
         /// <remarks/>
         MGF,
-
+        
         /// <remarks/>
         MNC,
-
+        
         /// <remarks/>
         MNT,
-
+        
         /// <remarks/>
         MOP,
-
+        
         /// <remarks/>
         MRO,
-
+        
         /// <remarks/>
         MUR,
-
+        
         /// <remarks/>
         MVR,
-
+        
         /// <remarks/>
         MWK,
-
+        
         /// <remarks/>
         MXN,
-
+        
         /// <remarks/>
         MYR,
-
+        
         /// <remarks/>
         MZM,
-
+        
         /// <remarks/>
         NGN,
-
+        
         /// <remarks/>
         NIC,
-
+        
         /// <remarks/>
         NIO,
-
+        
         /// <remarks/>
         NIS,
-
+        
         /// <remarks/>
         NOK,
-
+        
         /// <remarks/>
         NPR,
-
+        
         /// <remarks/>
         NZD,
-
+        
         /// <remarks/>
         OMR,
-
+        
         /// <remarks/>
         PAB,
-
+        
         /// <remarks/>
         PEI,
-
+        
         /// <remarks/>
         PEN,
-
+        
         /// <remarks/>
         PES,
-
+        
         /// <remarks/>
         PGK,
-
+        
         /// <remarks/>
         PHP,
-
+        
         /// <remarks/>
         PKR,
-
+        
         /// <remarks/>
         PLN,
-
+        
         /// <remarks/>
         PYG,
-
+        
         /// <remarks/>
         QAR,
-
+        
         /// <remarks/>
         RMB,
-
+        
         /// <remarks/>
         RON,
-
+        
         /// <remarks/>
         RUB,
-
+        
         /// <remarks/>
         RWF,
-
+        
         /// <remarks/>
         SAR,
-
+        
         /// <remarks/>
         SBD,
-
+        
         /// <remarks/>
         SCR,
-
+        
         /// <remarks/>
         SDP,
-
+        
         /// <remarks/>
         SEK,
-
+        
         /// <remarks/>
         SGD,
-
+        
         /// <remarks/>
         SHP,
-
+        
         /// <remarks/>
         SKK,
-
+        
         /// <remarks/>
         SLL,
-
+        
         /// <remarks/>
         SOL,
-
+        
         /// <remarks/>
         SOS,
-
+        
         /// <remarks/>
         SRD,
-
+        
         /// <remarks/>
         STD,
-
+        
         /// <remarks/>
         SVC,
-
+        
         /// <remarks/>
         SYP,
-
+        
         /// <remarks/>
         SZL,
-
+        
         /// <remarks/>
         THB,
-
+        
         /// <remarks/>
         TJS,
-
+        
         /// <remarks/>
         TMM,
-
+        
         /// <remarks/>
         TND,
-
+        
         /// <remarks/>
         TOP,
-
+        
         /// <remarks/>
         TPE,
-
+        
         /// <remarks/>
         TRY,
-
+        
         /// <remarks/>
         TTD,
-
+        
         /// <remarks/>
         TWD,
-
+        
         /// <remarks/>
         TZS,
-
+        
         /// <remarks/>
         UAH,
-
+        
         /// <remarks/>
         UGS,
-
+        
         /// <remarks/>
         USD,
-
+        
         /// <remarks/>
         UYP,
-
+        
         /// <remarks/>
         UYU,
-
+        
         /// <remarks/>
         VEF,
-
+        
         /// <remarks/>
         VND,
-
+        
         /// <remarks/>
         VUV,
-
+        
         /// <remarks/>
         WST,
-
+        
         /// <remarks/>
         XAF,
-
+        
         /// <remarks/>
         XCD,
-
+        
         /// <remarks/>
         XOF,
-
+        
         /// <remarks/>
         YER,
-
+        
         /// <remarks/>
         ZAR,
-
+        
         /// <remarks/>
         ZMK,
-
+        
         /// <remarks/>
         ZWD,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public enum LanguageCodeType
-    {
-
+    {        
         /// <remarks/>
         ar,
-
+        
         /// <remarks/>
         be,
-
+        
         /// <remarks/>
         bg,
-
+        
         /// <remarks/>
         ca,
-
+        
         /// <remarks/>
         cs,
-
+        
         /// <remarks/>
         da,
-
+        
         /// <remarks/>
         de,
-
+        
         /// <remarks/>
         el,
-
+        
         /// <remarks/>
         en,
-
+        
         /// <remarks/>
         es,
-
+        
         /// <remarks/>
         et,
-
+        
         /// <remarks/>
         eu,
-
+        
         /// <remarks/>
         fi,
-
+        
         /// <remarks/>
         fr,
-
+        
         /// <remarks/>
         ga,
-
+        
         /// <remarks/>
         gl,
-
+        
         /// <remarks/>
         hr,
-
+        
         /// <remarks/>
         hu,
-
+        
         /// <remarks/>
         @is,
-
+        
         /// <remarks/>
         it,
-
+        
         /// <remarks/>
         lv,
-
+        
         /// <remarks/>
         lt,
-
+        
         /// <remarks/>
         mk,
-
+        
         /// <remarks/>
         mt,
-
+        
         /// <remarks/>
         nl,
-
+        
         /// <remarks/>
         no,
-
+        
         /// <remarks/>
         pl,
-
+        
         /// <remarks/>
         pt,
-
+        
         /// <remarks/>
         ro,
-
+        
         /// <remarks/>
         ru,
-
+        
         /// <remarks/>
         sk,
-
+        
         /// <remarks/>
         sl,
-
+        
         /// <remarks/>
         sq,
-
+        
         /// <remarks/>
         sr,
-
+        
         /// <remarks/>
         sv,
-
+        
         /// <remarks/>
         tr,
-
+        
         /// <remarks/>
         uk,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class CorrectiveType
-    {
-
-        private string invoiceNumberField;
-
-        private string invoiceSeriesCodeField;
-
-        private ReasonCodeType reasonCodeField;
-
-        private ReasonDescriptionType reasonDescriptionField;
-
-        private PeriodDates taxPeriodField;
-
-        private CorrectionMethodType correctionMethodField;
-
-        private CorrectionMethodDescriptionType correctionMethodDescriptionField;
-
-        private string additionalReasonDescriptionField;
-
+    {        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string InvoiceNumber
+        public string InvoiceNumber 
         {
-            get
-            {
-                return this.invoiceNumberField;
-            }
-            set
-            {
-                this.invoiceNumberField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string InvoiceSeriesCode
+        public string InvoiceSeriesCode 
         {
-            get
-            {
-                return this.invoiceSeriesCodeField;
-            }
-            set
-            {
-                this.invoiceSeriesCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public ReasonCodeType ReasonCode
+        public ReasonCodeType ReasonCode 
         {
-            get
-            {
-                return this.reasonCodeField;
-            }
-            set
-            {
-                this.reasonCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public ReasonDescriptionType ReasonDescription
+        public ReasonDescriptionType ReasonDescription 
         {
-            get
-            {
-                return this.reasonDescriptionField;
-            }
-            set
-            {
-                this.reasonDescriptionField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public PeriodDates TaxPeriod
+        public PeriodDates TaxPeriod 
         {
-            get
-            {
-                return this.taxPeriodField;
-            }
-            set
-            {
-                this.taxPeriodField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public CorrectionMethodType CorrectionMethod
+        public CorrectionMethodType CorrectionMethod 
         {
-            get
-            {
-                return this.correctionMethodField;
-            }
-            set
-            {
-                this.correctionMethodField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public CorrectionMethodDescriptionType CorrectionMethodDescription
+        public CorrectionMethodDescriptionType CorrectionMethodDescription 
         {
-            get
-            {
-                return this.correctionMethodDescriptionField;
-            }
-            set
-            {
-                this.correctionMethodDescriptionField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string AdditionalReasonDescription
+        public string AdditionalReasonDescription 
         {
-            get
-            {
-                return this.additionalReasonDescriptionField;
-            }
-            set
-            {
-                this.additionalReasonDescriptionField = value;
-            }
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime InvoiceIssueDate 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlIgnoreAttribute()]
+        public bool InvoiceIssueDateSpecified 
+        {
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum ReasonCodeType
-    {
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum ReasonCodeType 
+    {        
         /// <remarks/>
         [XmlEnumAttribute("01")]
         Item01,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("02")]
         Item02,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("03")]
         Item03,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("04")]
         Item04,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("05")]
         Item05,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("06")]
         Item06,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("07")]
         Item07,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("08")]
         Item08,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("09")]
         Item09,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("10")]
         Item10,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("11")]
         Item11,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("12")]
         Item12,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("13")]
         Item13,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("14")]
         Item14,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("15")]
         Item15,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("16")]
         Item16,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("80")]
         Item80,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("81")]
         Item81,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("82")]
         Item82,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("83")]
         Item83,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("84")]
         Item84,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("85")]
         Item85,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public enum ReasonDescriptionType
-    {
-
+    {        
         /// <remarks/>
         [XmlEnumAttribute("Número de la factura")]
         Númerodelafactura,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Serie de la factura")]
         Seriedelafactura,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Fecha expedición")]
         Fechaexpedición,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Nombre y apellidos/Razón Social-Emisor")]
         NombreyapellidosRazónSocialEmisor,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Nombre y apellidos/Razón Social-Receptor")]
         NombreyapellidosRazónSocialReceptor,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Identificación fiscal Emisor/obligado")]
         IdentificaciónfiscalEmisorobligado,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Identificación fiscal Receptor")]
         IdentificaciónfiscalReceptor,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Domicilio Emisor/Obligado")]
         DomicilioEmisorObligado,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Domicilio Receptor")]
         DomicilioReceptor,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Detalle Operación")]
         DetalleOperación,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Porcentaje impositivo a aplicar")]
         Porcentajeimpositivoaaplicar,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Cuota tributaria a aplicar")]
         Cuotatributariaaaplicar,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Fecha/Periodo a aplicar")]
         FechaPeriodoaaplicar,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Clase de factura")]
         Clasedefactura,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Literales legales")]
         Literaleslegales,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Base imponible")]
         Baseimponible,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Cálculo de cuotas repercutidas")]
         Cálculodecuotasrepercutidas,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Cálculo de cuotas retenidas")]
         Cálculodecuotasretenidas,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Base imponible modificada por devolución de envases / embalajes")]
         Baseimponiblemodificadapordevolucióndeenvasesembalajes,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Base imponible modificada por descuentos y bonificaciones")]
         Baseimponiblemodificadapordescuentosybonificaciones,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Base imponible modificada por resolución firme, judicial o administrativa")]
         Baseimponiblemodificadaporresoluciónfirmejudicialoadministrativa,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Base imponible modificada cuotas repercutidas no satisfechas. Auto de declaración" +
             " de concurso")]
         BaseimponiblemodificadacuotasrepercutidasnosatisfechasAutodedeclaracióndeconcurso,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum CorrectionMethodType
-    {
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum CorrectionMethodType {
+        
         /// <remarks/>
         [XmlEnumAttribute("01")]
         Item01,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("02")]
         Item02,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("03")]
         Item03,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("04")]
         Item04,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public enum CorrectionMethodDescriptionType
-    {
-
+    {        
         /// <remarks/>
         [XmlEnumAttribute("Rectificación íntegra")]
         Rectificacióníntegra,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Rectificación por diferencias")]
         Rectificaciónpordiferencias,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Rectificación por descuento por volumen de operaciones durante un periodo")]
         Rectificaciónpordescuentoporvolumendeoperacionesduranteunperiodo,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("Autorizadas por la Agencia Tributaria")]
         AutorizadasporlaAgenciaTributaria,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class InvoiceHeaderType
-    {
-
-        private string invoiceNumberField;
-
-        private string invoiceSeriesCodeField;
-
-        private InvoiceDocumentTypeType invoiceDocumentTypeField;
-
-        private InvoiceClassType invoiceClassField;
-
-        private CorrectiveType correctiveField;
-
+    {               
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string InvoiceNumber
         {
-            get
-            {
-                return this.invoiceNumberField;
-            }
-            set
-            {
-                this.invoiceNumberField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string InvoiceSeriesCode
+        public string InvoiceSeriesCode 
         {
-            get
-            {
-                return this.invoiceSeriesCodeField;
-            }
-            set
-            {
-                this.invoiceSeriesCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public InvoiceDocumentTypeType InvoiceDocumentType
+        public InvoiceDocumentTypeType InvoiceDocumentType 
         {
-            get
-            {
-                return this.invoiceDocumentTypeField;
-            }
-            set
-            {
-                this.invoiceDocumentTypeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public InvoiceClassType InvoiceClass
+        public InvoiceClassType InvoiceClass 
         {
-            get
-            {
-                return this.invoiceClassField;
-            }
-            set
-            {
-                this.invoiceClassField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public CorrectiveType Corrective
+        public CorrectiveType Corrective 
         {
-            get
-            {
-                return this.correctiveField;
-            }
-            set
-            {
-                this.correctiveField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public enum InvoiceDocumentTypeType
-    {
+    {        
         /// <remarks/>
-        [XmlEnum("FC")]
-        Complete,
-
+        [XmlEnumAttribute("FC")]
+        CompleteInvoce,
+        
         /// <remarks/>
-        [XmlEnum("FA")]
+        [XmlEnumAttribute("FA")]
         Abbreviated,
-
+        
         /// <remarks/>
-        [XmlEnum("AF")]
-        SelfInvoice, F,
+        [XmlEnumAttribute("AF")]
+        SelfInvoice,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public enum InvoiceClassType
-    {
+    {        
         /// <remarks/>
-        [XmlEnum("OO")]
-        Original,
-
+        [XmlEnumAttribute("OO")]
+        OriginalInvoice,
+        
         /// <remarks/>
-        [XmlEnum("OR")]
+        [XmlEnumAttribute("OR")]
         Corrective,
-
+        
         /// <remarks/>
-        [XmlEnum("OC")]
-        SummaryOriginal,
-
+        [XmlEnumAttribute("OC")]
+        Summary,
+        
         /// <remarks/>
-        [XmlEnum("CO")]
-        CopyOfOriginal,
-
+        [XmlEnumAttribute("CO")]
+        CopyOfTheOriginal,
+        
         /// <remarks/>
-        [XmlEnum("CR")]
-        CopyOfCorrective,
-
+        [XmlEnumAttribute("CR")]
+        CopyOfTheCorrective,
+        
         /// <remarks/>
-        [XmlEnum("CC")]
-        CopyOfSummary,
+        [XmlEnumAttribute("CC")]
+        CopyOfTheSummary
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class InvoiceType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class InvoiceType 
     {
-
-        private InvoiceHeaderType invoiceHeaderField;
-
-        private InvoiceIssueDataType invoiceIssueDataField;
-
-        private List<TaxOutputType> taxesOutputsField;
-
-        private List<TaxType> taxesWithheldField;
-
-        private InvoiceTotalsType invoiceTotalsField;
-
-        private List<InvoiceLineType> itemsField;
-
-        private List<InstallmentType> paymentDetailsField;
-
-        private List<string> legalLiteralsField;
-
-        private AdditionalDataType additionalDataField;
+        [XmlIgnore]
         internal Facturae Parent
         {
             get;
             set;
         }
-        /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public InvoiceHeaderType InvoiceHeader
-        {
-            get
-            {
-                return this.invoiceHeaderField;
-            }
-            set
-            {
-                this.invoiceHeaderField = value;
-            }
-        }
 
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public InvoiceIssueDataType InvoiceIssueData
+        public InvoiceHeaderType InvoiceHeader 
         {
-            get
-            {
-                return this.invoiceIssueDataField;
-            }
-            set
-            {
-                this.invoiceIssueDataField = value;
-            }
+            get;
+            set;
         }
-
-        /// <remarks/>
-        [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("Tax", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<TaxOutputType> TaxesOutputs
-        {
-            get
-            {
-                return this.taxesOutputsField;
-            }
-            set
-            {
-                this.taxesOutputsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("Tax", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<TaxType> TaxesWithheld
-        {
-            get
-            {
-                return this.taxesWithheldField;
-            }
-            set
-            {
-                this.taxesWithheldField = value;
-            }
-        }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public InvoiceTotalsType InvoiceTotals
+        public InvoiceIssueDataType InvoiceIssueData 
         {
-            get
-            {
-                return this.invoiceTotalsField;
-            }
-            set
-            {
-                this.invoiceTotalsField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("InvoiceLine", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<InvoiceLineType> Items
+        [XmlArrayItemAttribute("Tax", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<TaxOutputType> TaxesOutputs 
         {
-            get
-            {
-                return this.itemsField;
-            }
-            set
-            {
-                this.itemsField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("Installment", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<InstallmentType> PaymentDetails
+        [XmlArrayItemAttribute("Tax", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<TaxType> TaxesWithheld 
         {
-            get
-            {
-                return this.paymentDetailsField;
-            }
-            set
-            {
-                this.paymentDetailsField = value;
-            }
+            get;
+            set;
         }
-
-        /// <remarks/>
-        [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("LegalReference", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<string> LegalLiterals
-        {
-            get
-            {
-                return this.legalLiteralsField;
-            }
-            set
-            {
-                this.legalLiteralsField = value;
-            }
-        }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AdditionalDataType AdditionalData
+        public InvoiceTotalsType InvoiceTotals 
         {
-            get
-            {
-                return this.additionalDataField;
-            }
-            set
-            {
-                this.additionalDataField = value;
-            }
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
+        [XmlArrayItemAttribute("InvoiceLine", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<InvoiceLineType> Items 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
+        [XmlArrayItemAttribute("Installment", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<InstallmentType> PaymentDetails 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
+        [XmlArrayItemAttribute("LegalReference", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<string> LegalLiterals 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public AdditionalDataType AdditionalData 
+        {
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class InstallmentType
-    {
-
-        private System.DateTime installmentDueDateField;
-
-        private DoubleTwoDecimalType installmentAmountField;
-
-        private PaymentMeansType paymentMeansField;
-
-        private AccountType accountToBeCreditedField;
-
-        private string paymentReconciliationReferenceField;
-
-        private AccountType accountToBeDebitedField;
-
-        private string collectionAdditionalInformationField;
-
-        private string regulatoryReportingDataField;
-
-        private string debitReconciliationReferenceField;
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class InstallmentType 
+    {               
         /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType = "date")]
-        public System.DateTime InstallmentDueDate
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
+        public System.DateTime InstallmentDueDate 
         {
-            get
-            {
-                return this.installmentDueDateField;
-            }
-            set
-            {
-                this.installmentDueDateField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public DoubleTwoDecimalType InstallmentAmount
+        public DoubleTwoDecimalType InstallmentAmount 
         {
-            get
-            {
-                return this.installmentAmountField;
-            }
-            set
-            {
-                this.installmentAmountField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public PaymentMeansType PaymentMeans
+        public PaymentMeansType PaymentMeans 
         {
-            get
-            {
-                return this.paymentMeansField;
-            }
-            set
-            {
-                this.paymentMeansField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AccountType AccountToBeCredited
+        public AccountType AccountToBeCredited 
         {
-            get
-            {
-                return this.accountToBeCreditedField;
-            }
-            set
-            {
-                this.accountToBeCreditedField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string PaymentReconciliationReference
+        public string PaymentReconciliationReference 
         {
-            get
-            {
-                return this.paymentReconciliationReferenceField;
-            }
-            set
-            {
-                this.paymentReconciliationReferenceField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AccountType AccountToBeDebited
+        public AccountType AccountToBeDebited 
         {
-            get
-            {
-                return this.accountToBeDebitedField;
-            }
-            set
-            {
-                this.accountToBeDebitedField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string CollectionAdditionalInformation
+        public string CollectionAdditionalInformation 
         {
-            get
-            {
-                return this.collectionAdditionalInformationField;
-            }
-            set
-            {
-                this.collectionAdditionalInformationField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string RegulatoryReportingData
+        public string RegulatoryReportingData 
         {
-            get
-            {
-                return this.regulatoryReportingDataField;
-            }
-            set
-            {
-                this.regulatoryReportingDataField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string DebitReconciliationReference
+        public string DebitReconciliationReference 
         {
-            get
-            {
-                return this.debitReconciliationReferenceField;
-            }
-            set
-            {
-                this.debitReconciliationReferenceField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public enum PaymentMeansType
-    {
-
+    {        
         /// <remarks/>
         [XmlEnumAttribute("01")]
         Item01,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("02")]
         Item02,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("03")]
         Item03,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("04")]
         Item04,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("05")]
         Item05,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("06")]
         Item06,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("07")]
         Item07,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("08")]
         Item08,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("09")]
         Item09,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("10")]
         Item10,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("11")]
         Item11,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("12")]
         Item12,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("13")]
         Item13,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("14")]
         Item14,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("15")]
         Item15,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("16")]
         Item16,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("17")]
         Item17,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("18")]
         Item18,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("19")]
         Item19,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class AccountType
     {
-
-        private string itemField;
-
-        private ItemChoiceType itemElementNameField;
-
-        private string bankCodeField;
-
-        private string branchCodeField;
-
-        private object item1Field;
-
-        private string bICField;
-
         /// <remarks/>
         [XmlElementAttribute("AccountNumber", typeof(string), Form = XmlSchemaForm.Unqualified)]
         [XmlElementAttribute("IBAN", typeof(string), Form = XmlSchemaForm.Unqualified)]
         [XmlChoiceIdentifierAttribute("ItemElementName")]
-        public string Item
+        public string Item 
         {
-            get
-            {
-                return this.itemField;
-            }
-            set
-            {
-                this.itemField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public ItemChoiceType ItemElementName
+        public ItemChoiceType ItemElementName 
         {
-            get
-            {
-                return this.itemElementNameField;
-            }
-            set
-            {
-                this.itemElementNameField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string BankCode
+        public string BankCode 
         {
-            get
-            {
-                return this.bankCodeField;
-            }
-            set
-            {
-                this.bankCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string BranchCode
+        public string BranchCode 
         {
-            get
-            {
-                return this.branchCodeField;
-            }
-            set
-            {
-                this.branchCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute("BranchInSpainAddress", typeof(AddressType), Form = XmlSchemaForm.Unqualified)]
         [XmlElementAttribute("OverseasBranchAddress", typeof(OverseasAddressType), Form = XmlSchemaForm.Unqualified)]
-        public object Item1
+        public object Item1 
         {
-            get
-            {
-                return this.item1Field;
-            }
-            set
-            {
-                this.item1Field = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string BIC
+        public string BIC 
         {
-            get
-            {
-                return this.bICField;
-            }
-            set
-            {
-                this.bICField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae", IncludeInSchema = false)]
-    public enum ItemChoiceType
-    {
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml", IncludeInSchema=false)]
+    public enum ItemChoiceType 
+    {        
         /// <remarks/>
-        [XmlEnumAttribute("AccountNumber")]
+        [XmlEnumAttribute(":AccountNumber")]
         AccountNumber,
-
+        
         /// <remarks/>
-        [XmlEnumAttribute("IBAN")]
+        [XmlEnumAttribute(":IBAN")]
         IBAN,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class AddressType
-    {
-
-        private string addressField;
-
-        private string postCodeField;
-
-        private string townField;
-
-        private string provinceField;
-
-        private CountryType countryCodeField;
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class AddressType 
+    {       
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string Address
+        public string Address 
         {
-            get
-            {
-                return this.addressField;
-            }
-            set
-            {
-                this.addressField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string PostCode
         {
-            get
-            {
-                return this.postCodeField;
-            }
-            set
-            {
-                this.postCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string Town
+        public string Town 
         {
-            get
-            {
-                return this.townField;
-            }
-            set
-            {
-                this.townField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string Province
+        public string Province 
         {
-            get
-            {
-                return this.provinceField;
-            }
-            set
-            {
-                this.provinceField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public CountryType CountryCode
+        public CountryType CountryCode 
         {
-            get
-            {
-                return this.countryCodeField;
-            }
-            set
-            {
-                this.countryCodeField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum CountryType
-    {
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum CountryType 
+    {        
         /// <remarks/>
         AFG,
-
+        
         /// <remarks/>
         ALB,
-
+        
         /// <remarks/>
         DZA,
-
+        
         /// <remarks/>
         ASM,
-
+        
         /// <remarks/>
         AND,
-
+        
         /// <remarks/>
         AGO,
-
+        
         /// <remarks/>
         AIA,
-
+        
         /// <remarks/>
         ATG,
-
+        
         /// <remarks/>
         ARG,
-
+        
         /// <remarks/>
         ARM,
-
+        
         /// <remarks/>
         ABW,
-
+        
         /// <remarks/>
         AUS,
-
+        
         /// <remarks/>
         AUT,
-
+        
         /// <remarks/>
         AZE,
-
+        
         /// <remarks/>
         BHS,
-
+        
         /// <remarks/>
         BHR,
-
+        
         /// <remarks/>
         BGD,
-
+        
         /// <remarks/>
         BRB,
-
+        
         /// <remarks/>
         BLR,
-
+        
         /// <remarks/>
         BEL,
-
+        
         /// <remarks/>
         BLZ,
-
+        
         /// <remarks/>
         BEN,
-
+        
         /// <remarks/>
         BMU,
-
+        
         /// <remarks/>
         BTN,
-
+        
         /// <remarks/>
         BOL,
-
+        
         /// <remarks/>
         BIH,
-
+        
         /// <remarks/>
         BWA,
-
+        
         /// <remarks/>
         BRA,
-
+        
         /// <remarks/>
         BRN,
-
+        
         /// <remarks/>
         BGR,
-
+        
         /// <remarks/>
         BFA,
-
+        
         /// <remarks/>
         BDI,
-
+        
         /// <remarks/>
         KHM,
-
+        
         /// <remarks/>
         CMR,
-
+        
         /// <remarks/>
         CAN,
-
+        
         /// <remarks/>
         CPV,
-
+        
         /// <remarks/>
         CYM,
-
+        
         /// <remarks/>
         CAF,
-
+        
         /// <remarks/>
         TCD,
-
+        
         /// <remarks/>
         CHL,
-
+        
         /// <remarks/>
         CHN,
-
+        
         /// <remarks/>
         COD,
-
+        
         /// <remarks/>
         COL,
-
+        
         /// <remarks/>
         COM,
-
+        
         /// <remarks/>
         COG,
-
+        
         /// <remarks/>
         COK,
-
+        
         /// <remarks/>
         CRI,
-
+        
         /// <remarks/>
         CIV,
-
+        
         /// <remarks/>
         HRV,
-
+        
         /// <remarks/>
         CUB,
-
+        
         /// <remarks/>
         CYP,
-
+        
         /// <remarks/>
         CZE,
-
+        
         /// <remarks/>
         DNK,
-
+        
         /// <remarks/>
         DJI,
-
+        
         /// <remarks/>
         DMA,
-
+        
         /// <remarks/>
         DOM,
-
+        
         /// <remarks/>
         ECU,
-
+        
         /// <remarks/>
         EGY,
-
+        
         /// <remarks/>
         SLV,
-
+        
         /// <remarks/>
         GNQ,
-
+        
         /// <remarks/>
         ERI,
-
+        
         /// <remarks/>
         EST,
-
+        
         /// <remarks/>
         ETH,
-
+        
         /// <remarks/>
         FLK,
-
+        
         /// <remarks/>
         FRO,
-
+        
         /// <remarks/>
         FJI,
-
+        
         /// <remarks/>
         FIN,
-
+        
         /// <remarks/>
         FRA,
-
+        
         /// <remarks/>
         GUF,
-
+        
         /// <remarks/>
         PYF,
-
+        
         /// <remarks/>
         GAB,
-
+        
         /// <remarks/>
         GMB,
-
+        
         /// <remarks/>
         GEO,
-
+        
         /// <remarks/>
         GGY,
-
+        
         /// <remarks/>
         DEU,
-
+        
         /// <remarks/>
         GHA,
-
+        
         /// <remarks/>
         GIB,
-
+        
         /// <remarks/>
         GRC,
-
+        
         /// <remarks/>
         GRL,
-
+        
         /// <remarks/>
         GRD,
-
+        
         /// <remarks/>
         GLP,
-
+        
         /// <remarks/>
         GUM,
-
+        
         /// <remarks/>
         GTM,
-
+        
         /// <remarks/>
         GIN,
-
+        
         /// <remarks/>
         GNB,
-
+        
         /// <remarks/>
         GUY,
-
+        
         /// <remarks/>
         HTI,
-
+        
         /// <remarks/>
         HND,
-
+        
         /// <remarks/>
         HKG,
-
+        
         /// <remarks/>
         HUN,
-
+        
         /// <remarks/>
         ISL,
-
+        
         /// <remarks/>
         IND,
-
+        
         /// <remarks/>
         IDN,
-
+        
         /// <remarks/>
         IMN,
-
+        
         /// <remarks/>
         IRN,
-
+        
         /// <remarks/>
         IRQ,
-
+        
         /// <remarks/>
         IRL,
-
+        
         /// <remarks/>
         ISR,
-
+        
         /// <remarks/>
         ITA,
-
+        
         /// <remarks/>
         JAM,
-
+        
         /// <remarks/>
         JEY,
-
+        
         /// <remarks/>
         JPN,
-
+        
         /// <remarks/>
         JOR,
-
+        
         /// <remarks/>
         KAZ,
-
+        
         /// <remarks/>
         KEN,
-
+        
         /// <remarks/>
         KIR,
-
+        
         /// <remarks/>
         PRK,
-
+        
         /// <remarks/>
         KOR,
-
+        
         /// <remarks/>
         KWT,
-
+        
         /// <remarks/>
         KGZ,
-
+        
         /// <remarks/>
         LAO,
-
+        
         /// <remarks/>
         LVA,
-
+        
         /// <remarks/>
         LBN,
-
+        
         /// <remarks/>
         LSO,
-
+        
         /// <remarks/>
         LBR,
-
+        
         /// <remarks/>
         LBY,
-
+        
         /// <remarks/>
         LIE,
-
+        
         /// <remarks/>
         LTU,
-
+        
         /// <remarks/>
         LUX,
-
+        
         /// <remarks/>
         MAC,
-
+        
         /// <remarks/>
         MKD,
-
+        
         /// <remarks/>
         MDG,
-
+        
         /// <remarks/>
         MWI,
-
+        
         /// <remarks/>
         MYS,
-
+        
         /// <remarks/>
         MDV,
-
+        
         /// <remarks/>
         MLI,
-
+        
         /// <remarks/>
         MLT,
-
+        
         /// <remarks/>
         MHL,
-
+        
         /// <remarks/>
         MTQ,
-
+        
         /// <remarks/>
         MRT,
-
+        
         /// <remarks/>
         MUS,
-
+        
         /// <remarks/>
         MYT,
-
+        
         /// <remarks/>
         MEX,
-
+        
         /// <remarks/>
         FSM,
-
+        
         /// <remarks/>
         MDA,
-
+        
         /// <remarks/>
         MCO,
-
+        
         /// <remarks/>
         MNE,
-
+        
         /// <remarks/>
         MNG,
-
+        
         /// <remarks/>
         MSR,
-
+        
         /// <remarks/>
         MAR,
-
+        
         /// <remarks/>
         MOZ,
-
+        
         /// <remarks/>
         MMR,
-
+        
         /// <remarks/>
         NAM,
-
+        
         /// <remarks/>
         NRU,
-
+        
         /// <remarks/>
         NPL,
-
+        
         /// <remarks/>
         NLD,
-
+        
         /// <remarks/>
         ANT,
-
+        
         /// <remarks/>
         NCL,
-
+        
         /// <remarks/>
         NZL,
-
+        
         /// <remarks/>
         NIC,
-
+        
         /// <remarks/>
         NER,
-
+        
         /// <remarks/>
         NGA,
-
+        
         /// <remarks/>
         NIU,
-
+        
         /// <remarks/>
         NFK,
-
+        
         /// <remarks/>
         MNP,
-
+        
         /// <remarks/>
         NOR,
-
+        
         /// <remarks/>
         OMN,
-
+        
         /// <remarks/>
         PAK,
-
+        
         /// <remarks/>
         PLW,
-
+        
         /// <remarks/>
         PAN,
-
+        
         /// <remarks/>
         PNG,
-
+        
         /// <remarks/>
         PRY,
-
+        
         /// <remarks/>
         PSE,
-
+        
         /// <remarks/>
         PER,
-
+        
         /// <remarks/>
         PHL,
-
+        
         /// <remarks/>
         PCN,
-
+        
         /// <remarks/>
         POL,
-
+        
         /// <remarks/>
         PRT,
-
+        
         /// <remarks/>
         PRI,
-
+        
         /// <remarks/>
         QAT,
-
+        
         /// <remarks/>
         REU,
-
+        
         /// <remarks/>
         ROU,
-
+        
         /// <remarks/>
         RUS,
-
+        
         /// <remarks/>
         RWA,
-
+        
         /// <remarks/>
         KNA,
-
+        
         /// <remarks/>
         LCA,
-
+        
         /// <remarks/>
         VCT,
-
+        
         /// <remarks/>
         WSM,
-
+        
         /// <remarks/>
         SMR,
-
+        
         /// <remarks/>
         STP,
-
+        
         /// <remarks/>
         SAU,
-
+        
         /// <remarks/>
         SEN,
-
+        
         /// <remarks/>
         SRB,
-
+        
         /// <remarks/>
         SYC,
-
+        
         /// <remarks/>
         SLE,
-
+        
         /// <remarks/>
         SGP,
-
+        
         /// <remarks/>
         SVK,
-
+        
         /// <remarks/>
         SVN,
-
+        
         /// <remarks/>
         SLB,
-
+        
         /// <remarks/>
         SOM,
-
+        
         /// <remarks/>
         ZAF,
-
+        
         /// <remarks/>
         ESP,
-
+        
         /// <remarks/>
         LKA,
-
+        
         /// <remarks/>
         SHN,
-
+        
         /// <remarks/>
         SPM,
-
+        
         /// <remarks/>
         SDN,
-
+        
         /// <remarks/>
         SUR,
-
+        
         /// <remarks/>
         SJM,
-
+        
         /// <remarks/>
         SWZ,
-
+        
         /// <remarks/>
         SWE,
-
+        
         /// <remarks/>
         CHE,
-
+        
         /// <remarks/>
         SYR,
-
+        
         /// <remarks/>
         TWN,
-
+        
         /// <remarks/>
         TJK,
-
+        
         /// <remarks/>
         TZA,
-
+        
         /// <remarks/>
         THA,
-
+        
         /// <remarks/>
         TGO,
-
+        
         /// <remarks/>
         TKL,
-
+        
         /// <remarks/>
         TON,
-
+        
         /// <remarks/>
         TTO,
-
+        
         /// <remarks/>
         TUN,
-
+        
         /// <remarks/>
         TUR,
-
+        
         /// <remarks/>
         TKM,
-
+        
         /// <remarks/>
         TLS,
-
+        
         /// <remarks/>
         TCA,
-
+        
         /// <remarks/>
         TUV,
-
+        
         /// <remarks/>
         UGA,
-
+        
         /// <remarks/>
         UKR,
-
+        
         /// <remarks/>
         ARE,
-
+        
         /// <remarks/>
         GBR,
-
+        
         /// <remarks/>
         USA,
-
+        
         /// <remarks/>
         URY,
-
+        
         /// <remarks/>
         UZB,
-
+        
         /// <remarks/>
         VUT,
-
+        
         /// <remarks/>
         VAT,
-
+        
         /// <remarks/>
         VEN,
-
+        
         /// <remarks/>
         VNM,
-
+        
         /// <remarks/>
         VGB,
-
+        
         /// <remarks/>
         VIR,
-
+        
         /// <remarks/>
         WLF,
-
+        
         /// <remarks/>
         ESH,
-
+        
         /// <remarks/>
         YEM,
-
+        
         /// <remarks/>
         ZAR,
-
+        
         /// <remarks/>
         ZMB,
-
+        
         /// <remarks/>
         ZWE,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class OverseasAddressType
-    {
-
-        private string addressField;
-
-        private string postCodeAndTownField;
-
-        private string provinceField;
-
-        private CountryType countryCodeField;
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class OverseasAddressType 
+    {        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string Address
+        public string Address 
         {
-            get
-            {
-                return this.addressField;
-            }
-            set
-            {
-                this.addressField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string PostCodeAndTown
+        public string PostCodeAndTown 
         {
-            get
-            {
-                return this.postCodeAndTownField;
-            }
-            set
-            {
-                this.postCodeAndTownField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string Province
+        public string Province 
         {
-            get
-            {
-                return this.provinceField;
-            }
-            set
-            {
-                this.provinceField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public CountryType CountryCode
+        public CountryType CountryCode 
         {
-            get
-            {
-                return this.countryCodeField;
-            }
-            set
-            {
-                this.countryCodeField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class AdministrativeCentreType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class AdministrativeCentreType 
     {
-
-        private string centreCodeField;
-
-        private RoleTypeCodeType roleTypeCodeField;
-
-        private bool roleTypeCodeFieldSpecified;
-
-        private string nameField;
-
-        private string firstSurnameField;
-
-        private string secondSurnameField;
-
-        private object itemField;
-
-        private ContactDetailsType contactDetailsField;
-
-        private string physicalGLNField;
-
-        private string logicalOperationalPointField;
-
-        private string centreDescriptionField;
-
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string CentreCode
+        public string CentreCode 
         {
-            get
-            {
-                return this.centreCodeField;
-            }
-            set
-            {
-                this.centreCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public RoleTypeCodeType RoleTypeCode
+        public RoleTypeCodeType RoleTypeCode 
         {
-            get
-            {
-                return this.roleTypeCodeField;
-            }
-            set
-            {
-                this.roleTypeCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool RoleTypeCodeSpecified
+        public bool RoleTypeCodeSpecified 
         {
-            get
-            {
-                return this.roleTypeCodeFieldSpecified;
-            }
-            set
-            {
-                this.roleTypeCodeFieldSpecified = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string Name
+        public string Name 
         {
-            get
-            {
-                return this.nameField;
-            }
-            set
-            {
-                this.nameField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string FirstSurname
+        public string FirstSurname 
         {
-            get
-            {
-                return this.firstSurnameField;
-            }
-            set
-            {
-                this.firstSurnameField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string SecondSurname
+        public string SecondSurname 
         {
-            get
-            {
-                return this.secondSurnameField;
-            }
-            set
-            {
-                this.secondSurnameField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute("AddressInSpain", typeof(AddressType), Form = XmlSchemaForm.Unqualified)]
         [XmlElementAttribute("OverseasAddress", typeof(OverseasAddressType), Form = XmlSchemaForm.Unqualified)]
-        public object Item
+        public object Item 
         {
-            get
-            {
-                return this.itemField;
-            }
-            set
-            {
-                this.itemField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public ContactDetailsType ContactDetails
+        public ContactDetailsType ContactDetails 
         {
-            get
-            {
-                return this.contactDetailsField;
-            }
-            set
-            {
-                this.contactDetailsField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string PhysicalGLN
+        public string PhysicalGLN 
         {
-            get
-            {
-                return this.physicalGLNField;
-            }
-            set
-            {
-                this.physicalGLNField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string LogicalOperationalPoint
-        {
-            get
-            {
-                return this.logicalOperationalPointField;
-            }
-            set
-            {
-                this.logicalOperationalPointField = value;
-            }
+        public string LogicalOperationalPoint 
+        {            
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string CentreDescription
+        public string CentreDescription 
         {
-            get
-            {
-                return this.centreDescriptionField;
-            }
-            set
-            {
-                this.centreDescriptionField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public enum RoleTypeCodeType
-    {
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public enum RoleTypeCodeType 
+    {        
         /// <remarks/>
         [XmlEnumAttribute("01")]
         Item01,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("02")]
         Item02,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("03")]
         Item03,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("04")]
         Item04,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("05")]
         Item05,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("06")]
         Item06,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("07")]
         Item07,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("08")]
         Item08,
-
+        
         /// <remarks/>
         [XmlEnumAttribute("09")]
         Item09,
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class ContactDetailsType
-    {
-
-        private string telephoneField;
-
-        private string teleFaxField;
-
-        private string webAddressField;
-
-        private string electronicMailField;
-
-        private string contactPersonsField;
-
-        private string cnoCnaeField;
-
-        private string iNETownCodeField;
-
-        private string additionalContactDetailsField;
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class ContactDetailsType 
+    {        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string Telephone
+        public string Telephone 
         {
-            get
-            {
-                return this.telephoneField;
-            }
-            set
-            {
-                this.telephoneField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string TeleFax
+        public string TeleFax 
         {
-            get
-            {
-                return this.teleFaxField;
-            }
-            set
-            {
-                this.teleFaxField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string WebAddress
+        public string WebAddress 
         {
-            get
-            {
-                return this.webAddressField;
-            }
-            set
-            {
-                this.webAddressField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string ElectronicMail
+        public string ElectronicMail 
         {
-            get
-            {
-                return this.electronicMailField;
-            }
-            set
-            {
-                this.electronicMailField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string ContactPersons
+        public string ContactPersons 
         {
-            get
-            {
-                return this.contactPersonsField;
-            }
-            set
-            {
-                this.contactPersonsField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string CnoCnae
-        {
-            get
-            {
-                return this.cnoCnaeField;
-            }
-            set
-            {
-                this.cnoCnaeField = value;
-            }
+        public string CnoCnae 
+        {            
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string INETownCode
+        public string INETownCode 
         {
-            get
-            {
-                return this.iNETownCodeField;
-            }
-            set
-            {
-                this.iNETownCodeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string AdditionalContactDetails
+        public string AdditionalContactDetails 
         {
-            get
-            {
-                return this.additionalContactDetailsField;
-            }
-            set
-            {
-                this.additionalContactDetailsField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class BusinessType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class BusinessType 
     {
-
-        private TaxIdentificationType taxIdentificationField;
-
-        private string partyIdentificationField;
-
-        private List<AdministrativeCentreType> administrativeCentresField;
-
-        private object itemField;
+        [XmlIgnore]
         internal PartiesType Parent
         {
             get;
             set;
         }
-        /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public TaxIdentificationType TaxIdentification
-        {
-            get
-            {
-                return this.taxIdentificationField;
-            }
-            set
-            {
-                this.taxIdentificationField = value;
-            }
-        }
 
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string PartyIdentification
+        public TaxIdentificationType TaxIdentification 
         {
-            get
-            {
-                return this.partyIdentificationField;
-            }
-            set
-            {
-                this.partyIdentificationField = value;
-            }
+            get;
+            set;
         }
-
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string PartyIdentification 
+        {
+            get;
+            set;
+        }
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("AdministrativeCentre", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<AdministrativeCentreType> AdministrativeCentres
+        [XmlArrayItemAttribute("AdministrativeCentre", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public List<AdministrativeCentreType> AdministrativeCentres 
         {
-            get
-            {
-                return this.administrativeCentresField;
-            }
-            set
-            {
-                this.administrativeCentresField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute("Individual", typeof(IndividualType), Form = XmlSchemaForm.Unqualified)]
         [XmlElementAttribute("LegalEntity", typeof(LegalEntityType), Form = XmlSchemaForm.Unqualified)]
-        public object Item
+        public object Item 
         {
-            get
-            {
-                return this.itemField;
-            }
-            set
-            {
-                this.itemField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class IndividualType
     {
-
-        private string nameField;
-
-        private string firstSurnameField;
-
-        private string secondSurnameField;
-
-        private object itemField;
-
-        private ContactDetailsType contactDetailsField;
+        [XmlIgnore]
         internal BusinessType Parent
         {
             get;
             set;
         }
+
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string Name
         {
-            get
-            {
-                return this.nameField;
-            }
-            set
-            {
-                this.nameField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string FirstSurname
         {
-            get
-            {
-                return this.firstSurnameField;
-            }
-            set
-            {
-                this.firstSurnameField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string SecondSurname
         {
-            get
-            {
-                return this.secondSurnameField;
-            }
-            set
-            {
-                this.secondSurnameField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute("AddressInSpain", typeof(AddressType), Form = XmlSchemaForm.Unqualified)]
         [XmlElementAttribute("OverseasAddress", typeof(OverseasAddressType), Form = XmlSchemaForm.Unqualified)]
         public object Item
         {
-            get
-            {
-                return this.itemField;
-            }
-            set
-            {
-                this.itemField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public ContactDetailsType ContactDetails
         {
-            get
-            {
-                return this.contactDetailsField;
-            }
-            set
-            {
-                this.contactDetailsField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class LegalEntityType
-    {
-
-        private string corporateNameField;
-
-        private string tradeNameField;
-
-        private RegistrationDataType registrationDataField;
-
-        private object itemField;
-
-        private ContactDetailsType contactDetailsField;
-
+    {        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string CorporateName
         {
-            get
-            {
-                return this.corporateNameField;
-            }
-            set
-            {
-                this.corporateNameField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string TradeName
         {
-            get
-            {
-                return this.tradeNameField;
-            }
-            set
-            {
-                this.tradeNameField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public RegistrationDataType RegistrationData
         {
-            get
-            {
-                return this.registrationDataField;
-            }
-            set
-            {
-                this.registrationDataField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute("AddressInSpain", typeof(AddressType), Form = XmlSchemaForm.Unqualified)]
         [XmlElementAttribute("OverseasAddress", typeof(OverseasAddressType), Form = XmlSchemaForm.Unqualified)]
         public object Item
         {
-            get
-            {
-                return this.itemField;
-            }
-            set
-            {
-                this.itemField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public ContactDetailsType ContactDetails
         {
-            get
-            {
-                return this.contactDetailsField;
-            }
-            set
-            {
-                this.contactDetailsField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class RegistrationDataType
-    {
-
-        private string bookField;
-
-        private string registerOfCompaniesLocationField;
-
-        private string sheetField;
-
-        private string folioField;
-
-        private string sectionField;
-
-        private string volumeField;
-
-        private string additionalRegistrationDataField;
-
+    {        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string Book
         {
-            get
-            {
-                return this.bookField;
-            }
-            set
-            {
-                this.bookField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
         public string RegisterOfCompaniesLocation
         {
-            get
-            {
-                return this.registerOfCompaniesLocationField;
-            }
-            set
-            {
-                this.registerOfCompaniesLocationField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string Sheet
+        public string Sheet 
         {
-            get
-            {
-                return this.sheetField;
-            }
-            set
-            {
-                this.sheetField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string Folio
+        public string Folio 
         {
-            get
-            {
-                return this.folioField;
-            }
-            set
-            {
-                this.folioField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string Section
+        public string Section 
         {
-            get
-            {
-                return this.sectionField;
-            }
-            set
-            {
-                this.sectionField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string Volume
+        public string Volume 
         {
-            get
-            {
-                return this.volumeField;
-            }
-            set
-            {
-                this.volumeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string AdditionalRegistrationData
+        public string AdditionalRegistrationData 
         {
-            get
-            {
-                return this.additionalRegistrationDataField;
-            }
-            set
-            {
-                this.additionalRegistrationDataField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
     public partial class PartiesType
     {
-
-        private BusinessType sellerPartyField;
-
-        private BusinessType buyerPartyField;
+        [XmlIgnore]
         internal Facturae Parent
         {
             get;
             set;
         }
-        /// <remarks/>
-        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public BusinessType SellerParty
-        {
-            get
-            {
-                return this.sellerPartyField;
-            }
-            set
-            {
-                this.sellerPartyField = value;
-            }
-        }
 
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public BusinessType BuyerParty
+        public BusinessType SellerParty 
         {
-            get
-            {
-                return this.buyerPartyField;
-            }
-            set
-            {
-                this.buyerPartyField = value;
-            }
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public BusinessType BuyerParty {
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class AssigneeType
-    {
-
-        private TaxIdentificationType taxIdentificationField;
-
-        private object itemField;
-
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class RepositoryType 
+    {        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public TaxIdentificationType TaxIdentification
+        public string RepositoryName 
         {
-            get
-            {
-                return this.taxIdentificationField;
-            }
-            set
-            {
-                this.taxIdentificationField = value;
-            }
+            get;
+            set;
         }
-
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string URL 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string Reference 
+        {
+            get;
+            set;
+        }
+    }
+    
+    /// <remarks/>
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
+    [SerializableAttribute()]
+    [DebuggerStepThroughAttribute()]
+    [DesignerCategoryAttribute("code")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class FactoringAssignmentDocumentType 
+    {        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string DocumentCharacter 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string RepresentationIdentity 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string DocumentType 
+        {
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public RepositoryType Repository 
+        {
+            get;
+            set;
+        }
+    }
+    
+    /// <remarks/>
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
+    [SerializableAttribute()]
+    [DebuggerStepThroughAttribute()]
+    [DesignerCategoryAttribute("code")]
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class AssigneeType 
+    {        
+        /// <remarks/>
+        [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
+        public TaxIdentificationType TaxIdentification 
+        {
+            get;
+            set;
+        }
+        
         /// <remarks/>
         [XmlElementAttribute("Individual", typeof(IndividualType), Form = XmlSchemaForm.Unqualified)]
         [XmlElementAttribute("LegalEntity", typeof(LegalEntityType), Form = XmlSchemaForm.Unqualified)]
-        public object Item
+        public object Item 
         {
-            get
-            {
-                return this.itemField;
-            }
-            set
-            {
-                this.itemField = value;
-            }
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class FactoringAssignmentDataType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class FactoringAssignmentDataType 
     {
-
-        private AssigneeType assigneeField;
-
-        private List<InstallmentType> paymentDetailsField;
-
-        private string factoringAssignmentClausesField;
-
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AssigneeType Assignee
+        public AssigneeType Assignee 
         {
-            get
-            {
-                return this.assigneeField;
-            }
-            set
-            {
-                this.assigneeField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlArrayAttribute(Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItemAttribute("Installment", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public List<InstallmentType> PaymentDetails
+        [XmlArrayItemAttribute("Installment", Form = XmlSchemaForm.Unqualified, IsNullable=false)]
+        public InstallmentType[] PaymentDetails 
         {
-            get
-            {
-                return this.paymentDetailsField;
-            }
-            set
-            {
-                this.paymentDetailsField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string FactoringAssignmentClauses
+        public string FactoringAssignmentClauses 
         {
-            get
-            {
-                return this.factoringAssignmentClausesField;
-            }
-            set
-            {
-                this.factoringAssignmentClausesField = value;
-            }
+            get;
+            set;
+        }
+        
+        /// <remarks/>
+        [XmlElementAttribute("FactoringAssignmentDocument", Form = XmlSchemaForm.Unqualified)]
+        public FactoringAssignmentDocumentType[] FactoringAssignmentDocument 
+        {
+            get;
+            set;
         }
     }
-
+    
     /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
+    [GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
     [SerializableAttribute()]
     [DebuggerStepThroughAttribute()]
     [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.facturae.es/Facturae/2014/v3.2.1/Facturae")]
-    public partial class BatchType
+    [XmlTypeAttribute(Namespace = "http://www.facturae.gob.es/formato/Versiones/Facturaev3_2_2.xml")]
+    public partial class BatchType 
     {
-
-        private string batchIdentifierField;
-
-        private long invoicesCountField;
-
-        private AmountType totalInvoicesAmountField;
-
-        private AmountType totalOutstandingAmountField;
-
-        private AmountType totalExecutableAmountField;
-
-        private CurrencyCodeType invoiceCurrencyCodeField;
-
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public string BatchIdentifier
+        public string BatchIdentifier 
         {
-            get
-            {
-                return this.batchIdentifierField;
-            }
-            set
-            {
-                this.batchIdentifierField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public long InvoicesCount
+        public long InvoicesCount 
         {
-            get
-            {
-                return this.invoicesCountField;
-            }
-            set
-            {
-                this.invoicesCountField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AmountType TotalInvoicesAmount
+        public AmountType TotalInvoicesAmount 
         {
-            get
-            {
-                return this.totalInvoicesAmountField;
-            }
-            set
-            {
-                this.totalInvoicesAmountField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AmountType TotalOutstandingAmount
+        public AmountType TotalOutstandingAmount 
         {
-            get
-            {
-                return this.totalOutstandingAmountField;
-            }
-            set
-            {
-                this.totalOutstandingAmountField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public AmountType TotalExecutableAmount
+        public AmountType TotalExecutableAmount 
         {
-            get
-            {
-                return this.totalExecutableAmountField;
-            }
-            set
-            {
-                this.totalExecutableAmountField = value;
-            }
+            get;
+            set;
         }
-
+        
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public CurrencyCodeType InvoiceCurrencyCode
+        public CurrencyCodeType InvoiceCurrencyCode 
         {
-            get
-            {
-                return this.invoiceCurrencyCodeField;
-            }
-            set
-            {
-                this.invoiceCurrencyCodeField = value;
-            }
+            get;
+            set;
         }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("Transforms", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class TransformsType
-    {
-
-        private List<TransformType> transformField;
-
-        /// <remarks/>
-        [XmlElementAttribute("Transform")]
-        public List<TransformType> Transform
-        {
-            get
-            {
-                return this.transformField;
-            }
-            set
-            {
-                this.transformField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("Manifest", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class ManifestType
-    {
-
-        private List<ReferenceType> referenceField;
-
-        private string idField;
-
-        /// <remarks/>
-        [XmlElementAttribute("Reference")]
-        public List<ReferenceType> Reference
-        {
-            get
-            {
-                return this.referenceField;
-            }
-            set
-            {
-                this.referenceField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "ID")]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("SignatureProperties", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SignaturePropertiesType
-    {
-
-        private List<SignaturePropertyType> signaturePropertyField;
-
-        private string idField;
-
-        /// <remarks/>
-        [XmlElementAttribute("SignatureProperty")]
-        public List<SignaturePropertyType> SignatureProperty
-        {
-            get
-            {
-                return this.signaturePropertyField;
-            }
-            set
-            {
-                this.signaturePropertyField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "ID")]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-    }
-
-    /// <remarks/>
-    [GeneratedCodeAttribute("xsd", "4.0.30319.18020")]
-    [SerializableAttribute()]
-    [DebuggerStepThroughAttribute()]
-    [DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-    [XmlRootAttribute("SignatureProperty", Namespace = "http://www.w3.org/2000/09/xmldsig#", IsNullable = false)]
-    public partial class SignaturePropertyType
-    {
-
-        private List<XmlElement> itemsField;
-
-        private List<string> textField;
-
-        private string targetField;
-
-        private string idField;
-
-        /// <remarks/>
-        [XmlAnyElementAttribute()]
-        public List<XmlElement> Items
-        {
-            get
-            {
-                return this.itemsField;
-            }
-            set
-            {
-                this.itemsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlTextAttribute()]
-        public List<string> Text
-        {
-            get
-            {
-                return this.textField;
-            }
-            set
-            {
-                this.textField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "anyURI")]
-        public string Target
-        {
-            get
-            {
-                return this.targetField;
-            }
-            set
-            {
-                this.targetField = value;
-            }
-        }
-
-        /// <remarks/>
-        [XmlAttributeAttribute(DataType = "ID")]
-        public string Id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-    }
+    }      
 }
