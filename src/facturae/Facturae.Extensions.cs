@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using FacturaE.DataType;
 
 namespace FacturaE
 {
@@ -20,7 +22,7 @@ namespace FacturaE
             FileHeader = new FileHeaderType
             {
                 Batch         = new BatchType()
-              , SchemaVersion = SchemaVersionType.Item321
+              , SchemaVersion = SchemaVersionType.Item322
             };
             Parties = new PartiesType
             {
@@ -31,7 +33,7 @@ namespace FacturaE
                 
             Invoices = new List<InvoiceType>();
             SetCurrency(CurrencyCodeType.EUR);
-            SetIssuer(InvoiceIssuerTypeType.EM);
+            SetIssuer(InvoiceIssuerTypeType.Seller);
         }
 
         /// <summary>
@@ -201,7 +203,7 @@ namespace FacturaE
         /// <returns></returns>
         public InvoiceType IsComplete()
         {
-            InvoiceHeader.InvoiceDocumentType = InvoiceDocumentTypeType.Complete;
+            InvoiceHeader.InvoiceDocumentType = InvoiceDocumentTypeType.CompleteInvoce;
 
             return this;
         }
@@ -234,7 +236,7 @@ namespace FacturaE
         /// <returns></returns>
         public InvoiceType IsOriginal()
         {
-            InvoiceHeader.InvoiceClass = InvoiceClassType.Original;
+            InvoiceHeader.InvoiceClass = InvoiceClassType.OriginalInvoice;
 
             return this;
         }
@@ -256,7 +258,7 @@ namespace FacturaE
         /// <returns></returns>
         public InvoiceType IsSummaryOriginal()
         {
-            InvoiceHeader.InvoiceClass = InvoiceClassType.SummaryOriginal;
+            InvoiceHeader.InvoiceClass = InvoiceClassType.Summary;
 
             return this;
         }
@@ -267,7 +269,7 @@ namespace FacturaE
         /// <returns></returns>
         public InvoiceType IsCopyOfOriginal()
         {
-            InvoiceHeader.InvoiceClass = InvoiceClassType.CopyOfOriginal;
+            InvoiceHeader.InvoiceClass = InvoiceClassType.CopyOfTheOriginal;
 
             return this;
         }
@@ -278,7 +280,7 @@ namespace FacturaE
         /// <returns></returns>
         public InvoiceType IsCopyOfCorrective()
         {
-            InvoiceHeader.InvoiceClass = InvoiceClassType.CopyOfCorrective;
+            InvoiceHeader.InvoiceClass = InvoiceClassType.CopyOfTheCorrective;
             
             return this;
         }
@@ -289,7 +291,7 @@ namespace FacturaE
         /// <returns></returns>
         public InvoiceType IsCopyOfSummary()
         {
-            InvoiceHeader.InvoiceClass = InvoiceClassType.CopyOfSummary;
+            InvoiceHeader.InvoiceClass = InvoiceClassType.CopyOfTheSummary;
 
             return this;
         }
@@ -431,14 +433,14 @@ namespace FacturaE
         /// <returns></returns>
         public Facturae CalculateTotals()
         {
-            double subsidyAmount = 0;
+            DoubleUpToEightDecimalType subsidyAmount = 0;
 
             // Taxes Outputs
             var q = from tax in Items.SelectMany(x => x.TaxesOutputs)
-                    group tax by tax.TaxRate into g
+                    group tax by new { tax.TaxTypeCode, tax.TaxRate } into g
                     select new TaxOutputType
                     {
-                        TaxRate     = g.Key,
+                        TaxRate     = g.Key.TaxRate,
                         TaxableBase = new AmountType 
                         { 
                             TotalAmount       = g.Sum(gtax => gtax.TaxableBase.TotalAmount).Round(),
@@ -449,10 +451,31 @@ namespace FacturaE
                             TotalAmount       = g.Sum(gtax => gtax.TaxAmount.TotalAmount).Round(),
                             EquivalentInEuros = g.Sum(gtax => gtax.TaxAmount.EquivalentInEuros).Round()
                         },
-                        TaxTypeCode = TaxTypeCodeType.Item01,
+                        TaxTypeCode = g.Key.TaxTypeCode,
                     };
 
-            TaxesOutputs = q.ToList();
+            TaxesOutputs = q.OrderBy(x => x.TaxTypeCode).ThenBy(x => x.TaxRate).ToList();
+
+            // Taxes Withheld
+            var w = from tax in Items.SelectMany(x => x.TaxesWithheld)
+                    group tax by new { tax.TaxTypeCode, tax.TaxRate } into g
+                    select new TaxType
+                    {
+                        TaxRate     = g.Key.TaxRate,
+                        TaxableBase = new AmountType 
+                        { 
+                            TotalAmount       = g.Sum(gtax => gtax.TaxableBase.TotalAmount).Round(),
+                            EquivalentInEuros = g.Sum(gtax => gtax.TaxableBase.EquivalentInEuros).Round()
+                        },
+                        TaxAmount   = new AmountType 
+                        { 
+                            TotalAmount       = g.Sum(gtax => gtax.TaxAmount.TotalAmount).Round(),
+                            EquivalentInEuros = g.Sum(gtax => gtax.TaxAmount.EquivalentInEuros).Round()
+                        },
+                        TaxTypeCode = g.Key.TaxTypeCode,
+                    };
+
+            TaxesWithheld = w.OrderBy(x => x.TaxTypeCode).ThenBy(x => x.TaxRate).ToList();
 
             // Invoice totals
             InvoiceTotals = new InvoiceTotalsType();
@@ -471,20 +494,23 @@ namespace FacturaE
             CalculatePaymentsOnAccountTotals();
 
             CalculateReimbursableExpensesTotals();
-            
-            // Total impuestos retenidos.
-            CalculateTotalTaxesWithheldTotals();
+
+            // Total impuestos retenidos
+            InvoiceTotals.TotalTaxesWithheld = CalculateTaxWithheldTotal();
 
             // Sum of different fields Tax Amounts + Total Equivalence 
             // Surcharges. Always to two decimal points.
-            InvoiceTotals.TotalTaxOutputs = Math.Round(CalculateTaxOutputTotal(), 2);
+            InvoiceTotals.TotalTaxOutputs = CalculateTaxOutputTotal();
 
-            InvoiceTotals.InvoiceTotal = (InvoiceTotals.TotalGrossAmountBeforeTaxes
-                                        + InvoiceTotals.TotalTaxOutputs
+            // Result: TotalGrossAmountBeforeTaxes + TotalTaxOutputs - TotalTaxesWithheld. Up to eight decimal points.
+            InvoiceTotals.InvoiceTotal = ((InvoiceTotals.TotalGrossAmountBeforeTaxes + InvoiceTotals.TotalTaxOutputs)
                                         - InvoiceTotals.TotalTaxesWithheld).Round();
 
             // Total de gastos financieros
             InvoiceTotals.TotalFinancialExpenses = 0;
+
+            // Amounts withheld by the payer  subject to the normal fulfilment of the transaction.
+            var amountsWithheld = InvoiceTotals.AmountsWithheld?.WithholdingAmount ?? 0;
             
             if (InvoiceTotals.Subsidies != null)
             {
@@ -493,9 +519,12 @@ namespace FacturaE
                 subsidyAmount = InvoiceTotals.Subsidies.Sum(s => s.SubsidyAmount).Round();
             }
 
+            // Result: InvoiceTotal - (SubsidyAmount + TotalPaymentsOnAccount).
             InvoiceTotals.TotalOutstandingAmount = (InvoiceTotals.InvoiceTotal  - (subsidyAmount + InvoiceTotals.TotalPaymentsOnAccount)).Round();
+
+            // Result: TotalOutstandingAmount - WithholdingAmount - PaymentInKindAmount + Reimbursable expenses + Financial expenses.
             InvoiceTotals.TotalExecutableAmount  = (InvoiceTotals.TotalOutstandingAmount
-                                                 - InvoiceTotals.TotalTaxesWithheld
+                                                 - amountsWithheld
                                                  + InvoiceTotals.TotalReimbursableExpenses
                                                  + InvoiceTotals.TotalFinancialExpenses).Round();
 
@@ -506,26 +535,6 @@ namespace FacturaE
         {
             // Rate applied to the Invoice Total.
             InvoiceTotals.Subsidies.ForEach(s => s.SubsidyAmount = (InvoiceTotals.InvoiceTotal * s.SubsidyRate / 100).Round());
-        }
-
-        private void CalculateTotalTaxesWithheldTotals()
-        {
-            var taxes = Items.Sum
-            (
-                il =>
-                {
-                    double total = 0;
-
-                    if (il.TaxesWithheld != null)
-                    {
-                        total = il.TaxesWithheld.Sum(tw => tw.TaxAmount.TotalAmount).Round();
-                    }
-
-                    return total;
-                }
-            );
-
-            InvoiceTotals.TotalTaxesWithheld = taxes.Round();
         }
 
         private void CalculateReimbursableExpensesTotals()
@@ -573,9 +582,14 @@ namespace FacturaE
             }
         }
 
-        private double CalculateTaxOutputTotal()
+        private DoubleUpToEightDecimalType CalculateTaxOutputTotal()
         {
-            return TaxesOutputs.Sum(to => to.TaxAmount.TotalAmount).Round();
+            return TaxesOutputs?.Sum(to => to.TaxAmount.TotalAmount).Round() ?? 0;
+        }
+
+        private DoubleUpToEightDecimalType CalculateTaxWithheldTotal()
+        {
+            return TaxesWithheld?.Sum(to => to.TaxAmount.TotalAmount).Round() ?? 0;
         }
     }
 
@@ -588,14 +602,14 @@ namespace FacturaE
             return this;
         }
 
-        public InvoiceLineType GiveUnitPriceWithoutTax(double price)
+        public InvoiceLineType GiveUnitPriceWithoutTax(DoubleUpToEightDecimalType price)
         {
             UnitPriceWithoutTax = price;
 
             return this;
         }
 
-        public InvoiceLineType GiveDiscount(double discountRate, string discountReason = "Descuento")
+        public InvoiceLineType GiveDiscount(DoubleUpToEightDecimalType discountRate, string discountReason = "Descuento")
         {
             if (DiscountsAndRebates == null)
             {
@@ -613,28 +627,64 @@ namespace FacturaE
             return this;
         }
 
-        public InvoiceLineType GiveTax(double taxRate)
+        public InvoiceLineType GiveVATRate(DoubleUpToEightDecimalType taxRate)
         {
-            if (TaxesOutputs == null)
+            return GiveTaxRate(taxRate, TaxTypeCodeType.ValueAddedTax);
+        }
+
+        public InvoiceLineType GiveTaxRate(DoubleUpToEightDecimalType taxRate, TaxTypeCodeType taxType)
+        {
+            switch (taxType)
             {
-                TaxesOutputs = new List<InvoiceLineTypeTax>();
+                case TaxTypeCodeType.ValueAddedTax:
+                case TaxTypeCodeType.IGIC:
+                    AddTaxOutput(taxRate, taxType);
+                    break;
+
+                case TaxTypeCodeType.PersonalIncomeTax:
+                    AddTaxWithheld(taxRate, taxType);
+                    break;
             }
-
-            var tax = new InvoiceLineTypeTax
-            {
-                TaxTypeCode = TaxTypeCodeType.Item01
-              , TaxRate     = taxRate
-            };
-
-            TaxesOutputs.Add(tax);
 
             return this;
         }
 
+        private void AddTaxOutput(DoubleUpToEightDecimalType taxRate, TaxTypeCodeType taxType)
+        {
+            if (TaxesOutputs == null)
+            {
+                TaxesOutputs = new List<InvoiceLineTypeTax>(1);
+            }
+
+            var tax = new InvoiceLineTypeTax
+            {
+                TaxTypeCode = taxType
+              , TaxRate     = taxRate
+            };
+
+            TaxesOutputs.Add(tax);
+        }
+
+        private void AddTaxWithheld(DoubleUpToEightDecimalType taxRate, TaxTypeCodeType taxType)
+        {
+            if (TaxesWithheld == null)
+            {
+                TaxesWithheld = new List<TaxType>(1);
+            }
+
+            var tax = new TaxType
+            {
+                TaxTypeCode = taxType
+              , TaxRate     = taxRate
+            };
+
+            TaxesWithheld.Add(tax);
+        }
+
         public InvoiceType CalculateTotals()
         {
-            double totalDiscounts = 0;
-            double totalCharges   = 0;
+            DoubleUpToEightDecimalType totalDiscounts = 0;
+            DoubleUpToEightDecimalType totalCharges   = 0;
 
             TotalCost = (Quantity * UnitPriceWithoutTax).Round();
 
@@ -662,9 +712,33 @@ namespace FacturaE
                 );
             }
 
+            // Result: TotalCost - DiscountAmount + ChargeAmount. Up to eight decimal points
             GrossAmount = TotalCost - totalDiscounts + totalCharges;
 
             TaxesOutputs.ForEach
+            (
+                tax =>
+                {
+                    if (tax.TaxableBase == null)
+                    {
+                        tax.TaxableBase = new AmountType();
+                    }
+
+                    tax.TaxableBase.TotalAmount       = GrossAmount;
+                    tax.TaxableBase.EquivalentInEuros = GrossAmount;
+
+                    if (tax.TaxAmount == null)
+                    {
+                        tax.TaxAmount = new AmountType();
+                    }
+
+                    tax.TaxAmount.TotalAmount = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100).Round();
+                }
+            );
+
+            var discounts = DiscountsAndRebates?.Sum(x => x.DiscountAmount).Round() ?? 0;
+
+            TaxesWithheld.ForEach
             (
                 tax =>
                 {
