@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace ASN1
 {
     public abstract class AsnObject
@@ -11,13 +13,13 @@ namespace ASN1
             private set;
         }
 
-        public byte[] RawData
+        public ReadOnlyMemory<byte> RawData
         {
             get;
             protected set;
         }
 
-        protected AsnObject(AsnIdentifier id, byte[] buffer)
+        protected AsnObject(AsnIdentifier id, ReadOnlyMemory<byte> buffer)
         {
             Id      = id;
             RawData = buffer;

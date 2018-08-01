@@ -89,6 +89,49 @@ namespace FacturaE
                 .Sign(cert, ClaimedRole.Supplier)
                 .WriteToFile(s_Filename)
                 .CheckSignature();
+
+            System.Console.WriteLine(isValid);
+
+            var _serializer         = new XmlSerializer(typeof(Facturae));
+            var _nameTable          = new NameTable();
+            var _nsMgr              = XsdSchemas.CreateXadesNamespaceManager(_nameTable);
+            var _context            = new XmlParserContext(_nameTable, _nsMgr, null, XmlSpace.Preserve, System.Text.Encoding.UTF8);
+            var _namespaces         = new XmlSerializerNamespaces();
+            var s_xmlReaderSettings = new XmlReaderSettings
+            {
+                ConformanceLevel = ConformanceLevel.Document,
+                Schemas          = XsdSchemas.BuildSchemaSet(_nameTable),
+                NameTable        = _nameTable,
+            };
+
+            foreach (XmlQualifiedName name in XsdSchemas.Namespaces)
+            {
+                _nsMgr.AddNamespace(name.Name, name.Namespace);
+            }
+
+            _serializer.UnknownElement += (object sender, XmlElementEventArgs e) => {
+                Console.WriteLine("Unexpected element: {0} as line {1}, column {2}", e.Element.Name, e.LineNumber, e.LinePosition);
+            };
+            
+            _serializer.UnknownAttribute += (object sender, XmlAttributeEventArgs e) => {
+                Console.WriteLine("Unexpected attribute: {0} as line {1}, column {2}", e.Attr.Name, e.LineNumber, e.LinePosition);
+            };
+
+            _serializer.UnknownNode += (object sender, XmlNodeEventArgs e) => {
+                Console.WriteLine("Unexpected node: {0} as line {1}, column {2}", e.NodeType, e.LineNumber, e.LinePosition);
+            };
+
+            _serializer.UnreferencedObject += (object sender, UnreferencedObjectEventArgs e) => {
+                Console.WriteLine("Unreferenced objkect with ID {0}", e.UnreferencedId);
+            };
+
+            using (var stream = new System.IO.FileStream(s_Filename, System.IO.FileMode.Open))
+            {
+                using (var xmlReader = XmlReader.Create(stream, s_xmlReaderSettings, _context))
+                {
+                    var face = _serializer.Deserialize(xmlReader) as Facturae;
+                }
+            }
         }
     }
 }

@@ -8,8 +8,8 @@ namespace ASN1
     public sealed class AsnOctetString
         : AsnString
     {
-        public AsnOctetString(AsnIdentifier id, byte[] buffer)
-            : base(id, buffer, buffer.ByteArrayToHex(" "))
+        public AsnOctetString(AsnIdentifier id, ReadOnlyMemory<byte> buffer)
+            : base(id, buffer, buffer.Span.ByteArrayToHex(" "))
         {
         }
     }

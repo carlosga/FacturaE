@@ -9,16 +9,16 @@ namespace ASN1
     public sealed class AsnBitString
         : AsnString
     {
-        private static string Encode(byte[] buffer)
+        private static string Encode(ReadOnlyMemory<byte> buffer)
         {
-            int bitCount = ((buffer.Length - 1) * 8) - buffer[0];
+            int bitCount = ((buffer.Length - 1) * 8) - buffer.Span[0];
             var result   = new StringBuilder(buffer.Length); 
 
             if (bitCount > 0)
             {
                 for (int i = 1; i < buffer.Length; i++)
                 {
-                    int current = buffer[i];
+                    int current = buffer.Span[i];
 
                     for (byte j = 8; j > 0; j--)
                     {
@@ -40,7 +40,7 @@ namespace ASN1
             return result.ToString();
         }
 
-        public AsnBitString(AsnIdentifier id, byte[] buffer)
+        public AsnBitString(AsnIdentifier id, ReadOnlyMemory<byte> buffer)
             : base(id, buffer, Encode(buffer))
         {
         }

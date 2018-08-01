@@ -19,17 +19,17 @@ namespace ASN1
           , "yyMMddHHmmss"
         };
 
-        private static DateTime ToDateTime(byte[] buffer)
+        private static DateTime ToDateTime(ReadOnlySpan<byte> buffer)
         {
             var utcTime = Encoding.UTF8.GetString(buffer).Replace("Z", string.Empty);
 
             return DateTime.ParseExact(utcTime, s_timeFormats, CultureInfo.CurrentCulture, DateTimeStyles.AdjustToUniversal);
         }
 
-        public AsnUTCTime(AsnIdentifier id, byte[] buffer)
+        public AsnUTCTime(AsnIdentifier id, ReadOnlyMemory<byte> buffer)
             : base(id, buffer)
         {
-            Value = ToDateTime(buffer).ToUniversalTime();
+            Value = ToDateTime(buffer.Span).ToUniversalTime();
         }
     }
 }

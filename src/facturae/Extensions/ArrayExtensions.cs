@@ -36,7 +36,7 @@ namespace System
         /// </summary>
         /// <param name="buffer">The buffer.</param>
         /// <returns></returns>
-        internal static string ByteArrayToHex(this byte[] buffer) => ByteArrayToHex(buffer, 0, buffer.Length);
+        internal static string ByteArrayToHex(this ReadOnlySpan<byte> buffer) => ByteArrayToHex(buffer, string.Empty);
 
         /// <summary>
         /// Converts the given buffer to a hexadecimal string using the given character as separator.
@@ -44,21 +44,9 @@ namespace System
         /// <param name="buffer">The buffer.</param>
         /// <param name="separator">The separator.</param>
         /// <returns></returns>
-        internal static string ByteArrayToHex(this byte[] buffer, string separator)
+        internal static string ByteArrayToHex(this ReadOnlySpan<byte> buffer, string separator)
         {
-            return ByteArrayToHex(buffer, 0, buffer.Length, separator);
-        }
-
-        /// <summary>
-        /// Converts the given buffer to a hexadecimal string.
-        /// </summary>
-        /// <param name="buffer">The buffer.</param>
-        /// <param name="offset">The offset.</param>
-        /// <param name="count">The count.</param>
-        /// <returns></returns>
-        internal static string ByteArrayToHex(this byte[] buffer, int offset, int count)
-        {
-            return ByteArrayToHex(buffer, offset, count, String.Empty);
+            return ByteArrayToHex(buffer, separator);
         }
 
         /// <summary>
@@ -69,7 +57,7 @@ namespace System
         /// <param name="count">The count.</param>
         /// <param name="separator">The separator.</param>
         /// <returns></returns>
-        internal static string ByteArrayToHex(this byte[] buffer, int offset, int count, string separator)
+        internal static string ByteArrayToHex(this ReadOnlySpan<byte> buffer, int offset, int count, string separator)
         {
             if (buffer == null)
             {

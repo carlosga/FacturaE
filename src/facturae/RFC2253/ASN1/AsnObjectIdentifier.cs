@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Globalization;
 using System.Text;
 
@@ -9,7 +10,7 @@ namespace ASN1
     public sealed class AsnObjectIdentifier
         : AsnValueObject<string>
     {
-        public AsnObjectIdentifier(AsnIdentifier id, byte[] buffer)
+        public AsnObjectIdentifier(AsnIdentifier id, ReadOnlyMemory<byte> buffer)
             : base(id, buffer)
         {
             // http://msdn.microsoft.com/en-us/library/windows/desktop/bb540809(v=vs.85).aspx
@@ -20,7 +21,7 @@ namespace ASN1
             // Bit 7 of the leftmost byte is set to one. Bits 0 through 6 of each byte contains the encoded value.
 
             var value = new StringBuilder(buffer.Length);
-            var node  = buffer[0];
+            var node  = buffer.Span[0];
 
             value.Append(((int)(node / 40)).ToString(CultureInfo.InvariantCulture));
             value.Append(".");
@@ -29,7 +30,7 @@ namespace ASN1
             for (int i = 1; i < buffer.Length;)
             {
                 int  sid    = 0;
-                int  octect = buffer[i];
+                int  octect = buffer.Span[i];
                 bool vlq    = ((octect & 0x80) == 0x80);
 
                 if (vlq)
@@ -39,10 +40,10 @@ namespace ASN1
                     do
                     {
                         weight++;
-                    } while (((buffer[++j] & 0x80) == 0x80));
+                    } while (((buffer.Span[++j] & 0x80) == 0x80));
                     do
                     {
-                        sid |= (buffer[i++] & 0x7F) << (7 * weight);
+                        sid |= (buffer.Span[i++] & 0x7F) << (7 * weight);
                     } while (--weight >= 0);
                 }
                 else

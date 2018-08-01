@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,7 +12,7 @@ namespace ASN1
     {
         private readonly List<AsnObject> _objects;
 
-        public AsnSequence(AsnIdentifier id, byte[] buffer)
+        public AsnSequence(AsnIdentifier id, ReadOnlyMemory<byte> buffer)
             : base(id, buffer)
         {
             _objects = new List<AsnObject>();

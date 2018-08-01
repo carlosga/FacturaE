@@ -23,6 +23,9 @@ namespace FacturaE.Xml
         private static readonly string s_XmlDsigSchemaResource  = "FacturaE.Schemas.xmldsig-core-schema.xsd";
         private static readonly string s_FacturaeSchemaResource = "FacturaE.Schemas.Facturaev3_2_2.xsd";
 
+        private static readonly XmlSchema s_FacturaeXmlSchema = ReadSchema(s_FacturaeSchemaResource);
+        private static readonly XmlSchema s_DsigXmlSchema     = ReadSchema(s_XmlDsigSchemaResource);
+
         internal static readonly XmlQualifiedName[] Namespaces = new XmlQualifiedName[] 
         {
             new XmlQualifiedName(XsdSchemas.s_FacturaePrefix, XsdSchemas.s_FacturaeNamespaceUrl),
@@ -45,6 +48,7 @@ namespace FacturaE.Xml
         /// Formats a new identifier with the given strings
         /// </summary>
         /// <param name="firstPart">First part of the identifier to be generated</param>
+        /// <param name="secondPart">Second part of the identifier to be generated</param>
         /// <returns>A new identifier</returns>
         internal static string FormatId(string firstPart, string secondPart)
         {
@@ -52,23 +56,44 @@ namespace FacturaE.Xml
         }
 
         /// <summary>
-        /// Creates a new <see cref="XmlNamespaceManager"/> with xades, dsig and facturae namespaces defined.
+        /// Creates a new <see cref="XmlNamespaceManager"/> with dsig and facturae namespaces defined.
         /// </summary>
-        /// <param name="document">The Xml Document</param>
+        /// <param name="document">The XML document</param>
         /// <returns>A new instance of <see cref="XmlNamespaceManager"/></returns>
         internal static XmlNamespaceManager CreateXadesNamespaceManager(XmlDocument document)
         {
             return CreateXadesNamespaceManager(document.NameTable);
         }
 
-        internal static XmlNamespaceManager CreateXadesNamespaceManager(XmlNameTable nameTable)
+        /// <summary>
+        /// Creates a new <see cref="XmlNamespaceManager"/> with dsig and facturae namespaces defined.
+        /// </summary>
+        /// <param name="nt">The name table.</param>
+        /// <returns>A new instance of <see cref="XmlNamespaceManager"/></returns>
+        internal static XmlNamespaceManager CreateXadesNamespaceManager(XmlNameTable nt)
         {
-            var nsmgr = new XmlNamespaceManager(nameTable);
+            var nsmgr = new XmlNamespaceManager(nt);
             
             nsmgr.AddNamespace(XsdSchemas.s_FacturaePrefix, XsdSchemas.s_FacturaeNamespaceUrl);
             nsmgr.AddNamespace(XsdSchemas.s_XmlDsigPrefix , XsdSchemas.s_XmlDsigNamespaceUrl);
 
             return nsmgr;
+        }
+
+        /// <summary>
+        /// Gets the schema set built with the given xml name table.
+        /// </summary>
+        /// <param name="nt">The name table.</param>
+        /// <returns>A instance of <see cref="XmlSchemaSet"/></returns>
+        internal static XmlSchemaSet BuildSchemaSet(XmlNameTable nt)
+        {
+            var schemaSet = new XmlSchemaSet(nt);
+
+            schemaSet.Add(s_FacturaeXmlSchema);
+            schemaSet.Add(s_DsigXmlSchema);
+            schemaSet.Compile();
+
+            return schemaSet;
         }
 
         /// <summary>
@@ -103,22 +128,6 @@ namespace FacturaE.Xml
             }
 
             return doc.DocumentElement;
-        }
-
-        /// <summary>
-        /// Gets the schema set built with the given xml name table.
-        /// </summary>
-        /// <param name="nt">The name table.</param>
-        /// <returns>A instance of <see cref="XmlSchemaSet"/></returns>
-        internal static XmlSchemaSet BuildSchemaSet(XmlNameTable nt)
-        {
-            var schemaSet = new XmlSchemaSet(nt);
-
-            schemaSet.Add(ReadSchema(s_FacturaeSchemaResource));
-            schemaSet.Add(ReadSchema(s_XmlDsigSchemaResource));
-            schemaSet.Compile();
-
-            return schemaSet;
         }
 
         private static XmlSchema ReadSchema(string resourceName)

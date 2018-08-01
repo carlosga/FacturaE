@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace ASN1
 {
     public abstract class AsnValueObject<T>
@@ -17,7 +19,7 @@ namespace ASN1
             get { return Value; }
         }
 
-        protected AsnValueObject(AsnIdentifier id, byte[] buffer)
+        protected AsnValueObject(AsnIdentifier id, ReadOnlyMemory<byte> buffer)
             : base(id, buffer)
         {
         }

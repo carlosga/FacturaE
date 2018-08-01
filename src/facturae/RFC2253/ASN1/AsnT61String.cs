@@ -8,7 +8,7 @@ namespace ASN1
     public sealed class AsnT61String
         : AsnString
     {
-        public AsnT61String(AsnIdentifier id, byte[] buffer)
+        public AsnT61String(AsnIdentifier id, ReadOnlyMemory<byte> buffer)
             : base(id, buffer, string.Empty)
         {
             throw new NotImplementedException();

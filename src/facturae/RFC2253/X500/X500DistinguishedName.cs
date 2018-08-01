@@ -67,21 +67,19 @@ namespace X500
         {
             if (rawData == null)
             {
-                throw new ArgumentNullException("rawData");
+                throw new ArgumentNullException(nameof(rawData));
             }
             if (rawData.Length == 0)
             {
                 throw new ArgumentException("rawData cannot be empty");
             }
 
-            using (var dec = new AsnDecoder(rawData))
-            {
-                var builder = new StringBuilder();
+            var decoder = new AsnDecoder(rawData);
+            var builder = new StringBuilder();
 
-                Format(format, dec.MoveNext(), ref builder);
+            Format(format, decoder.MoveNext(), ref builder);
 
-                return builder.ToString();
-            }
+            return builder.ToString();
         }
 
         private static void Format(DistinguishedNameFormat format, AsnObject root, ref StringBuilder builder)
@@ -146,7 +144,7 @@ namespace X500
             _rawData = rawData;
         }
 
-        public string GetPreferredEncoding() => _rawData.ByteArrayToHex();
+        //public string GetPreferredEncoding() => _rawData.AsSpan().ByteArrayToHex();
 
         public string Format(DistinguishedNameFormat format) => Format(format, _rawData);
 
