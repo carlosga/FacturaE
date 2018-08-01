@@ -25,9 +25,7 @@ namespace System
 
             using (var hashAlgorithm = SHA1.Create())
             {
-                hashAlgorithm.TransformFinalBlock(buffer, 0, buffer.Length);
-
-                return hashAlgorithm.Hash;
+                return hashAlgorithm.ComputeHash(buffer, 0, buffer.Length);
             }
         }
 

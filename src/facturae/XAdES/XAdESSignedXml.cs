@@ -119,7 +119,7 @@ namespace FacturaE.XAdES
             KeyInfo.AddClause(new KeyInfoX509Data(certificate));
             KeyInfo.AddClause(new RSAKeyValue(key));
 
-            AddReference(new Reference { Uri = $"#{KeyInfo.Id}" });
+            AddReference(new Reference { Uri = "#" + KeyInfo.Id });
 
             SetQualifyingPropertiesObject(certificate);
 
@@ -148,7 +148,7 @@ namespace FacturaE.XAdES
             var reference = new Reference
             {
                 Id   = XsdSchemas.FormatId("SignedPropertiesID")
-              , Uri  = $"#{signedProperties.Id}"
+              , Uri  = "#" + signedProperties.Id
               , Type = "http://uri.etsi.org/01903#SignedProperties"
             };
 
@@ -184,7 +184,7 @@ namespace FacturaE.XAdES
                     {
                         Description     = "Description"
                       , MimeType        = "text/xml"
-                      , ObjectReference = $"#{transformReference.Id}"
+                      , ObjectReference = "#" + transformReference.Id
                     }
                 }
             };
@@ -206,7 +206,7 @@ namespace FacturaE.XAdES
 
         private QualifyingPropertiesType CreateQualifyingProperties()
         {
-            return new QualifyingPropertiesType { Target = $"#{Signature.Id}" };
+            return new QualifyingPropertiesType { Target = "#" + Signature.Id };
         }
     }
 }

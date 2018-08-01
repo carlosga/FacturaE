@@ -713,26 +713,20 @@ namespace FacturaE
 
             if (DiscountsAndRebates != null)
             {
-                DiscountsAndRebates.ForEach
-                (
-                    dar => 
-                    {
-                        dar.DiscountAmount = (TotalCost * dar.DiscountRate / 100).Round();
-                        totalDiscounts     = (totalDiscounts + dar.DiscountAmount).Round();
-                    }
-                );
+                foreach (var dar in DiscountsAndRebates)
+                {
+                    dar.DiscountAmount = (TotalCost * dar.DiscountRate / 100).Round();
+                    totalDiscounts     = (totalDiscounts + dar.DiscountAmount).Round();
+                }
             }
 
             if (Charges != null)
             {
-                Charges.ForEach
-                (
-                    chr =>
-                    {
-                        chr.ChargeAmount = (TotalCost * chr.ChargeRate / 100).Round();
-                        totalCharges     = (totalCharges + chr.ChargeAmount).Round();
-                    }
-                );
+                foreach (var chr in Charges)
+                {
+                    chr.ChargeAmount = (TotalCost * chr.ChargeRate / 100).Round();
+                    totalCharges     = (totalCharges + chr.ChargeAmount).Round();
+                }
             }
 
             // Result: TotalCost - DiscountAmount + ChargeAmount. Up to eight decimal points

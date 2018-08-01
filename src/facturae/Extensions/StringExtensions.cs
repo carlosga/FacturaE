@@ -10,35 +10,6 @@ namespace System
     /// </summary>
     internal static class StringExtensions
     {
-        /// <summary>
-        /// Returns a byte buffer from the given hexadecimal string.
-        /// </summary>
-        /// <param name="hexString">The hex string.</param>
-        /// <returns></returns>
-        internal static byte[] HexToByteArray(this string hexString, string delimiter = null)
-        {
-            var hex = hexString;
-
-            if (!string.IsNullOrEmpty(delimiter))
-            {
-                hex = hex.Replace(delimiter, String.Empty);
-            }
-
-            if ((hex.Length % 2) != 0)
-            {
-                throw new ArgumentException("Invalid hex string");
-            }
-
-            byte[] buffer = new byte[hex.Length / 2];
-
-            for (int i = 0; i < buffer.Length; i++)
-            {
-                buffer[i] = (Byte.Parse(hex.Substring(i * 2, 2), NumberStyles.HexNumber));
-            }
-
-            return buffer;
-        }
-
         internal static string Quote(this string value, string quote = "")
         {
             if (value == null)
@@ -46,7 +17,7 @@ namespace System
                 return value;
             }
 
-            return $"{quote}{value}{quote}";
+            return quote + value + quote;
         } 
     }
 }

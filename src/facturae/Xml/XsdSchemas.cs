@@ -41,7 +41,7 @@ namespace FacturaE.Xml
         /// <returns>A new identifier</returns>
         internal static string FormatId(string firstPart)
         {
-            return $"{firstPart}-{DateTime.Now.ToString("yyyyMMddmmssfff", CultureInfo.InvariantCulture)}";
+            return firstPart + "-" + DateTime.Now.ToString("yyyyMMddmmssfff", CultureInfo.InvariantCulture);
         }
 
         /// <summary>

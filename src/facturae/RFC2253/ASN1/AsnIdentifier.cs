@@ -25,7 +25,7 @@ namespace ASN1
     ///  1  1  1  1  0  (0-30) single octet tag
     ///  1  1  1  1  1  (> 30) multiple octet tag, more octets follow
     /// </summary>
-    public sealed class AsnIdentifier
+    public struct AsnIdentifier
     {
         public AsnClass Class
         {
@@ -45,16 +45,17 @@ namespace ASN1
             private set;
         }
 
-        public int DataLength
-        {
-            get;
-            private set;
-        }
+        // public int DataLength
+        // {
+        //     get;
+        //     private set;
+        // }
 
         public AsnIdentifier(int octect)
         {
-            Form = ((octect.IsBitSet(6) ? AsnForm.Constructed : AsnForm.Primitive));
-            Tag  = (AsnTag)(octect & 0x5F);
+            Class = AsnClass.Private;
+            Form  = ((octect.IsBitSet(6) ? AsnForm.Constructed : AsnForm.Primitive));
+            Tag   = (AsnTag)(octect & 0x5F);
 
             if ((!octect.IsBitSet(8) && !octect.IsBitSet(7)))
             {

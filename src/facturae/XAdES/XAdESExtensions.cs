@@ -23,15 +23,15 @@ namespace FacturaE.XAdES
     /// </summary>
     internal static class XAdESExtensions
     {
-        private const string PolicyIdentifier = "http://www.facturae.es/politica_de_firma_formato_facturae/politica_de_firma_formato_facturae_v3_1.pdf";
-        private const string PolicyResource = "FacturaE.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
+        private static readonly string PolicyIdentifier = "http://www.facturae.es/politica_de_firma_formato_facturae/politica_de_firma_formato_facturae_v3_1.pdf";
+        private static readonly string PolicyResource   = "FacturaE.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
+        private static readonly byte[] PolicyHash       = Assembly.GetExecutingAssembly().GetManifestResourceStream(PolicyResource).ComputeSHA1Hash();
 
-        private static readonly XmlSerializer s_serializer = new XmlSerializer(typeof(QualifyingPropertiesType));
-        private static readonly Encoding s_encoding = new UTF8Encoding(false);
+        private static readonly XmlSerializer     s_serializer = new XmlSerializer(typeof(QualifyingPropertiesType));
+        private static readonly Encoding          s_encoding = new UTF8Encoding(false);
         private static readonly XmlWriterSettings s_writerSettings = new XmlWriterSettings { Encoding = s_encoding };
 
-        internal static SignedPropertiesType CreateSignedProperties(this QualifyingPropertiesType properties
-                                                                  , XAdESSignedXml                signedXml)
+        internal static SignedPropertiesType CreateSignedProperties(this QualifyingPropertiesType properties, XAdESSignedXml signedXml)
         {
             var id = XsdSchemas.FormatId(signedXml.Signature.Id, "SignedProperties");
 
@@ -103,7 +103,7 @@ namespace FacturaE.XAdES
                     SigPolicyHash = new DigestAlgAndValueType
                     {
                         DigestMethod = new XAdES.DigestMethodType { Algorithm = SignedXml.XmlDsigSHA1Url }
-                      , DigestValue  = ReadPolicyFile().ComputeSHA1Hash()
+                      , DigestValue  = PolicyHash
                     }
                 }
             };
@@ -113,15 +113,14 @@ namespace FacturaE.XAdES
 
         internal static string ToXml(this QualifyingPropertiesType properties)
         {
-            using (var buffer = new MemoryStream(8192))
-            {
-                using (var writer = XmlWriter.Create(buffer, s_writerSettings))
-                {
-                    s_serializer.Serialize(writer, properties, XsdSchemas.XadesSerializerNamespaces);
-                }
+            var buffer = new StringBuilder();
 
-                return s_encoding.GetString(buffer.ToArray());
+            using (var writer = XmlWriter.Create(buffer, s_writerSettings))
+            {
+                s_serializer.Serialize(writer, properties, XsdSchemas.XadesSerializerNamespaces);
             }
+
+            return buffer.ToString();
         }
 
         internal static XmlDocument ToXmlDocument(this QualifyingPropertiesType properties)
@@ -131,20 +130,6 @@ namespace FacturaE.XAdES
             document.LoadXml(properties.ToXml());
 
             return document;
-        }
-
-        private static byte[] ReadPolicyFile()
-        {
-            var currentAssembly = Assembly.GetExecutingAssembly();
-
-            using (var stream = currentAssembly.GetManifestResourceStream(PolicyResource))
-            {
-                byte[] buffer = new byte[stream.Length];
-
-                stream.Read(buffer, 0, (int)stream.Length);
-
-                return buffer;
-            }
         }
     }
 }

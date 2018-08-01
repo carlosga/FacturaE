@@ -1,23 +1,26 @@
 // Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes.Columns;
+using BenchmarkDotNet.Running;
 using FacturaE.XAdES;
-using FacturaE.Xml;
 using System;
 using System.Security.Cryptography.X509Certificates;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace FacturaE
 {
-    public class Program
+    [MemoryDiagnoser]
+    [RankColumn]
+    public class FacturaeBenchmark
     {
-        static readonly string s_Filename = "sample.xsig";
+        static readonly X509Certificate2 s_Certificate = new X509Certificate2(@"Certificates/ANCERTCCP_FIRMA.p12", "1111");
+        //static readonly string           s_Filename = "sample.xsig";
 
-        static void Main(string[] args)
+        [Benchmark]
+        public void SignatureBenchmark()
         {
             var eInvoice = new Facturae();
-            var cert     = new X509Certificate2(@"Certificates/ANCERTCCP_FIRMA.p12", "1111");
 
             // Create a new facturae invoice & sign it
             var isValid = eInvoice
@@ -64,7 +67,7 @@ namespace FacturaE
                     .SetExchangeRate(1, DateTime.Now)
                     .SetTaxCurrency(CurrencyCodeType.EUR)
                     .SetLanguage(LanguageCodeType.es)
-                    .SetPlaceOfIssue(String.Empty, "00000")
+                    .SetPlaceOfIssue(string.Empty, "00000")
                     .IsOriginal()
                     .IsComplete()
                     .SetInvoiceSeries("0")
@@ -85,54 +88,71 @@ namespace FacturaE
                         .CalculateTotals()
                     .CalculateTotals()
                 .CalculateTotals()
-                .Validate()
-                .Sign(cert, ClaimedRole.Supplier)
-                .WriteToFile(s_Filename)
-                .CheckSignature();
+                //.Validate()
+                .Sign(s_Certificate)
+                .CheckSignature()
+                // .WriteToFile(s_Filename)
+                ;
+        }
 
-            System.Console.WriteLine(isValid);
+        [Benchmark]
+        public void X500FormatterBenchmark()
+        {
+            X500.X500DistinguishedName.Format(X500.DistinguishedNameFormat.RFC2253, s_Certificate.IssuerName.RawData);
+        }
+    }    
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            var summary = BenchmarkRunner.Run<FacturaeBenchmark>();
 
-            var _serializer         = new XmlSerializer(typeof(Facturae));
-            var _nameTable          = new NameTable();
-            var _nsMgr              = XsdSchemas.CreateXadesNamespaceManager(_nameTable);
-            var _context            = new XmlParserContext(_nameTable, _nsMgr, null, XmlSpace.Preserve, System.Text.Encoding.UTF8);
-            var _namespaces         = new XmlSerializerNamespaces();
-            var s_xmlReaderSettings = new XmlReaderSettings
-            {
-                ConformanceLevel = ConformanceLevel.Document,
-                Schemas          = XsdSchemas.BuildSchemaSet(_nameTable),
-                NameTable        = _nameTable,
-            };
+            // var _serializer         = new XmlSerializer(typeof(Facturae));
+            // var _nameTable          = new NameTable();
+            // var _nsMgr              = XsdSchemas.CreateXadesNamespaceManager(_nameTable);
+            // var _context            = new XmlParserContext(_nameTable, _nsMgr, null, XmlSpace.Preserve, System.Text.Encoding.UTF8);
+            // var _namespaces         = new XmlSerializerNamespaces();
+            // var s_xmlReaderSettings = new XmlReaderSettings
+            // {
+            //     ConformanceLevel = ConformanceLevel.Document,
+            //     Schemas          = XsdSchemas.BuildSchemaSet(_nameTable),
+            //     NameTable        = _nameTable,
+            // };
 
-            foreach (XmlQualifiedName name in XsdSchemas.Namespaces)
-            {
-                _nsMgr.AddNamespace(name.Name, name.Namespace);
-            }
+            // foreach (XmlQualifiedName name in XsdSchemas.Namespaces)
+            // {
+            //     _nsMgr.AddNamespace(name.Name, name.Namespace);
+            // }
 
-            _serializer.UnknownElement += (object sender, XmlElementEventArgs e) => {
-                Console.WriteLine("Unexpected element: {0} as line {1}, column {2}", e.Element.Name, e.LineNumber, e.LinePosition);
-            };
+            // _serializer.UnknownElement += (object sender, XmlElementEventArgs e) => {
+            //     Console.WriteLine("Unexpected element: {0} as line {1}, column {2}", e.Element.Name, e.LineNumber, e.LinePosition);
+            // };
             
-            _serializer.UnknownAttribute += (object sender, XmlAttributeEventArgs e) => {
-                Console.WriteLine("Unexpected attribute: {0} as line {1}, column {2}", e.Attr.Name, e.LineNumber, e.LinePosition);
-            };
+            // _serializer.UnknownAttribute += (object sender, XmlAttributeEventArgs e) => {
+            //     Console.WriteLine("Unexpected attribute: {0} as line {1}, column {2}", e.Attr.Name, e.LineNumber, e.LinePosition);
+            // };
 
-            _serializer.UnknownNode += (object sender, XmlNodeEventArgs e) => {
-                Console.WriteLine("Unexpected node: {0} as line {1}, column {2}", e.NodeType, e.LineNumber, e.LinePosition);
-            };
+            // _serializer.UnknownNode += (object sender, XmlNodeEventArgs e) => {
+            //     Console.WriteLine("Unexpected node: {0} as line {1}, column {2}", e.NodeType, e.LineNumber, e.LinePosition);
+            // };
 
-            _serializer.UnreferencedObject += (object sender, UnreferencedObjectEventArgs e) => {
-                Console.WriteLine("Unreferenced objkect with ID {0}", e.UnreferencedId);
-            };
+            // _serializer.UnreferencedObject += (object sender, UnreferencedObjectEventArgs e) => {
+            //     Console.WriteLine("Unreferenced objkect with ID {0}", e.UnreferencedId);
+            // };
 
-            using (var stream = new System.IO.FileStream(s_Filename, System.IO.FileMode.Open))
-            {
-                using (var xmlReader = XmlReader.Create(stream, s_xmlReaderSettings, _context))
-                {
-                    var face = _serializer.Deserialize(xmlReader) as Facturae;
-                }
-            }
+            // using (var stream = new System.IO.FileStream(s_Filename, System.IO.FileMode.Open))
+            // {
+            //     using (var xmlReader = XmlReader.Create(stream, s_xmlReaderSettings, _context))
+            //     {
+            //         var face = _serializer.Deserialize(xmlReader) as Facturae;
+            //     }
+            // }
         }
     }
 }
 
+
+//                  Method |        Mean |       Error |     StdDev | Rank |    Gen 0 |    Gen 1 |  Allocated |
+// ----------------------- |------------:|------------:|-----------:|-----:|---------:|---------:|-----------:|
+//      SignatureBenchmark | 6,915.97 us | 101.2801 us | 94.7375 us |    2 | 742.1875 | 171.8750 | 2464.33 KB |
+//  X500FormatterBenchmark |    14.39 us |   0.2803 us |  0.3442 us |    1 |   1.9073 |        - |    5.91 KB |

@@ -29,7 +29,7 @@ namespace X500
             // UID     userId                 (0.9.2342.19200300.100.1.1)
 
             // RFC1779
-            s_rfc1179 = new Dictionary<string, string>(10);
+            s_rfc1179 = new Dictionary<string, string>(7);
 
             s_rfc1179.Add("2.5.4.3" , "CN");                        // commonName
             s_rfc1179.Add("2.5.4.6" , "C");                         // countryName
@@ -58,11 +58,6 @@ namespace X500
             s_rfc2459.Add("1.2.840.113549.1.9.1", "E");             // e-mailAddress
         }
 
-        public static string Format(DistinguishedNameFormat format, string hexstring)
-        {
-            return Format(format, hexstring.HexToByteArray());
-        }
-
         public static string Format(DistinguishedNameFormat format, byte[] rawData)
         {
             if (rawData == null)
@@ -84,60 +79,45 @@ namespace X500
 
         private static void Format(DistinguishedNameFormat format, AsnObject root, ref StringBuilder builder)
         {
-            if (root is IEnumerable<AsnObject>)
+            if (root is IEnumerable<AsnObject> enumeration)
             {
-                foreach (var item in (root as IEnumerable<AsnObject>))
+                foreach (var item in enumeration)
                 {
                     Format(format, item, ref builder);
                 }
             }
-            else if (root is AsnObjectIdentifier)
+            else if (root is AsnObjectIdentifier identifier)
             {
                 if (builder.Length > 0)
                 {
                     builder.Append(",");
                 }
-                builder.Append($"{TranslateOid(format, (root as AsnObjectIdentifier).Value)}=");
+                builder.Append(TranslateOid(format, identifier.Value + "="));
             }
-            else if (root is IAsnValueObject)
+            else if (root is IAsnValueObject valueObject)
             {
-                builder.Append($"{(root as IAsnValueObject).Value}");
+                builder.Append(valueObject.Value.ToString());
             }
         }
 
         private static string TranslateOid(DistinguishedNameFormat format, string oid)
         {
-            Dictionary<string, string> oids = null;
-
             switch (format)
             {
             case DistinguishedNameFormat.RFC1779:
-                oids = s_rfc1179;
-                break;
+                return (s_rfc1179.ContainsKey(oid)) ? s_rfc1179[oid] : oid;
             case DistinguishedNameFormat.RFC2253:
-                oids = s_rfc2253;
-                break;
+                return (s_rfc2253.ContainsKey(oid)) ? s_rfc2253[oid] : oid;
             case DistinguishedNameFormat.RFC2459:
-                oids = s_rfc2459;
-                break;
+                return (s_rfc2459.ContainsKey(oid)) ? s_rfc2459[oid] : oid;
+            default:
+                return oid;
             }
-
-            if (oids.ContainsKey(oid))
-            {
-                return oids[oid];
-            }
-
-            return oid;
         }
 
         private readonly byte[] _rawData;
 
         public byte[] RawData => _rawData;
-
-        public X500DistinguishedName(string encodingHex)
-            : this(encodingHex.HexToByteArray())
-        {
-        }
 
         public X500DistinguishedName(byte[] rawData)
         {

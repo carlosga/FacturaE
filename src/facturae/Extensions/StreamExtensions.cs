@@ -1,45 +1,30 @@
 ﻿// Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Security.Cryptography;
+
 namespace System.IO
 {
     internal static class StreamExtensions
     {
-        internal static byte[] ReadBytes(this Stream stream, int count)
+        internal static byte[] ComputeSHA1Hash(this Stream stream, bool leavOpen = false)
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
-            if (count == 0)
+
+            using (var hashAlgorithm = SHA1.Create())
             {
-                return Array.Empty<byte>();
+                var hash = hashAlgorithm.ComputeHash(stream);
+
+                if (!leavOpen)
+                {
+                    stream.Dispose();
+                }
+
+                return hash;
             }
-
-            byte[] buffer = new byte[count];
-
-            stream.Read(buffer, 0, count);
-
-            return buffer;
-        }
-
-        internal static byte[] PeekBytes(this Stream stream, int count)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("stream");
-            }
-            if (count == 0)
-            {
-                return Array.Empty<byte>();
-            }
-
-            var currentPosition = stream.Position;
-            var buffer          = stream.ReadBytes(count);
-
-            stream.Position = currentPosition;
-
-            return buffer;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace ASN1
             return s_encoding1200.GetString(buffer.Span);
         }
 
-        public AsnBmpString(AsnIdentifier id, byte[] buffer)
+        public AsnBmpString(AsnIdentifier id, ReadOnlyMemory<byte> buffer)
             : base(id, buffer, Encode(buffer))
         {
         }

@@ -36,7 +36,7 @@ namespace ASN1
             var length = ReadLength();
 
             // TODO: Handle custom constructed types ( for example constructed bit strings )
-            return this.ReadPrimitiveType(id, length);
+            return ReadPrimitiveType(id, length);
         }
 
         private AsnObject ReadPrimitiveType(AsnIdentifier id, int length)
@@ -116,9 +116,53 @@ namespace ASN1
         private T ReadAsnObject<T>(AsnIdentifier id, int length)
             where T : AsnObject
         {
-            var rawData = ReadBytes(length);
+            var rawData    = ReadBytes(length);
+            var targetType = typeof(T);
 
-            return (T)Activator.CreateInstance(typeof(T), new object[] { id, rawData });
+            if (targetType == typeof (AsnObjectIdentifier))
+            {
+                return new AsnObjectIdentifier(id, rawData) as T;
+            }
+            else if (targetType == typeof(AsnInteger))
+            {
+                return new AsnInteger(id, rawData) as T;
+            }
+            else if (targetType == typeof(AsnUTCTime))
+            {
+                return new AsnUTCTime(id, rawData) as T;
+            }
+            else if (targetType == typeof(AsnBitString))
+            {
+                return new AsnBitString(id, rawData) as T;
+            }
+            else if (targetType == typeof(AsnBmpString))
+            {
+                return new AsnBmpString(id, rawData) as T;
+            }
+            else if (targetType == typeof(AsnIA5String))
+            {
+                return new AsnIA5String(id, rawData) as T;
+            }
+            else if (targetType == typeof(AsnOctetString))
+            {
+                return new AsnOctetString(id, rawData) as T;
+            }
+            else if (targetType == typeof(AsnPrintableString))
+            {
+                return new AsnPrintableString(id, rawData) as T;
+            }
+            else if (targetType == typeof(AsnT61String))
+            {
+                return new AsnT61String(id, rawData) as T;
+            }
+            else if (targetType == typeof(AsnUTF8String))
+            {
+                return new AsnUTF8String(id, rawData) as T;
+            }
+            else
+            {
+                throw new ArgumentException($"Uknow type {targetType.FullName}");
+            }
         }
 
         private AsnIdentifier ReadAsnIdentifier() => new AsnIdentifier(ReadByte());
