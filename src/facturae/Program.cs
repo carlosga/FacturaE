@@ -150,9 +150,3 @@ namespace FacturaE
         }
     }
 }
-
-
-//                  Method |        Mean |       Error |     StdDev | Rank |    Gen 0 |    Gen 1 |  Allocated |
-// ----------------------- |------------:|------------:|-----------:|-----:|---------:|---------:|-----------:|
-//      SignatureBenchmark | 6,915.97 us | 101.2801 us | 94.7375 us |    2 | 742.1875 | 171.8750 | 2464.33 KB |
-//  X500FormatterBenchmark |    14.39 us |   0.2803 us |  0.3442 us |    1 |   1.9073 |        - |    5.91 KB |
