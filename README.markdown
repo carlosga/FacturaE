@@ -4,7 +4,7 @@
 
 ## Authors
 
-* **Carlos Guzmán Alvarez** - *Initial work* - [carlosga](https://gitlab.com/carlosga)
+* **Carlos Guzmán Alvarez** - *Initial work* - [carlosga](https://github.com/carlosga)
 
 ## License
 
