@@ -14,9 +14,7 @@ internal static class StreamExtensions
             throw new ArgumentNullException(nameof(stream));
         }
 
-        using var hashAlgorithm = SHA1.Create();
-
-        var hash = hashAlgorithm.ComputeHash(stream);
+        var hash = SHA1.HashData(stream);
 
         if (!leavOpen)
         {
