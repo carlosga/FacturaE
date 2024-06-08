@@ -77,9 +77,10 @@ internal static class XAdESExtensions
                 {
                     DigestMethod = new DigestMethodType { Algorithm = SignedXml.XmlDsigSHA1Url },
                     DigestValue  = certificate.RawData.ComputeSHA1Hash()
-                }
-                , IssuerSerial = new X509IssuerSerialType
+                },
+                IssuerSerial = new X509IssuerSerialType
                 {
+                    // X509IssuerName   = certificate.IssuerName.Name, 
                     X509IssuerName   = X500.X500DistinguishedName.Format(DistinguishedNameFormat.RFC2253, certificate.IssuerName.RawData),
                     X509SerialNumber = BigInteger.Parse(certificate.SerialNumber, NumberStyles.HexNumber).ToString()
                 }
@@ -99,8 +100,7 @@ internal static class XAdESExtensions
                 {
                     Identifier  = new IdentifierType { Value = PolicyIdentifier },
                     Description = "Política de Firma FacturaE v3.1"
-                }
-                ,
+                },
                 SigPolicyHash = new DigestAlgAndValueType
                 {
                     DigestMethod = new DigestMethodType { Algorithm = SignedXml.XmlDsigSHA1Url },
@@ -116,10 +116,9 @@ internal static class XAdESExtensions
     {
         var buffer = new StringBuilder();
 
-        using (var writer = XmlWriter.Create(buffer, s_writerSettings))
-        {
-            s_serializer.Serialize(writer, properties, XsdSchemas.XadesSerializerNamespaces);
-        }
+        using var writer = XmlWriter.Create(buffer, s_writerSettings);
+
+        s_serializer.Serialize(writer, properties, XsdSchemas.XadesSerializerNamespaces);
 
         return buffer.ToString();
     }
