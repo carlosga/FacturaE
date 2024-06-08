@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <PackageTags>facturae;dotnet8</PackageTags>
-    <PackageProjectUrl>https://gitlab.com/carlosga/facturae</PackageProjectUrl>
-    <PackageLicenseUrl>https://gitlab.com/carlosga/facturae/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/carlosga/facturae</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/carlosga/facturae/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <PropertyGroup>

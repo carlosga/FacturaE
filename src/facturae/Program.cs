@@ -10,10 +10,9 @@ public class Program
     static void Main(string[] args)
     {
         var certificate = new X509Certificate2(@"Certificates/facturae.p12", "1234");
-        var eInvoice    = new Facturae();
 
         // Create a new facturae invoice & sign it
-        eInvoice
+        new Facturae()
             .Seller()
                 .SetIdentification("00001")
                 .AsResidentInSpain()
