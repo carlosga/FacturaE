@@ -43,7 +43,7 @@ public sealed class XAdESSignatureVerifier
     /// <param name="Key"></param>
     /// <returns></returns>
     /// <remarks>http://social.msdn.microsoft.com/Forums/hu-HU/netfxbcl/thread/d6a4fe9f-7d2e-419c-ab19-9e57c75ba90f</remarks>
-    public bool CheckSignature()
+    public XAdESSignatureVerifier CheckSignature()
     {
         var signedXml = new XAdESSignedXml(_signedDocument);
         var nsmgr     = XsdSchemas.CreateXadesNamespaceManager(_signedDocument);
@@ -53,6 +53,8 @@ public sealed class XAdESSignatureVerifier
 
         // Check the signature against the passed asymetric key
         // and return the result.
-        return signedXml.CheckSignature();
+        signedXml.CheckSignature();
+
+        return this;
     }
 }
