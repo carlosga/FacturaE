@@ -10,6 +10,15 @@ internal static class StringExtensions
 {
     internal static string Quote(this string value, string quote = "")
     {
-        return (value is null) ? null : quote + value + quote;
+        if (value is null)
+        {
+            return null;
+        }
+        else if (string.IsNullOrWhiteSpace(quote))
+        {
+            return value;
+        }
+
+        return quote + value + quote;
     }
 }
