@@ -16,7 +16,9 @@ public sealed class AsnBmpString : AsnString
     // http://www.tech-archive.net/Archive/DotNet/microsoft.public.dotnet.languages.csharp/2007-11/msg03278.html
     private static string Encode(ReadOnlyMemory<byte> buffer)
     {
-        return buffer.Span[0] == 0 ? s_encoding1201.GetString(buffer.Span) : s_encoding1200.GetString(buffer.Span);
+        return buffer.Span[0] == 0 
+            ? s_encoding1201.GetString(buffer.Span) 
+            : s_encoding1200.GetString(buffer.Span);
     }
 
     public AsnBmpString(AsnIdentifier id, ReadOnlyMemory<byte> buffer) : base(id, buffer, Encode(buffer))

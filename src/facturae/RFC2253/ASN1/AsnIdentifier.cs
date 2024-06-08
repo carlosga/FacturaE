@@ -43,19 +43,13 @@ public struct AsnIdentifier
         private set;
     }
 
-    // public int DataLength
-    // {
-    //     get;
-    //     private set;
-    // }
-
     public AsnIdentifier(int octect)
     {
         Class = AsnClass.Private;
-        Form  = ((octect.IsBitSet(6) ? AsnForm.Constructed : AsnForm.Primitive));
+        Form  = octect.IsBitSet(6) ? AsnForm.Constructed : AsnForm.Primitive;
         Tag   = (AsnTag)(octect & 0x5F);
 
-        if ((!octect.IsBitSet(8) && !octect.IsBitSet(7)))
+        if (!octect.IsBitSet(8) && !octect.IsBitSet(7))
         {
             Class = AsnClass.Universal;
         }

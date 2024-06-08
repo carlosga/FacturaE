@@ -80,7 +80,7 @@ public class Program
             .CalculateTotals()
             .Validate()
             .Sign(certificate)
-            .WriteToFile("signed-invoice.xml")
+            .WriteToFile("signed-invoice.xsig")
             .CheckSignature();
     }
 }

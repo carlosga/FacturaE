@@ -7,11 +7,10 @@ namespace ASN1;
 
 public sealed class AsnSet : AsnObject, IEnumerable<AsnObject>
 {
-    private readonly List<AsnObject> _objects;
+    private readonly List<AsnObject> _objects = [];
 
     public AsnSet(AsnIdentifier id, ReadOnlyMemory<byte> buffer) : base(id, buffer)
     {
-        _objects = new List<AsnObject>();
     }
 
     internal void Add(AsnObject asnObject) => _objects.Add(asnObject);

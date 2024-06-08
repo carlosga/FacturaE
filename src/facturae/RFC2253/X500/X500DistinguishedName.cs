@@ -27,33 +27,36 @@ public sealed class X500DistinguishedName
         // UID     userId                 (0.9.2342.19200300.100.1.1)
 
         // RFC1779
-        s_rfc1179 = new Dictionary<string, string>(7);
-
-        s_rfc1179.Add("2.5.4.3" , "CN");                        // commonName
-        s_rfc1179.Add("2.5.4.6" , "C");                         // countryName
-        s_rfc1179.Add("2.5.4.7" , "L");                         // localityName
-        s_rfc1179.Add("2.5.4.8" , "ST");                        // stateOrProvinceName
-        s_rfc1179.Add("2.5.4.9" , "STREET");                    // streetAddress
-        s_rfc1179.Add("2.5.4.10", "O");                         // organizationName
-        s_rfc1179.Add("2.5.4.11", "OU");                        // organizationalUnitName
+        s_rfc1179 = new Dictionary<string, string>(7)
+        {
+            { "2.5.4.3", "CN" },                    // commonName
+            { "2.5.4.6", "C" },                     // countryName
+            { "2.5.4.7", "L" },                     // localityName
+            { "2.5.4.8", "ST" },                    // stateOrProvinceName
+            { "2.5.4.9", "STREET" },                // streetAddress
+            { "2.5.4.10", "O" },                    // organizationName
+            { "2.5.4.11", "OU" }                    // organizationalUnitName
+        };
 
         // RFC2253
-        s_rfc2253 = new Dictionary<string, string>(s_rfc1179);
-
-        s_rfc2253.Add("0.9.2342.19200300.100.1.25", "DC");      // domainComponent
-        s_rfc2253.Add("0.9.2342.19200300.100.1.1" , "UID");     // userid
+        s_rfc2253 = new Dictionary<string, string>(s_rfc1179)
+        {
+            { "0.9.2342.19200300.100.1.25", "DC" }, // domainComponent
+            { "0.9.2342.19200300.100.1.1", "UID" }  // userid
+        };
 
         // RFC2459
-        s_rfc2459 = new Dictionary<string, string>(s_rfc2253);
-
-        s_rfc2459.Add("2.5.4.4"             , "SN");            // surname
-        s_rfc2459.Add("2.5.4.5"             , "SERIALNUMBER");  // serialNumber
-        s_rfc2459.Add("2.5.4.12"            , "T");             // title
-        s_rfc2459.Add("2.5.4.42"            , "G");             // givenName
-        s_rfc2459.Add("2.5.4.43"            , "I");             // initials
-        s_rfc2459.Add("2.5.4.44"            , "GENERATION");    // generationQualifier
-        s_rfc2459.Add("2.5.4.46"            , "dnQualifier");   // dnQualifier
-        s_rfc2459.Add("1.2.840.113549.1.9.1", "E");             // e-mailAddress
+        s_rfc2459 = new Dictionary<string, string>(s_rfc2253)
+        {
+            { "2.5.4.4", "SN" },                    // surname
+            { "2.5.4.5", "SERIALNUMBER" },          // serialNumber
+            { "2.5.4.12", "T" },                    // title
+            { "2.5.4.42", "G" },                    // givenName
+            { "2.5.4.43", "I" },                    // initials
+            { "2.5.4.44", "GENERATION" },           // generationQualifier
+            { "2.5.4.46", "dnQualifier" },          // dnQualifier
+            { "1.2.840.113549.1.9.1", "E" }         // e-mailAddress
+        };
     }
 
     public static string Format(DistinguishedNameFormat format, byte[] rawData)
@@ -88,7 +91,7 @@ public sealed class X500DistinguishedName
         {
             if (builder.Length > 0)
             {
-                builder.Append(",");
+                builder.Append(',');
             }
             builder.Append(TranslateOid(format, identifier.Value + "="));
         }
@@ -115,8 +118,6 @@ public sealed class X500DistinguishedName
     {
         RawData = rawData;
     }
-
-    //public string GetPreferredEncoding() => _rawData.AsSpan().ByteArrayToHex();
 
     public string Format(DistinguishedNameFormat format) => Format(format, RawData);
 

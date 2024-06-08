@@ -15,7 +15,7 @@ namespace FacturaE.XAdES;
 /// </summary>
 public sealed class XAdESSignedXml : SignedXml
 {
-    private readonly List<DataObject> _dataObjects = new();
+    private readonly List<DataObject> _dataObjects = [];
     private ClaimedRole               _signerRole;
 
     /// <summary>
@@ -174,15 +174,15 @@ public sealed class XAdESSignedXml : SignedXml
 
         signedProperties.SignedDataObjectProperties = new SignedDataObjectPropertiesType
         {
-            DataObjectFormat = new DataObjectFormatType[]
-            {
+            DataObjectFormat =
+            [
                 new DataObjectFormatType
                 {
                     Description     = "Description",
                     MimeType        = "text/xml",
                     ObjectReference = "#" + transformReference.Id
                 }
-            }
+            ]
         };
 
         return this;

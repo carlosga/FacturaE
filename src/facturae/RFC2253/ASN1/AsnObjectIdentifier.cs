@@ -28,7 +28,7 @@ public sealed class AsnObjectIdentifier : AsnValueObject<string>
         {
             int  sid    = 0;
             int  octect = buffer.Span[i];
-            bool vlq    = ((octect & 0x80) == 0x80);
+            bool vlq    = (octect & 0x80) == 0x80;
 
             if (vlq)
             {
@@ -37,7 +37,7 @@ public sealed class AsnObjectIdentifier : AsnValueObject<string>
                 do
                 {
                     weight++;
-                } while (((buffer.Span[++j] & 0x80) == 0x80));
+                } while ((buffer.Span[++j] & 0x80) == 0x80);
                 do
                 {
                     sid |= (buffer.Span[i++] & 0x7F) << (7 * weight);

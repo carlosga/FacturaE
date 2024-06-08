@@ -96,7 +96,7 @@ public partial class Facturae
     {
         var firstInvoice = Invoices[0];
 
-        FileHeader.Modality                     = ((Invoices.Count == 1) ? ModalityType.Single : ModalityType.Batch);
+        FileHeader.Modality                     = (Invoices.Count == 1) ? ModalityType.Single : ModalityType.Batch;
         FileHeader.Batch.InvoicesCount          = Invoices.Count;
         FileHeader.Batch.TotalInvoicesAmount    = SumTotalAmounts();
         FileHeader.Batch.TotalOutstandingAmount = SumTotalOutstandingAmount();
@@ -520,7 +520,7 @@ public partial class InvoiceType
         InvoiceTotals.TotalTaxOutputs = CalculateTaxOutputTotal();
 
         // Result: TotalGrossAmountBeforeTaxes + TotalTaxOutputs - TotalTaxesWithheld. Up to eight decimal points.
-        InvoiceTotals.InvoiceTotal = ((InvoiceTotals.TotalGrossAmountBeforeTaxes + InvoiceTotals.TotalTaxOutputs)
+        InvoiceTotals.InvoiceTotal = (InvoiceTotals.TotalGrossAmountBeforeTaxes + InvoiceTotals.TotalTaxOutputs
                                     - InvoiceTotals.TotalTaxesWithheld).Round();
 
         // Total de gastos financieros
@@ -579,7 +579,7 @@ public partial class InvoiceType
         {
             InvoiceTotals.GeneralSurcharges.ForEach
             (
-                gs => gs.ChargeAmount = ((InvoiceTotals.TotalGrossAmount * gs.ChargeRate) / 100).Round()
+                gs => gs.ChargeAmount = (InvoiceTotals.TotalGrossAmount * gs.ChargeRate / 100).Round()
             );
 
             InvoiceTotals.TotalGeneralSurcharges = InvoiceTotals.GeneralSurcharges.Sum(gs => gs.ChargeAmount).Round();
@@ -592,7 +592,7 @@ public partial class InvoiceType
         {
             InvoiceTotals.GeneralDiscounts.ForEach
             (
-                gd => gd.DiscountAmount = ((InvoiceTotals.TotalGrossAmount * gd.DiscountRate) / 100).Round()
+                gd => gd.DiscountAmount = (InvoiceTotals.TotalGrossAmount * gd.DiscountRate / 100).Round()
             );
 
             InvoiceTotals.TotalGeneralDiscounts = InvoiceTotals.GeneralDiscounts.Sum(gd => gd.DiscountAmount).Round();
@@ -677,7 +677,7 @@ public partial class InvoiceLineType
         {
             TaxTypeCode                   = taxType,
             TaxRate                       = taxRate,
-            EquivalenceSurcharge          = (equivalenceSurcharge.HasValue) ? equivalenceSurcharge.Value.Value : 0.0,
+            EquivalenceSurcharge          = equivalenceSurcharge.HasValue ? equivalenceSurcharge.Value.Value : 0.0,
             EquivalenceSurchargeSpecified = equivalenceSurcharge.HasValue
         };
 
@@ -795,7 +795,7 @@ public partial class InvoiceLineType
 
 public partial class BusinessType
 {
-    private Facturae _parent;
+    private readonly Facturae _parent;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="BusinessType"/> class.
@@ -1098,7 +1098,7 @@ public partial class IndividualType
 
 public partial class AdministrativeCentreType
 {
-    private BusinessType _parent;
+    private readonly BusinessType _parent;
 
     public AdministrativeCentreType()
     {
@@ -1287,7 +1287,7 @@ public partial class AdministrativeCentreType
 
 public partial class LegalEntityType
 {
-    private BusinessType _parent;
+    private readonly BusinessType _parent;
 
     public LegalEntityType()
     {

@@ -22,7 +22,7 @@ public sealed class AsnBitString : AsnString
                 {
                     if (bitCount > 0)
                     {
-                        result.Append(((current.IsBitSet(j)) ? "1" : "0"));
+                        result.Append(current.IsBitSet(j) ? "1" : "0");
                     }
 
                     bitCount--;
