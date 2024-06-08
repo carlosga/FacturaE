@@ -9,15 +9,15 @@ public class Program
 {
     static void Main(string[] args)
     {
-        var certificate = new X509Certificate2(@"Certificates/ANCERTCCP_FIRMA.p12", "1111");
+        var certificate = new X509Certificate2(@"Certificates/facturae.p12", "1234");
         var eInvoice    = new Facturae();
 
         // Create a new facturae invoice & sign it
-        var isValid = eInvoice
+        eInvoice
             .Seller()
                 .SetIdentification("00001")
                 .AsResidentInSpain()
-                .SetIdentificationNumber("555888555")
+                .SetIdentificationNumber("35799562Q")
                 .AsIndividual()
                     .SetName("JOHN")
                     .SetFirstSurname("DOE")
@@ -31,7 +31,7 @@ public class Program
             .Buyer()
                 .SetIdentification("00002")
                 .AsResidentInSpain()
-                .SetIdentificationNumber("555888555")
+                .SetIdentificationNumber("06990097Y")
                 .AsLegalEntity()
                     .SetCorporateName("JOHN")
                     .SetAddress("8585 FIRST STREET")
@@ -78,10 +78,9 @@ public class Program
                     .CalculateTotals()
                 .CalculateTotals()
             .CalculateTotals()
-            //.Validate()
+            .Validate()
             .Sign(certificate)
+            .WriteToFile("signed-invoice.xml")
             .CheckSignature();
-
-        Console.WriteLine(isValid);
     }
 }
