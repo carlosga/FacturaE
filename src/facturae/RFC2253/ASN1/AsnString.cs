@@ -11,6 +11,6 @@ public abstract class AsnString : AsnValueObject<string>
 
     protected AsnString(AsnIdentifier id, ReadOnlyMemory<byte> buffer, string value) : base(id, buffer)
     {
-        Value = value.Quote(((value.IndexOf(",") != -1) ? "\"" : string.Empty));
+        Value = value.Quote((value.IndexOf(",") != -1) ? "\"" : string.Empty);
     }
 }

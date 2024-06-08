@@ -69,8 +69,8 @@ internal static class XAdESExtensions
     {
         Debug.Assert(certificate is not null);
 
-        properties.SigningCertificate = new CertIDType[]
-        {
+        properties.SigningCertificate =
+        [
             new CertIDType
             {
                 CertDigest = new DigestAlgAndValueType
@@ -84,7 +84,7 @@ internal static class XAdESExtensions
                     X509SerialNumber = BigInteger.Parse(certificate.SerialNumber, NumberStyles.HexNumber).ToString()
                 }
             }
-        };
+        ];
 
         return properties;
     }

@@ -22,9 +22,7 @@ internal static class ArrayExtensions
             return null;
         }
 
-        using var hashAlgorithm = SHA1.Create();
-
-        return hashAlgorithm.ComputeHash(buffer, 0, buffer.Length);
+        return SHA1.HashData(buffer.AsSpan());
     }
 
     /// <summary>
@@ -35,6 +33,19 @@ internal static class ArrayExtensions
     /// <returns></returns>
     internal static string ByteArrayToHex(this ReadOnlySpan<byte> buffer, string separator)
     {
-        return ByteArrayToHex(buffer, separator);
+        var result = new StringBuilder(buffer.Length * 2);
+        var aseps  = !string.IsNullOrEmpty(separator);
+
+        for (var i = 0; i < buffer.Length; i++)
+        {
+            if (aseps && result.Length > 0)
+            {
+                result.Append(separator);
+            }
+
+            result.Append(buffer[i].ToString("x2"));
+        }
+
+        return result.ToString();
     }
 }

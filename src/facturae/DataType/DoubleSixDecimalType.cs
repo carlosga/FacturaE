@@ -143,132 +143,132 @@ public struct DoubleSixDecimalType
         Value = (double)value;
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return 207501132 ^ Value.GetHashCode();
     }
 
-    public override bool Equals(object obj)
+    public override readonly bool Equals(object obj)
     {
         return obj is not null and DoubleSixDecimalType dvalue && dvalue == this;
     }
 
-    public override string ToString()
+    public override readonly string ToString()
     {
         return Value.ToString("F6", System.Globalization.CultureInfo.InvariantCulture);
     }
 
-    public string ToString(string format)
+    public readonly string ToString(string format)
     {
         return Value.ToString(format);
     }
 
-    public int CompareTo(object obj)
+    public readonly int CompareTo(object obj)
     {
         return Value.CompareTo(obj);
     }
 
-    public string ToString(string format, IFormatProvider formatProvider)
+    public readonly string ToString(string format, IFormatProvider formatProvider)
     {
         return Value.ToString("F6", formatProvider);
     }
 
-    TypeCode IConvertible.GetTypeCode()
+    readonly TypeCode IConvertible.GetTypeCode()
     {
         return TypeCode.Object;
     }
 
-    bool IConvertible.ToBoolean(IFormatProvider provider)
+    readonly bool IConvertible.ToBoolean(IFormatProvider provider)
     {
         return Convert.ToBoolean(Value);
     }
 
-    byte IConvertible.ToByte(IFormatProvider provider)
+    readonly byte IConvertible.ToByte(IFormatProvider provider)
     {
         return Convert.ToByte(Value);
     }
 
-    char IConvertible.ToChar(IFormatProvider provider)
+    readonly char IConvertible.ToChar(IFormatProvider provider)
     {
         return Convert.ToChar(Value);
     }
 
-    DateTime IConvertible.ToDateTime(IFormatProvider provider)
+    readonly DateTime IConvertible.ToDateTime(IFormatProvider provider)
     {
         return Convert.ToDateTime(Value);
     }
 
-    decimal IConvertible.ToDecimal(IFormatProvider provider)
+    readonly decimal IConvertible.ToDecimal(IFormatProvider provider)
     {
         return Convert.ToDecimal(Value);
     }
 
-    double IConvertible.ToDouble(IFormatProvider provider)
+    readonly double IConvertible.ToDouble(IFormatProvider provider)
     {
         return Value;
     }
 
-    short IConvertible.ToInt16(IFormatProvider provider)
+    readonly short IConvertible.ToInt16(IFormatProvider provider)
     {
         return Convert.ToInt16(Value);
     }
 
-    int IConvertible.ToInt32(IFormatProvider provider)
+    readonly int IConvertible.ToInt32(IFormatProvider provider)
     {
         return Convert.ToInt32(Value);
     }
 
-    long IConvertible.ToInt64(IFormatProvider provider)
+    readonly long IConvertible.ToInt64(IFormatProvider provider)
     {
         return Convert.ToInt64(Value);
     }
 
-    sbyte IConvertible.ToSByte(IFormatProvider provider)
+    readonly sbyte IConvertible.ToSByte(IFormatProvider provider)
     {
         return Convert.ToSByte(Value);
     }
 
-    float IConvertible.ToSingle(IFormatProvider provider)
+    readonly float IConvertible.ToSingle(IFormatProvider provider)
     {
         return Convert.ToSingle(Value);
     }
 
-    string IConvertible.ToString(IFormatProvider provider)
+    readonly string IConvertible.ToString(IFormatProvider provider)
     {
         return this.ToString();
     }
 
-    object IConvertible.ToType(Type conversionType, IFormatProvider provider)
+    readonly object IConvertible.ToType(Type conversionType, IFormatProvider provider)
     {
         return Convert.ChangeType(Value, conversionType);
     }
 
-    ushort IConvertible.ToUInt16(IFormatProvider provider)
+    readonly ushort IConvertible.ToUInt16(IFormatProvider provider)
     {
         return Convert.ToUInt16(Value);
     }
 
-    uint IConvertible.ToUInt32(IFormatProvider provider)
+    readonly uint IConvertible.ToUInt32(IFormatProvider provider)
     {
         return Convert.ToUInt32(Value);
     }
 
-    ulong IConvertible.ToUInt64(IFormatProvider provider)
+    readonly ulong IConvertible.ToUInt64(IFormatProvider provider)
     {
         return Convert.ToUInt64(Value);
     }
 
-    int IComparable<double>.CompareTo(double other)
+    readonly int IComparable<double>.CompareTo(double other)
     {
         return CompareTo(other);
     }
 
-    public bool Equals(double other)
+    public readonly bool Equals(double other)
     {
         return Equals(other);
     }
 
-    public XmlSchema GetSchema()
+    public readonly XmlSchema GetSchema()
     {
         return null;
     }
@@ -281,7 +281,7 @@ public struct DoubleSixDecimalType
         }
     }
 
-    public void WriteXml(XmlWriter writer)
+    public readonly void WriteXml(XmlWriter writer)
     {
         writer?.WriteString(ToString());
     }

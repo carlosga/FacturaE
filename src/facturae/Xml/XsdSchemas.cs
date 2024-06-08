@@ -25,11 +25,11 @@ internal static class XsdSchemas
     private static readonly XmlSchema s_FacturaeXmlSchema = ReadSchema(s_FacturaeSchemaResource);
     private static readonly XmlSchema s_DsigXmlSchema     = ReadSchema(s_XmlDsigSchemaResource);
 
-    internal static readonly XmlQualifiedName[] Namespaces = new XmlQualifiedName[]
-    {
+    internal static readonly XmlQualifiedName[] Namespaces =
+    [
         new XmlQualifiedName(s_FacturaePrefix, s_FacturaeNamespaceUrl),
         new XmlQualifiedName(s_XmlDsigPrefix , s_XmlDsigNamespaceUrl),
-    };
+    ];
 
     internal readonly static XmlSerializerNamespaces XadesSerializerNamespaces = new(Namespaces);
 

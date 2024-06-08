@@ -8,14 +8,14 @@ namespace ASN1;
 
 public sealed class AsnUTCTime : AsnValueObject<DateTime>
 {
-    private static readonly string[] s_timeFormats = new string[]
-    {
+    private static readonly string[] s_timeFormats =
+    [
         "yyMMddHHmm",
         "yyMMddHHmmzz",
         "yyMMddHHmmss",
         "yyMMddHHmmsszz",
         "yyMMddHHmmss"
-    };
+    ];
 
     private static DateTime ToDateTime(ReadOnlySpan<byte> buffer)
     {

@@ -88,7 +88,7 @@ public sealed class AsnDecoder
         var rawData    = ReadBytes(length);
         var targetType = typeof(T);
 
-        if (targetType == typeof (AsnObjectIdentifier))
+        if (targetType == typeof(AsnObjectIdentifier))
         {
             return new AsnObjectIdentifier(id, rawData) as T;
         }
