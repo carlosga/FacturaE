@@ -67,7 +67,7 @@ public sealed class X500DistinguishedName
         }
         if (rawData.Length == 0)
         {
-            throw new ArgumentException("rawData cannot be empty");
+            throw new ArgumentException("rawData cannot be empty", nameof(rawData));
         }
 
         var decoder = new AsnDecoder(rawData);
@@ -93,7 +93,8 @@ public sealed class X500DistinguishedName
             {
                 builder.Append(',');
             }
-            builder.Append(TranslateOid(format, identifier.Value + "="));
+            builder.Append(TranslateOid(format, identifier.Value));
+            builder.Append('=');
         }
         else if (root is IAsnValueObject valueObject)
         {
