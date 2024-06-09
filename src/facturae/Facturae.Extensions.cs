@@ -318,10 +318,10 @@ public partial class InvoiceType
     /// </summary>
     /// <param name="date">The invoice operation date.</param>
     /// <returns></returns>
-    public InvoiceType SetOperationDate(DateTime date)
+    public InvoiceType SetOperationDate(DateTime? date)
     {
-        InvoiceIssueData.OperationDate = date;
-        InvoiceIssueData.OperationDateSpecified = true;
+        InvoiceIssueData.OperationDate = date.HasValue ? date.Value : DateTime.Today;
+        InvoiceIssueData.OperationDateSpecified = date.HasValue;
 
         return this;
     }
@@ -613,6 +613,14 @@ public partial class InvoiceType
 
 public partial class InvoiceLineType
 {
+    public InvoiceLineType SetIssuerTransactionDate(DateTime? value)
+    {
+         IssuerTransactionDate          = value.HasValue ? value.Value : DateTime.Today;
+         IssuerTransactionDateSpecified = value.HasValue;
+
+         return this;
+    }
+
     public InvoiceLineType GiveQuantity(decimal quantity)
     {
         Quantity = quantity;
@@ -672,7 +680,7 @@ public partial class InvoiceLineType
         {
             TaxTypeCode                   = taxType,
             TaxRate                       = taxRate,
-            EquivalenceSurcharge          = equivalenceSurcharge.HasValue ? equivalenceSurcharge.Value.Value : 0.0M,
+            EquivalenceSurcharge          = equivalenceSurcharge.HasValue ? equivalenceSurcharge.Value : 0.0M,
             EquivalenceSurchargeSpecified = equivalenceSurcharge.HasValue
         };
 

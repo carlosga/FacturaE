@@ -45,37 +45,37 @@ public struct DoubleTwoDecimalType
 
     public static bool operator ==(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
     {
-        return left.Value == right.Value;
+        return left._value == right._value;
     }
 
     public static bool operator !=(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
     {
-        return left.Value != right.Value;
+        return left._value != right._value;
     }
 
     public static bool operator >(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
     {
-        return left.Value > right.Value;
+        return left._value > right._value;
     }
 
     public static bool operator >=(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
     {
-        return left.Value >= right.Value;
+        return left._value >= right._value;
     }
 
     public static bool operator <(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
     {
-        return left.Value < right.Value;
+        return left._value < right._value;
     }
 
     public static bool operator <=(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
     {
-        return left.Value <= right.Value;
+        return left._value <= right._value;
     }
 
     public static implicit operator decimal(DoubleTwoDecimalType x)
     {
-        return x.Value;
+        return x._value;
     }
 
     public static implicit operator DoubleTwoDecimalType(decimal x)
@@ -83,27 +83,31 @@ public struct DoubleTwoDecimalType
         return new DoubleTwoDecimalType(x);
     }
 
+    public static implicit operator DoubleTwoDecimalType(DoubleFourDecimalType x)
+    {
+        return new DoubleTwoDecimalType((decimal)x);
+    }
+
     public static implicit operator DoubleTwoDecimalType(DoubleSixDecimalType x)
     {
-        return new DoubleTwoDecimalType(x.Value);
+        return new DoubleTwoDecimalType((decimal)x);
     }
 
     public static implicit operator DoubleTwoDecimalType(DoubleUpToEightDecimalType x)
     {
-        return new DoubleTwoDecimalType(x.Value);
+        return new DoubleTwoDecimalType((decimal)x);
     }
 
-    [XmlIgnore]
-    public decimal Value { get; private set; }
+    public decimal _value;
 
     public DoubleTwoDecimalType(decimal value)
     {
-        Value = value;
+        _value = value;
     }
 
     public override readonly int GetHashCode()
     {
-        return 207501130 ^ Value.GetHashCode();
+        return 207501130 ^ _value.GetHashCode();
     }
 
     public override readonly bool Equals(object obj)
@@ -113,22 +117,22 @@ public struct DoubleTwoDecimalType
 
     public override readonly string ToString()
     {
-        return Value.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+        return _value.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
     }
 
     public readonly string ToString(string format)
     {
-        return Value.ToString(format);
+        return _value.ToString(format);
     }
 
     public readonly int CompareTo(object obj)
     {
-        return Value.CompareTo(obj);
+        return _value.CompareTo(obj);
     }
 
     public readonly string ToString(string format, IFormatProvider formatProvider)
     {
-        return Value.ToString("F2", formatProvider);
+        return _value.ToString("F2", formatProvider);
     }
 
     readonly TypeCode IConvertible.GetTypeCode()
@@ -138,57 +142,57 @@ public struct DoubleTwoDecimalType
 
     readonly bool IConvertible.ToBoolean(IFormatProvider provider)
     {
-        return Convert.ToBoolean(Value);
+        return Convert.ToBoolean(_value);
     }
 
     readonly byte IConvertible.ToByte(IFormatProvider provider)
     {
-        return Convert.ToByte(Value);
+        return Convert.ToByte(_value);
     }
 
     readonly char IConvertible.ToChar(IFormatProvider provider)
     {
-        return Convert.ToChar(Value);
+        return Convert.ToChar(_value);
     }
 
     readonly DateTime IConvertible.ToDateTime(IFormatProvider provider)
     {
-        return Convert.ToDateTime(Value);
+        return Convert.ToDateTime(_value);
     }
 
     readonly decimal IConvertible.ToDecimal(IFormatProvider provider)
     {
-        return Value;
+        return _value;
     }
 
     readonly double IConvertible.ToDouble(IFormatProvider provider)
     {
-        return Convert.ToDouble(Value);
+        return Convert.ToDouble(_value);
     }
 
     readonly short IConvertible.ToInt16(IFormatProvider provider)
     {
-        return Convert.ToInt16(Value);
+        return Convert.ToInt16(_value);
     }
 
     readonly int IConvertible.ToInt32(IFormatProvider provider)
     {
-        return Convert.ToInt32(Value);
+        return Convert.ToInt32(_value);
     }
 
     readonly long IConvertible.ToInt64(IFormatProvider provider)
     {
-        return Convert.ToInt64(Value);
+        return Convert.ToInt64(_value);
     }
 
     readonly sbyte IConvertible.ToSByte(IFormatProvider provider)
     {
-        return Convert.ToSByte(Value);
+        return Convert.ToSByte(_value);
     }
 
     readonly float IConvertible.ToSingle(IFormatProvider provider)
     {
-        return Convert.ToSingle(Value);
+        return Convert.ToSingle(_value);
     }
 
     readonly string IConvertible.ToString(IFormatProvider provider)
@@ -198,22 +202,22 @@ public struct DoubleTwoDecimalType
 
     readonly object IConvertible.ToType(Type conversionType, IFormatProvider provider)
     {
-        return Convert.ChangeType(Value, conversionType);
+        return Convert.ChangeType(_value, conversionType);
     }
 
     readonly ushort IConvertible.ToUInt16(IFormatProvider provider)
     {
-        return Convert.ToUInt16(Value);
+        return Convert.ToUInt16(_value);
     }
 
     readonly uint IConvertible.ToUInt32(IFormatProvider provider)
     {
-        return Convert.ToUInt32(Value);
+        return Convert.ToUInt32(_value);
     }
 
     readonly ulong IConvertible.ToUInt64(IFormatProvider provider)
     {
-        return Convert.ToUInt64(Value);
+        return Convert.ToUInt64(_value);
     }
 
     readonly int IComparable<decimal>.CompareTo(decimal other)
@@ -235,7 +239,7 @@ public struct DoubleTwoDecimalType
     {
         if (reader is not null)
         {
-            Value = reader.ReadElementContentAsDecimal();
+            _value = reader.ReadElementContentAsDecimal();
         }
     }
 

@@ -53,7 +53,7 @@ public class Program
             .Invoice()
             .CreateInvoice()
                 .SetCurrency(CurrencyCodeType.EUR)                
-                .SetExchangeRate(1, DateTime.Now)
+                .SetExchangeRate(1, DateTime.Today)
                 .SetTaxCurrency(CurrencyCodeType.EUR)
                 .SetLanguage(LanguageCodeType.es)
                 .SetPlaceOfIssue(string.Empty, "00000")
