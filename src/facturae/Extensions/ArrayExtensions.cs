@@ -12,18 +12,18 @@ namespace System;
 internal static class ArrayExtensions
 {
     /// <summary>
-    /// Computes the SHA1 hash of a given byte array
+    /// Computes the SHA512 hash of a given byte array
     /// </summary>
     /// <param name="buffer"></param>
     /// <returns></returns>
-    internal static byte[] ComputeSHA1Hash(this byte[] buffer)
+    internal static byte[] ComputeSHA512Hash(this byte[] buffer)
     {
         if (buffer is null)
         {
             return null;
         }
 
-        return SHA1.HashData(buffer.AsSpan());
+        return SHA512.HashData(buffer.AsSpan());
     }
 
     /// <summary>

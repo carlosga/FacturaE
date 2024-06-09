@@ -75,8 +75,8 @@ internal static class XAdESExtensions
             {
                 CertDigest = new DigestAlgAndValueType
                 {
-                    DigestMethod = new DigestMethodType { Algorithm = SignedXml.XmlDsigSHA1Url },
-                    DigestValue  = certificate.RawData.ComputeSHA1Hash()
+                    DigestMethod = new DigestMethodType { Algorithm = SignedXml.XmlDsigSHA512Url },
+                    DigestValue  = certificate.RawData.ComputeSHA512Hash()
                 },
                 IssuerSerial = new X509IssuerSerialType
                 {
