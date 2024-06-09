@@ -17,12 +17,17 @@ namespace FacturaE;
 /// </summary>
 public partial class Facturae
 {
-    private static readonly XmlSerializer s_serializer = new(typeof(Facturae));
-    private static readonly Encoding      s_encoding   = new UTF8Encoding(false);
+    private static readonly XmlSerializer     s_Serializer     = new(typeof(Facturae));
+    private static readonly Encoding          s_Encoding       = new UTF8Encoding(false);
+    private static readonly XmlWriterSettings s_WriterSettings = new() 
+    { 
+        Encoding         = s_Encoding, 
+        ConformanceLevel = ConformanceLevel.Auto 
+    };
 
     private static void XmlValidationEventHandler(object sender, ValidationEventArgs e)
     {
-        if (e.Severity == XmlSeverityType.Error)
+        if (e.Severity is XmlSeverityType.Error)
         {
             throw e.Exception;
         }
@@ -100,16 +105,13 @@ public partial class Facturae
     }
 
     private string ToXml()
-    {
-        var settings = new XmlWriterSettings { Encoding = s_encoding, ConformanceLevel = ConformanceLevel.Auto };
-
+    {        
         using var buffer = new MemoryStream();
-        using (var writer = XmlWriter.Create(buffer, settings))
-        {
-            s_serializer.Serialize(writer, this, XsdSchemas.XadesSerializerNamespaces);
-        }
+        using var writer = XmlWriter.Create(buffer, s_WriterSettings);
 
-        return s_encoding.GetString(buffer.GetBuffer());
+        s_Serializer.Serialize(writer, this, XsdSchemas.XadesSerializerNamespaces);
+
+        return s_Encoding.GetString(buffer.GetBuffer());
     }
 
     private XmlDocument ToXmlDocument()

@@ -8,10 +8,10 @@ using System.Xml.Serialization;
 namespace FacturaE.DataType;
 
 public struct DoubleFourDecimalType
-    : IComparable, IFormattable, IConvertible, IComparable<double>, IEquatable<double>, IXmlSerializable
+    : IComparable, IFormattable, IConvertible, IComparable<decimal>, IEquatable<decimal>, IXmlSerializable
 {
-    public static readonly DoubleFourDecimalType MaxValue = new(double.MaxValue);
-    public static readonly DoubleFourDecimalType MinValue = new(double.MinValue);
+    public static readonly DoubleFourDecimalType MaxValue = new(decimal.MaxValue);
+    public static readonly DoubleFourDecimalType MinValue = new(decimal.MinValue);
 
     public static bool GreaterThan(DoubleFourDecimalType left, DoubleFourDecimalType right)
     {
@@ -40,102 +40,55 @@ public struct DoubleFourDecimalType
 
     public static DoubleFourDecimalType Parse(string value)
     {
-        return new DoubleFourDecimalType(double.Parse(value));
+        return new DoubleFourDecimalType(decimal.Parse(value));
     }
 
     public static bool operator ==(DoubleFourDecimalType left, DoubleFourDecimalType right)
     {
-        bool equals = false;
-
-        if (left.Value == right.Value)
-        {
-            equals = true;
-        }
-
-        return equals;
+        return left.Value == right.Value;
     }
 
     public static bool operator !=(DoubleFourDecimalType left, DoubleFourDecimalType right)
     {
-        bool notequals = false;
-
-        if (left.Value != right.Value)
-        {
-            notequals = true;
-        }
-
-        return notequals;
+        return left.Value != right.Value;
     }
 
     public static bool operator >(DoubleFourDecimalType left, DoubleFourDecimalType right)
     {
-        bool greater = false;
-
-        if (left.Value > right.Value)
-        {
-            greater = true;
-        }
-
-        return greater;
+        return left.Value > right.Value;
     }
 
     public static bool operator >=(DoubleFourDecimalType left, DoubleFourDecimalType right)
     {
-        bool greater = false;
-
-        if (left.Value >= right.Value)
-        {
-            greater = true;
-        }
-
-        return greater;
+        return left.Value >= right.Value;
     }
 
     public static bool operator <(DoubleFourDecimalType left, DoubleFourDecimalType right)
     {
-        bool less = false;
-
-        if (left.Value < right.Value)
-        {
-            less = true;
-        }
-
-        return less;
+        return left.Value < right.Value;
     }
 
     public static bool operator <=(DoubleFourDecimalType left, DoubleFourDecimalType right)
     {
-        bool less = false;
-
-        if (left.Value <= right.Value)
-        {
-            less = true;
-        }
-
-        return less;
+        return left.Value <= right.Value;
     }
 
-    public static implicit operator double(DoubleFourDecimalType x)
+    public static implicit operator decimal(DoubleFourDecimalType x)
     {
         return x.Value;
     }
 
-    public static implicit operator DoubleFourDecimalType(double x)
+    public static implicit operator DoubleFourDecimalType(decimal x)
     {
         return new DoubleFourDecimalType(x);
     }
 
     [XmlIgnore]
-    public double Value { get; private set; }
-
-    public DoubleFourDecimalType(double value)
-    {
-        Value = value;
-    }
+    public decimal Value { get; private set; }
 
     public DoubleFourDecimalType(decimal value)
     {
-        Value = (double)value;
+        Value = value;
     }
 
     public override readonly int GetHashCode()
@@ -195,12 +148,12 @@ public struct DoubleFourDecimalType
 
     readonly decimal IConvertible.ToDecimal(IFormatProvider provider)
     {
-        return Convert.ToDecimal(Value);
+        return Value;
     }
 
     readonly double IConvertible.ToDouble(IFormatProvider provider)
     {
-        return Value;
+        return Convert.ToDouble(Value);
     }
 
     readonly short IConvertible.ToInt16(IFormatProvider provider)
@@ -253,12 +206,12 @@ public struct DoubleFourDecimalType
         return Convert.ToUInt64(Value);
     }
 
-    readonly int IComparable<double>.CompareTo(double other)
+    readonly int IComparable<decimal>.CompareTo(decimal other)
     {
         return CompareTo(other);
     }
 
-    public readonly bool Equals(double other)
+    public readonly bool Equals(decimal other)
     {
         return Equals(other);
     }
@@ -272,7 +225,7 @@ public struct DoubleFourDecimalType
     {
         if (reader is not null)
         {
-            Value = reader.ReadElementContentAsDouble();
+            Value = reader.ReadElementContentAsDecimal();
         }
     }
 

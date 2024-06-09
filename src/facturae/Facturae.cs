@@ -708,7 +708,7 @@ namespace FacturaE
         
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified)]
-        public double Quantity 
+        public decimal Quantity 
         {
             get;
             set;
@@ -1872,7 +1872,7 @@ namespace FacturaE
         
         /// <remarks/>
         [XmlElementAttribute(Form = XmlSchemaForm.Unqualified, DataType="date")]
-        public System.DateTime OperationDate 
+        public System.DateTime? OperationDate 
         {
             get;
             set;
@@ -1880,7 +1880,7 @@ namespace FacturaE
         
         /// <remarks/>
         [XmlIgnoreAttribute()]
-        public bool OperationDateSpecified 
+        public bool OperationDateSpecified
         {
             get;
             set;

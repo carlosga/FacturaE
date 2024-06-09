@@ -321,6 +321,7 @@ public partial class InvoiceType
     public InvoiceType SetOperationDate(DateTime date)
     {
         InvoiceIssueData.OperationDate = date;
+        InvoiceIssueData.OperationDateSpecified = true;
 
         return this;
     }
@@ -377,7 +378,7 @@ public partial class InvoiceType
     /// <param name="exchangeRate">The exchange rate.</param>
     /// <param name="exchangeDate">The exchange date.</param>
     /// <returns></returns>
-    public InvoiceType SetExchangeRate(double exchangeRate, DateTime exchangeDate)
+    public InvoiceType SetExchangeRate(decimal exchangeRate, DateTime exchangeDate)
     {
         InvoiceIssueData.ExchangeRateDetails = new ExchangeRateDetailsType
         {
@@ -601,7 +602,7 @@ public partial class InvoiceType
 
     private DoubleUpToEightDecimalType CalculateTaxOutputTotal()
     {
-        return TaxesOutputs?.Sum(to => to.TaxAmount.TotalAmount + (to.EquivalenceSurchargeAmount?.TotalAmount ?? 0.0)).Round() ?? 0;
+        return TaxesOutputs?.Sum(to => to.TaxAmount.TotalAmount + (to.EquivalenceSurchargeAmount?.TotalAmount ?? 0.0M)).Round() ?? 0;
     }
 
     private DoubleUpToEightDecimalType CalculateTaxWithheldTotal()
@@ -612,7 +613,7 @@ public partial class InvoiceType
 
 public partial class InvoiceLineType
 {
-    public InvoiceLineType GiveQuantity(double quantity)
+    public InvoiceLineType GiveQuantity(decimal quantity)
     {
         Quantity = quantity;
 
@@ -628,10 +629,7 @@ public partial class InvoiceLineType
 
     public InvoiceLineType GiveDiscount(DoubleUpToEightDecimalType discountRate, string discountReason = "Descuento")
     {
-        if (DiscountsAndRebates is null)
-        {
-            DiscountsAndRebates = new List<DiscountType>();
-        }
+        DiscountsAndRebates ??= new List<DiscountType>();
 
         var discount = new DiscountType
         {
@@ -668,16 +666,13 @@ public partial class InvoiceLineType
 
     private void AddTaxOutput(DoubleUpToEightDecimalType taxRate, DoubleTwoDecimalType? equivalenceSurcharge, TaxTypeCodeType taxType)
     {
-        if (TaxesOutputs is null)
-        {
-            TaxesOutputs = new List<InvoiceLineTypeTax>(1);
-        }
+        TaxesOutputs ??= new List<InvoiceLineTypeTax>(1);
 
         var tax = new InvoiceLineTypeTax
         {
             TaxTypeCode                   = taxType,
             TaxRate                       = taxRate,
-            EquivalenceSurcharge          = equivalenceSurcharge.HasValue ? equivalenceSurcharge.Value.Value : 0.0,
+            EquivalenceSurcharge          = equivalenceSurcharge.HasValue ? equivalenceSurcharge.Value.Value : 0.0M,
             EquivalenceSurchargeSpecified = equivalenceSurcharge.HasValue
         };
 
@@ -686,10 +681,7 @@ public partial class InvoiceLineType
 
     private void AddTaxWithheld(DoubleUpToEightDecimalType taxRate, TaxTypeCodeType taxType)
     {
-        if (TaxesWithheld is null)
-        {
-            TaxesWithheld = new List<TaxType>(1);
-        }
+        TaxesWithheld ??= new List<TaxType>(1);
 
         var tax = new TaxType
         {
@@ -732,29 +724,20 @@ public partial class InvoiceLineType
         (
             tax =>
             {
-                if (tax.TaxableBase is null)
-                {
-                    tax.TaxableBase = new AmountType();
-                }
+                tax.TaxableBase ??= new AmountType();
 
                 tax.TaxableBase.TotalAmount                = GrossAmount;
                 tax.TaxableBase.EquivalentInEuros          = GrossAmount;
                 tax.TaxableBase.EquivalentInEurosSpecified = true;
 
-                if (tax.TaxAmount is null)
-                {
-                    tax.TaxAmount = new AmountType();
-                }
+                tax.TaxAmount ??= new AmountType();
 
                 tax.TaxAmount.TotalAmount       = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100).Round();
                 tax.TaxAmount.EquivalentInEuros = tax.TaxAmount.TotalAmount;
 
                 if (tax.EquivalenceSurchargeSpecified)
                 {
-                    if (tax.EquivalenceSurchargeAmount is null)
-                    {
-                        tax.EquivalenceSurchargeAmount = new AmountType();
-                    }
+                    tax.EquivalenceSurchargeAmount ??= new AmountType();
 
                     tax.EquivalenceSurchargeAmount.TotalAmount       = (tax.TaxableBase.TotalAmount * tax.EquivalenceSurcharge / 100).Round();
                     tax.EquivalenceSurchargeAmount.EquivalentInEuros = tax.EquivalenceSurchargeAmount.TotalAmount;
@@ -769,19 +752,13 @@ public partial class InvoiceLineType
         (
             tax =>
             {
-                if (tax.TaxableBase is null)
-                {
-                    tax.TaxableBase = new AmountType();
-                }
+                tax.TaxableBase ??= new AmountType();
 
                 tax.TaxableBase.TotalAmount                = GrossAmount;
                 tax.TaxableBase.EquivalentInEuros          = GrossAmount;
                 tax.TaxableBase.EquivalentInEurosSpecified = true;
 
-                if (tax.TaxAmount is null)
-                {
-                    tax.TaxAmount = new AmountType();
-                }
+                tax.TaxAmount ??= new AmountType();
 
                 tax.TaxAmount.TotalAmount                = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100).Round();
                 tax.TaxAmount.EquivalentInEuros          = tax.TaxAmount.TotalAmount;
@@ -840,7 +817,7 @@ public partial class BusinessType
 
         Item = individual;
 
-        individual.Item = TaxIdentification.ResidenceTypeCode == ResidenceTypeCodeType.ResidentInSpain
+        individual.Item = TaxIdentification.ResidenceTypeCode is ResidenceTypeCodeType.ResidentInSpain
             ? new AddressType { CountryCode = CountryType.ESP }
                 : new OverseasAddressType();
 
@@ -924,16 +901,13 @@ public partial class BusinessType
     {
         var centre = new AdministrativeCentreType(this);
 
-        if (AdministrativeCentres is null)
-        {
-            AdministrativeCentres = new List<AdministrativeCentreType>();
-        }
+        AdministrativeCentres ??= new List<AdministrativeCentreType>();
 
         AdministrativeCentres.Add(centre);
 
         if (TaxIdentification is not null)
         {
-            centre.Item = TaxIdentification.ResidenceTypeCode == ResidenceTypeCodeType.ResidentInSpain
+            centre.Item = TaxIdentification.ResidenceTypeCode is ResidenceTypeCodeType.ResidentInSpain
                 ? new AddressType { CountryCode = CountryType.ESP }
                     : new OverseasAddressType();
         }
