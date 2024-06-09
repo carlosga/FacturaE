@@ -105,13 +105,14 @@ public partial class Facturae
     }
 
     private string ToXml()
-    {        
-        using var buffer = new MemoryStream();
+    {
+        var buffer = new StringBuilder();
+
         using var writer = XmlWriter.Create(buffer, s_WriterSettings);
 
         s_Serializer.Serialize(writer, this, XsdSchemas.XadesSerializerNamespaces);
 
-        return s_Encoding.GetString(buffer.GetBuffer());
+        return buffer.ToString();
     }
 
     private XmlDocument ToXmlDocument()

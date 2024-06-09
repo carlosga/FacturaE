@@ -24,9 +24,9 @@ internal static class XAdESExtensions
     private static readonly string PolicyResource   = "FacturaE.Policies.politica_de_firma_formato_facturae_v3_1.pdf";
     private static readonly byte[] PolicyHash       = Assembly.GetExecutingAssembly().GetManifestResourceStream(PolicyResource).ComputeSHA1Hash();
 
-    private static readonly Encoding          s_encoding       = new UTF8Encoding(false);
-    private static readonly XmlSerializer     s_serializer     = new(typeof(QualifyingPropertiesType));
-    private static readonly XmlWriterSettings s_writerSettings = new() { Encoding = s_encoding };
+    private static readonly XmlSerializer     s_Serializer     = new(typeof(QualifyingPropertiesType));
+    private static readonly Encoding          s_Encoding       = new UTF8Encoding(false);
+    private static readonly XmlWriterSettings s_WriterSettings = new() { Encoding = s_Encoding };
 
     internal static SignedPropertiesType CreateSignedProperties(
         this QualifyingPropertiesType properties,
@@ -116,9 +116,9 @@ internal static class XAdESExtensions
     {
         var buffer = new StringBuilder();
 
-        using var writer = XmlWriter.Create(buffer, s_writerSettings);
+        using var writer = XmlWriter.Create(buffer, s_WriterSettings);
 
-        s_serializer.Serialize(writer, properties, XsdSchemas.XadesSerializerNamespaces);
+        s_Serializer.Serialize(writer, properties, XsdSchemas.XadesSerializerNamespaces);
 
         return buffer.ToString();
     }
