@@ -10,9 +10,6 @@ namespace FacturaE.DataType;
 public struct DoubleTwoDecimalType
     : IComparable, IFormattable, IConvertible, IComparable<decimal>, IEquatable<decimal>, IXmlSerializable
 {
-    public static readonly DoubleTwoDecimalType MaxValue = new(decimal.MaxValue);
-    public static readonly DoubleTwoDecimalType	MinValue = new(decimal.MinValue);
-
     public static bool GreaterThan(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
     {
         return left > right;

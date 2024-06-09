@@ -10,9 +10,6 @@ namespace FacturaE.DataType;
 public struct DoubleUpToEightDecimalType
     : IComparable, IFormattable, IConvertible, IComparable<decimal>, IEquatable<decimal>, IXmlSerializable
 {
-    public static readonly DoubleUpToEightDecimalType MaxValue = new(decimal.MaxValue);
-    public static readonly DoubleUpToEightDecimalType MinValue = new(decimal.MinValue);
-
     public static bool GreaterThan(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
     {
         return left > right;

@@ -6,7 +6,7 @@ using ASN1;
 
 namespace X500;
 
-public sealed class X500DistinguishedName
+public static class X500DistinguishedName
 {
     private static readonly Dictionary<string, string> s_rfc1179;
     private static readonly Dictionary<string, string> s_rfc2253;
@@ -112,15 +112,4 @@ public sealed class X500DistinguishedName
             _                               => oid,
         };
     }
-
-    public byte[] RawData { get; }
-
-    public X500DistinguishedName(byte[] rawData)
-    {
-        RawData = rawData;
-    }
-
-    public string Format(DistinguishedNameFormat format) => Format(format, RawData);
-
-    public override string ToString() => Format(DistinguishedNameFormat.RFC2253);
 }
