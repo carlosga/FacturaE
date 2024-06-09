@@ -7,6 +7,11 @@ namespace System.IO;
 
 internal static class StreamExtensions
 {
+    /// <summary>
+    /// Computes the SHA1 hash of a given stream instance.
+    /// </summary>
+    /// <param name="buffer"></param>
+    /// <returns></returns>    
     internal static byte[] ComputeSHA1Hash(this Stream stream, bool leavOpen = false)
     {
         if (stream is null)
