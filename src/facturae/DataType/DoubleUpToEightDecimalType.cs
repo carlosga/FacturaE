@@ -8,10 +8,10 @@ using System.Xml.Serialization;
 namespace FacturaE.DataType;
 
 public struct DoubleUpToEightDecimalType
-    : IComparable, IFormattable, IConvertible, IComparable<double>, IEquatable<double>, IXmlSerializable
+    : IComparable, IFormattable, IConvertible, IComparable<decimal>, IEquatable<decimal>, IXmlSerializable
 {
-    public static readonly DoubleUpToEightDecimalType MaxValue = new(double.MaxValue);
-    public static readonly DoubleUpToEightDecimalType MinValue = new(double.MinValue);
+    public static readonly DoubleUpToEightDecimalType MaxValue = new(decimal.MaxValue);
+    public static readonly DoubleUpToEightDecimalType MinValue = new(decimal.MinValue);
 
     public static bool GreaterThan(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
     {
@@ -40,87 +40,45 @@ public struct DoubleUpToEightDecimalType
 
     public static DoubleUpToEightDecimalType Parse(string value)
     {
-        return new DoubleUpToEightDecimalType(double.Parse(value));
+        return new DoubleUpToEightDecimalType(decimal.Parse(value));
     }
 
     public static bool operator ==(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
     {
-        bool equals = false;
-
-        if (left.Value == right.Value)
-        {
-            equals = true;
-        }
-
-        return equals;
+        return left.Value == right.Value;
     }
 
     public static bool operator !=(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
     {
-        bool notequals = false;
-
-        if (left.Value != right.Value)
-        {
-            notequals = true;
-        }
-
-        return notequals;
+        return left.Value != right.Value;
     }
 
     public static bool operator >(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
     {
-        bool greater = false;
-
-        if (left.Value > right.Value)
-        {
-            greater = true;
-        }
-
-        return greater;
+        return left.Value > right.Value;
     }
 
     public static bool operator >=(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
     {
-        bool greater = false;
-
-        if (left.Value >= right.Value)
-        {
-            greater = true;
-        }
-
-        return greater;
+        return left.Value >= right.Value;
     }
 
     public static bool operator <(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
     {
-        bool less = false;
-
-        if (left.Value < right.Value)
-        {
-            less = true;
-        }
-
-        return less;
+        return left.Value < right.Value;
     }
 
     public static bool operator <=(DoubleUpToEightDecimalType left, DoubleUpToEightDecimalType right)
     {
-        bool less = false;
-
-        if (left.Value <= right.Value)
-        {
-            less = true;
-        }
-
-        return less;
+        return left.Value <= right.Value;
     }
 
-    public static implicit operator double(DoubleUpToEightDecimalType value)
+    public static implicit operator decimal(DoubleUpToEightDecimalType value)
     {
         return value.Value;
     }
 
-    public static implicit operator DoubleUpToEightDecimalType(double value)
+    public static implicit operator DoubleUpToEightDecimalType(decimal value)
     {
         return new DoubleUpToEightDecimalType(value);
     }
@@ -131,16 +89,11 @@ public struct DoubleUpToEightDecimalType
     }
 
     [XmlIgnore]
-    public double Value { get; private set; }
-
-    public DoubleUpToEightDecimalType(double value)
-    {
-        Value = value;
-    }
+    public decimal Value { get; private set; }
 
     public DoubleUpToEightDecimalType(decimal value)
     {
-        Value = (double)value;
+        Value = value;
     }
 
     public override readonly int GetHashCode()
@@ -200,12 +153,12 @@ public struct DoubleUpToEightDecimalType
 
     readonly decimal IConvertible.ToDecimal(IFormatProvider provider)
     {
-        return Convert.ToDecimal(Value);
+        return Value;
     }
 
     readonly double IConvertible.ToDouble(IFormatProvider provider)
     {
-        return Value;
+        return Convert.ToDouble(Value);
     }
 
     readonly short IConvertible.ToInt16(IFormatProvider provider)
@@ -258,12 +211,12 @@ public struct DoubleUpToEightDecimalType
         return Convert.ToUInt64(Value);
     }
 
-    readonly int IComparable<double>.CompareTo(double other)
+    readonly int IComparable<decimal>.CompareTo(decimal other)
     {
         return CompareTo(other);
     }
 
-    public readonly bool Equals(double other)
+    public readonly bool Equals(decimal other)
     {
         return Equals(other);
     }
@@ -277,7 +230,7 @@ public struct DoubleUpToEightDecimalType
     {
         if (reader is not null)
         {
-            Value = reader.ReadElementContentAsDouble();
+            Value = reader.ReadElementContentAsDecimal();
         }
     }
 
