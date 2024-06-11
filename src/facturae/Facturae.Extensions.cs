@@ -651,28 +651,29 @@ public partial class InvoiceLineType
         return this;
     }
 
-    public InvoiceLineType GiveVATRate(DoubleUpToEightDecimalType taxRate, DoubleTwoDecimalType? equivalenceSurcharge = null)
+    public InvoiceLineType GiveValueAddedTaxRate(DoubleUpToEightDecimalType taxRate, DoubleTwoDecimalType? equivalenceSurcharge = null)
     {
-        AddTaxOutput(taxRate, equivalenceSurcharge, TaxTypeCodeType.ValueAddedTax);
+        AddTaxOutput(taxRate, TaxTypeCodeType.ValueAddedTax, equivalenceSurcharge);
 
         return this;
     }
 
     public InvoiceLineType GiveTaxRate(DoubleUpToEightDecimalType taxRate, TaxTypeCodeType taxType)
     {
-        if (taxType.IsTaxWithheld())
+        switch (taxType)
         {
-            AddTaxWithheld(taxRate, taxType);
-        }
-        else
-        {
-            AddTaxOutput(taxRate, null, taxType);
+            case TaxTypeCodeType.PersonalIncomeTax: 
+                AddTaxWithheld(taxRate, taxType);
+                break;
+            default:  
+                AddTaxOutput(taxRate, taxType);
+                break;
         }
 
         return this;
     }
 
-    private void AddTaxOutput(DoubleUpToEightDecimalType taxRate, DoubleTwoDecimalType? equivalenceSurcharge, TaxTypeCodeType taxType)
+    private void AddTaxOutput(DoubleUpToEightDecimalType taxRate, TaxTypeCodeType taxType, DoubleTwoDecimalType? equivalenceSurcharge = null)
     {
         TaxesOutputs ??= new List<InvoiceLineTypeTax>(1);
 
