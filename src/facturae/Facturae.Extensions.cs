@@ -1,8 +1,6 @@
 // Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System.Diagnostics;
-
 using FacturaE.DataType;
 
 namespace FacturaE;
@@ -103,7 +101,8 @@ public partial class Facturae
         FileHeader.Batch.TotalInvoicesAmount    = SumTotalAmounts();
         FileHeader.Batch.TotalOutstandingAmount = SumTotalOutstandingAmount();
         FileHeader.Batch.TotalExecutableAmount  = SumTotalExecutableAmount();
-        FileHeader.Batch.BatchIdentifier        = firstInvoice.InvoiceHeader.InvoiceNumber
+        FileHeader.Batch.BatchIdentifier        = Parties.SellerParty.TaxIdentification.TaxIdentificationNumber
+                                                + firstInvoice.InvoiceHeader.InvoiceNumber
                                                 + firstInvoice.InvoiceHeader.InvoiceSeriesCode;
 
         return this;

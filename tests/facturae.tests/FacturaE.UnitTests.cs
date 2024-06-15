@@ -196,6 +196,24 @@ public sealed class FacturaeTests
         sto.TaxAmount.TotalAmount.Should().Be(147.0M);
 
         invoiceType.CalculateTotals();
+
+        invoiceType.InvoiceTotals.Should().NotBeNull();
+        invoiceType.InvoiceTotals.TotalGrossAmount.Should().Be(6678.0M);
+        invoiceType.InvoiceTotals.TotalGrossAmountBeforeTaxes.Should().Be(6678.0M);
+        invoiceType.InvoiceTotals.TotalTaxOutputs.Should().Be(879.48M);
+        invoiceType.InvoiceTotals.TotalTaxesWithheld.Should().Be(0.0M);
+        invoiceType.InvoiceTotals.InvoiceTotal.Should().Be(7557.48M);
+        invoiceType.InvoiceTotals.TotalOutstandingAmount.Should().Be(7557.48M);
+        invoiceType.InvoiceTotals.TotalExecutableAmount.Should().Be(7557.48M);
+
         instance.CalculateTotals();
+
+        instance.FileHeader.Batch.Should().NotBeNull();
+        instance.FileHeader.Batch.BatchIdentifier.Should().Be("A2800056FBX-375-09");
+        instance.FileHeader.Batch.InvoicesCount.Should().Be(1);
+        instance.FileHeader.Batch.TotalInvoicesAmount.TotalAmount.Should().Be(7557.48M);
+        instance.FileHeader.Batch.TotalOutstandingAmount.TotalAmount.Should().Be(7557.48M);
+        instance.FileHeader.Batch.TotalExecutableAmount.TotalAmount.Should().Be(7557.48M);
+        instance.FileHeader.Batch.InvoiceCurrencyCode.Should().Be(CurrencyCodeType.EUR);
     }
 }
