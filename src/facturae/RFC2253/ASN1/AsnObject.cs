@@ -3,7 +3,7 @@
 
 namespace ASN1;
 
-public abstract class AsnObject
+internal abstract class AsnObject
 {
     public AsnIdentifier Id
     {

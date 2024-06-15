@@ -3,7 +3,7 @@
 
 namespace X500;
 
-public enum DistinguishedNameFormat
+internal enum DistinguishedNameFormat
 {
     RFC1779,
     RFC2253,

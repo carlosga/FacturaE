@@ -13,7 +13,7 @@ namespace FacturaE.XAdES;
 /// <summary>
 /// Custom <see cref="SignedXml"/> implementation.
 /// </summary>
-public sealed class XAdESSignedXml : SignedXml
+internal sealed class XAdESSignedXml : SignedXml
 {
     private readonly List<DataObject> _dataObjects = [];
     private ClaimedRole               _signerRole;

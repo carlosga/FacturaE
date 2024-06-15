@@ -40,6 +40,16 @@ public struct DoubleTwoDecimalType
         return new DoubleTwoDecimalType(decimal.Parse(value));
     }
 
+    public static bool operator ==(DoubleTwoDecimalType left, decimal dec)
+    {
+        return left._value == dec;
+    }
+
+    public static bool operator !=(DoubleTwoDecimalType left, decimal dec)
+    {
+        return left._value != dec;
+    }
+
     public static bool operator ==(DoubleTwoDecimalType left, DoubleTwoDecimalType right)
     {
         return left._value == right._value;
@@ -109,7 +119,19 @@ public struct DoubleTwoDecimalType
 
     public override readonly bool Equals(object obj)
     {
-        return obj is not null && obj is DoubleTwoDecimalType value && value == this;
+        if (obj is null)
+        {
+            return false;
+        }
+        else if (obj is decimal dec)
+        {
+            return _value == dec;
+        }
+        else if (obj is DoubleTwoDecimalType dsdt)
+        {
+            return dsdt == this;
+        }
+        return false;
     }
 
     public override readonly string ToString()
@@ -124,6 +146,27 @@ public struct DoubleTwoDecimalType
 
     public readonly int CompareTo(object obj)
     {
+        if (obj is decimal dec)
+        {
+            return _value.CompareTo(dec);
+        }
+        else if (obj is DoubleFourDecimalType dfdt)
+        {
+            return _value.CompareTo((decimal)dfdt);
+        }
+        else if (obj is DoubleSixDecimalType dsdt)
+        {
+            return _value.CompareTo((decimal)dsdt);
+        }
+        else if (obj is DoubleTwoDecimalType dtdt)
+        {
+            return _value.CompareTo((decimal)dtdt);
+        }
+        else if (obj is DoubleUpToEightDecimalType dedt)
+        {
+            return _value.CompareTo((decimal)dedt);
+        }
+
         return _value.CompareTo(obj);
     }
 

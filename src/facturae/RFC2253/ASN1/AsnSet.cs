@@ -5,7 +5,7 @@ using System.Collections;
 
 namespace ASN1;
 
-public sealed class AsnSet : AsnObject, IEnumerable<AsnObject>
+internal sealed class AsnSet : AsnObject, IEnumerable<AsnObject>
 {
     private readonly List<AsnObject> _objects = [];
 

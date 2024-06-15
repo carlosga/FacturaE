@@ -28,12 +28,33 @@ public sealed class XAdESSignatureVerifier
     /// </summary>
     /// <param name="path">The target file path</param>
     /// <returns>An instance of <see cref="SignedFacturae"/></returns>
-    public XAdESSignatureVerifier WriteToFile(string path)
+    public XAdESSignatureVerifier Save(string path)
     {
         _signedDocument.Save(path);
 
         return this;
     }
+
+    /// <summary>
+    /// Saves the XML document to the specified System.Xml.XmlWriter.
+    /// </summary>
+    public XAdESSignatureVerifier Save(XmlWriter w)
+    {
+        _signedDocument.Save(w);
+
+        return this;
+    }
+
+    /// <summary>
+    /// Saves the XML document to the specified stream.
+    /// </summary>
+    public XAdESSignatureVerifier Save(Stream outStream)
+    {
+        _signedDocument.Save(outStream);
+
+        return this;
+    }
+
 
     /// <summary>
     /// Verify the signature against an asymetric

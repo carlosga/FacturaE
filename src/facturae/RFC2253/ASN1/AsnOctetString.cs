@@ -3,7 +3,7 @@
 
 namespace ASN1;
 
-public sealed class AsnOctetString : AsnString
+internal sealed class AsnOctetString : AsnString
 {
     public AsnOctetString(AsnIdentifier id, ReadOnlyMemory<byte> buffer)
         : base(id, buffer, buffer.Span.ByteArrayToHex(" "))

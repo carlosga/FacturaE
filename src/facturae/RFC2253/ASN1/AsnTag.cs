@@ -6,7 +6,7 @@ namespace ASN1;
 /// <summary>
 /// http://en.wikipedia.org/wiki/X.690
 /// </summary>
-public enum AsnTag
+internal enum AsnTag
 {
     EOC = 0x00,
     Boolean = 0x01,

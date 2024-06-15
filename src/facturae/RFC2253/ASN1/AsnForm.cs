@@ -3,7 +3,7 @@
 
 namespace ASN1;
 
-public enum AsnForm
+internal enum AsnForm
 {
     Primitive   = 0,
     Constructed = 1

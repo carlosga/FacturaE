@@ -1,33 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <PackageTags>facturae;dotnet8</PackageTags>
-    <PackageProjectUrl>https://github.com/carlosga/facturae</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/carlosga/facturae/blob/master/LICENSE</PackageLicenseUrl>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- <Nullable>enable</Nullable> -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup>
+    <PackageProjectUrl>https://github.com/carlosga/facturae</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/carlosga/facturae/blob/master/LICENSE</PackageLicenseUrl>
     <AssemblyTitle>electronic invoice signing using pure C#</AssemblyTitle>
     <AssemblyName>FacturaE</AssemblyName>
+    <PackageTags>facturae;dotnet8</PackageTags>
     <PackageId>FacturaE</PackageId>
     <VersionPrefix>1.1.0</VersionPrefix>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.1-*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Certificates\facturae.p12">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>

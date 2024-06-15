@@ -1,6 +1,8 @@
 // Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Diagnostics;
+
 using FacturaE.DataType;
 
 namespace FacturaE;
@@ -178,6 +180,11 @@ public partial class Facturae
 
 public partial class InvoiceType
 {
+    public Facturae Root()
+    {
+        return Parent;
+    }
+
     /// <summary>
     /// Set the invoice series code.
     /// </summary>
@@ -419,13 +426,15 @@ public partial class InvoiceType
     /// <param name="productCode">The product code.</param>
     /// <param name="productDescription">The product description.</param>
     /// <returns></returns>
-    public InvoiceLineType AddInvoiceItem(string productCode, string productDescription)
+    public InvoiceLineType AddInvoiceItem(string productCode = null, string productDescription = null)
     {
         var item = new InvoiceLineType
         {
             Parent          = this,
             ArticleCode     = productCode,
-            ItemDescription = productDescription
+            ItemDescription = productDescription,
+            TaxesOutputs    = new List<InvoiceLineTypeTax>(),
+            TaxesWithheld   = new List<TaxType>()
         };
 
         Items.Add(item);
@@ -464,15 +473,15 @@ public partial class InvoiceType
                     EquivalenceSurchargeAmount    = new AmountType
                     {
                         TotalAmount                = g.Where(gtax => gtax.EquivalenceSurchargeSpecified)
-                                                        .Sum(gtax => gtax.EquivalenceSurchargeAmount.TotalAmount).Round(),
+                                                      .Sum(gtax => gtax.EquivalenceSurchargeAmount.TotalAmount).Round(),
                         EquivalentInEuros          = g.Where(gtax => gtax.EquivalenceSurchargeSpecified)
-                                                        .Sum(gtax => gtax.EquivalenceSurchargeAmount.EquivalentInEuros).Round(),
+                                                      .Sum(gtax => gtax.EquivalenceSurchargeAmount.EquivalentInEuros).Round(),
                         EquivalentInEurosSpecified = true
                     },
                     TaxTypeCode = g.Key.TaxTypeCode
                 };
 
-        TaxesOutputs = q.OrderBy(x => x.TaxTypeCode).ThenBy(x => x.TaxRate).ThenBy(x => x.EquivalenceSurcharge).ToList();
+        TaxesOutputs = [.. q.OrderBy(x => x.TaxTypeCode).ThenBy(x => x.TaxRate).ThenBy(x => x.EquivalenceSurcharge)];
 
         // Taxes Withheld
         var w = from tax in Items.SelectMany(x => x.TaxesWithheld)
@@ -493,7 +502,7 @@ public partial class InvoiceType
                     TaxTypeCode = g.Key.TaxTypeCode
                 };
 
-        TaxesWithheld = w.OrderBy(x => x.TaxTypeCode).ThenBy(x => x.TaxRate).ToList();
+        TaxesWithheld = [.. w.OrderBy(x => x.TaxTypeCode).ThenBy(x => x.TaxRate)];
 
         // Invoice totals
         InvoiceTotals = new InvoiceTotalsType();
@@ -613,17 +622,54 @@ public partial class InvoiceType
 
 public partial class InvoiceLineType
 {
+    public InvoiceLineType SetIssuerContractReference(string reference)
+    {
+        IssuerContractReference = reference;
+        
+        return this;
+    }
+
+    public InvoiceLineType SetIssuerContractDate(DateTime? value)
+    {
+         IssuerContractDate          = value ?? DateTime.Today;
+         IssuerContractDateSpecified = value.HasValue;
+
+        return this;
+    }
+
+    public InvoiceLineType SetIssuerTransactionReference(string reference)
+    {
+        IssuerTransactionReference = reference;
+
+        return this;
+    }
+
     public InvoiceLineType SetIssuerTransactionDate(DateTime? value)
     {
-         IssuerTransactionDate          = value.HasValue ? value.Value : DateTime.Today;
+         IssuerTransactionDate          = value ?? DateTime.Today;
          IssuerTransactionDateSpecified = value.HasValue;
 
          return this;
     }
 
+    public InvoiceLineType SetDescription(string description)
+    {
+        ItemDescription = description;
+
+        return this;
+    }
+
     public InvoiceLineType GiveQuantity(decimal quantity)
     {
         Quantity = quantity;
+
+        return this;
+    }
+
+    public InvoiceLineType GiveUnitOfMeasure(UnitOfMeasureType? measureType)
+    {
+        UnitOfMeasure          = measureType ?? UnitOfMeasureType.Units;
+        UnitOfMeasureSpecified = measureType.HasValue;
 
         return this;
     }
@@ -675,8 +721,6 @@ public partial class InvoiceLineType
 
     private void AddTaxOutput(DoubleUpToEightDecimalType taxRate, TaxTypeCodeType taxType, DoubleTwoDecimalType? equivalenceSurcharge = null)
     {
-        TaxesOutputs ??= new List<InvoiceLineTypeTax>(1);
-
         var tax = new InvoiceLineTypeTax
         {
             TaxTypeCode                   = taxType,
@@ -690,8 +734,6 @@ public partial class InvoiceLineType
 
     private void AddTaxWithheld(DoubleUpToEightDecimalType taxRate, TaxTypeCodeType taxType)
     {
-        TaxesWithheld ??= new List<TaxType>(1);
-
         var tax = new TaxType
         {
             TaxTypeCode = taxType,
@@ -729,7 +771,7 @@ public partial class InvoiceLineType
         // Result: TotalCost - DiscountAmount + ChargeAmount. Up to eight decimal points
         GrossAmount = TotalCost - totalDiscounts + totalCharges;
 
-        TaxesOutputs.ForEach
+        TaxesOutputs?.ForEach
         (
             tax =>
             {
@@ -757,7 +799,7 @@ public partial class InvoiceLineType
 
         var discounts = DiscountsAndRebates?.Sum(x => x.DiscountAmount).Round() ?? 0;
 
-        TaxesWithheld.ForEach
+        TaxesWithheld?.ForEach
         (
             tax =>
             {

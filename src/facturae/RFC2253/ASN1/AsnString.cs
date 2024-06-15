@@ -3,7 +3,7 @@
 
 namespace ASN1;
 
-public abstract class AsnString : AsnValueObject<string>
+internal abstract class AsnString : AsnValueObject<string>
 {
     protected AsnString(AsnIdentifier id, ReadOnlyMemory<byte> buffer) : base(id, buffer)
     {

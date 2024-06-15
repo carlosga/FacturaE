@@ -8,7 +8,7 @@ namespace ASN1;
 /// http://msdn.microsoft.com/en-us/library/windows/desktop/bb648643%28v=vs.85%29.aspx
 /// http://msdn.microsoft.com/en-us/library/windows/desktop/bb540809(v=vs.85).aspx
 /// </summary>
-public sealed class AsnDecoder
+internal sealed class AsnDecoder
 {
     private readonly ReadOnlyMemory<byte> _memory;
     private int                           _position;

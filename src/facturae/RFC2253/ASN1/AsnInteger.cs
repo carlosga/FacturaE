@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace ASN1;
 
-public sealed class AsnInteger : AsnValueObject<BigInteger>
+internal sealed class AsnInteger : AsnValueObject<BigInteger>
 {
     public AsnInteger(AsnIdentifier id, ReadOnlyMemory<byte> buffer) : base(id, buffer)
     {
