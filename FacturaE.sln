@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{88086700-F1E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacturaE", "src\facturae\FacturaE.csproj", "{E31A3B5E-FEA2-4FC0-80C1-415C91A635AF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C24D7763-A8A5-4799-8D1A-0CA4E4E0DB67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "facturae.tests", "tests\facturae.tests\facturae.tests.csproj", "{FCCCD1AE-EFF6-4DD0-BFD2-DD0455770783}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +24,13 @@ Global
 		{E31A3B5E-FEA2-4FC0-80C1-415C91A635AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E31A3B5E-FEA2-4FC0-80C1-415C91A635AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E31A3B5E-FEA2-4FC0-80C1-415C91A635AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCCCD1AE-EFF6-4DD0-BFD2-DD0455770783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCCCD1AE-EFF6-4DD0-BFD2-DD0455770783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCCCD1AE-EFF6-4DD0-BFD2-DD0455770783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCCCD1AE-EFF6-4DD0-BFD2-DD0455770783}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E31A3B5E-FEA2-4FC0-80C1-415C91A635AF} = {88086700-F1EB-4E51-B9E1-4F4D06B94876}
+		{FCCCD1AE-EFF6-4DD0-BFD2-DD0455770783} = {C24D7763-A8A5-4799-8D1A-0CA4E4E0DB67}
 	EndGlobalSection
 EndGlobal

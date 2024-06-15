@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ASN1;
 
-public sealed class AsnUTCTime : AsnValueObject<DateTime>
+internal sealed class AsnUTCTime : AsnValueObject<DateTime>
 {
     private static readonly string[] s_timeFormats =
     [

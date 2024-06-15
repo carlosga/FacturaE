@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ASN1;
 
-public sealed class AsnObjectIdentifier : AsnValueObject<string>
+internal sealed class AsnObjectIdentifier : AsnValueObject<string>
 {
     public AsnObjectIdentifier(AsnIdentifier id, ReadOnlyMemory<byte> buffer) : base(id, buffer)
     {

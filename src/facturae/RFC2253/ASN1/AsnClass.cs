@@ -3,7 +3,7 @@
 
 namespace ASN1;
 
-public enum AsnClass
+internal enum AsnClass
 {
     Universal       = 1,
     Application     = 2,

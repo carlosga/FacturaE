@@ -3,7 +3,7 @@
 
 namespace ASN1;
 
-public interface IAsnValueObject<T> : IAsnValueObject
+internal interface IAsnValueObject<T> : IAsnValueObject
 {
     new T Value { get; }
 }

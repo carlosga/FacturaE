@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ASN1;
 
-public sealed class AsnBitString : AsnString
+internal sealed class AsnBitString : AsnString
 {
     private static string Encode(ReadOnlyMemory<byte> buffer)
     {

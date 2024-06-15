@@ -3,7 +3,7 @@
 
 namespace ASN1;
 
-public abstract class AsnValueObject<T> : AsnObject, IAsnValueObject<T>
+internal abstract class AsnValueObject<T> : AsnObject, IAsnValueObject<T>
 {
     public T Value
     {

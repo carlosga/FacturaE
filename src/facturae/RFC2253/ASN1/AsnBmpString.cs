@@ -8,7 +8,7 @@ namespace ASN1;
 /// <summary>
 /// ASN.1 BMP (Basic Multilingual Plane) String
 /// </summary>
-public sealed class AsnBmpString : AsnString
+internal sealed class AsnBmpString : AsnString
 {
     private static readonly Encoding s_encoding1201 = Encoding.GetEncoding(1201);
     private static readonly Encoding s_encoding1200 = Encoding.GetEncoding(1200);

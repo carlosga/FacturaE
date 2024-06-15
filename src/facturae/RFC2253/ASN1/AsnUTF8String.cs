@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ASN1;
 
-public sealed class AsnUTF8String : AsnString
+internal sealed class AsnUTF8String : AsnString
 {
     public AsnUTF8String(AsnIdentifier id, ReadOnlyMemory<byte> buffer)
         : base(id, buffer, Encoding.UTF8.GetString(buffer.Span))

@@ -23,7 +23,7 @@ namespace ASN1;
 ///  1  1  1  1  0  (0-30) single octet tag
 ///  1  1  1  1  1  (> 30) multiple octet tag, more octets follow
 /// </summary>
-public struct AsnIdentifier
+internal struct AsnIdentifier
 {
     public AsnClass Class
     {

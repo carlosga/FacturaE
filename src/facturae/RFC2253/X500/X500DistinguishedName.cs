@@ -6,7 +6,7 @@ using ASN1;
 
 namespace X500;
 
-public static class X500DistinguishedName
+internal static class X500DistinguishedName
 {
     private static readonly Dictionary<string, string> s_rfc1179;
     private static readonly Dictionary<string, string> s_rfc2253;
