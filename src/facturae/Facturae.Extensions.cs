@@ -1,6 +1,8 @@
 // Copyright (c) Carlos Guzmán Álvarez. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Security.Cryptography.X509Certificates;
+
 using FacturaE.DataType;
 
 namespace FacturaE;
@@ -179,11 +181,6 @@ public partial class Facturae
 
 public partial class InvoiceType
 {
-    public Facturae Root()
-    {
-        return Parent;
-    }
-
     /// <summary>
     /// Set the invoice series code.
     /// </summary>
@@ -442,6 +439,28 @@ public partial class InvoiceType
     }
 
     /// <summary>
+    /// Adds a new general discount to an invoice.
+    /// </summary>
+    /// <param name="discountReason">The discount reason.</param>
+    /// <param name="discountRate">The discount rate.</param>
+    /// <returns></returns>
+    public InvoiceType AddGeneralDiscount(string discountReason, decimal discountRate)
+    {
+        InvoiceTotals.GeneralDiscounts ??= new List<DiscountType>(1);
+
+        var discount = new DiscountType
+        {
+            DiscountReason        = discountReason,
+            DiscountRate          = discountRate,
+            DiscountRateSpecified = true,
+        };
+
+        InvoiceTotals.GeneralDiscounts.Add(discount);
+
+        return this;
+    }
+
+    /// <summary>
     /// Calculates the invoice totals.
     /// </summary>
     /// <returns></returns>
@@ -457,30 +476,36 @@ public partial class InvoiceType
                     TaxRate     = g.Key.TaxRate,
                     TaxableBase = new AmountType
                     {
-                        TotalAmount                = g.Sum(gtax => gtax.TaxableBase.TotalAmount).Round(),
-                        EquivalentInEuros          = g.Sum(gtax => gtax.TaxableBase.EquivalentInEuros).Round(),
-                        EquivalentInEurosSpecified = true
-                    },
-                    TaxAmount   = new AmountType
-                    {
-                        TotalAmount                = g.Sum(gtax => gtax.TaxAmount.TotalAmount).Round(),
-                        EquivalentInEuros          = g.Sum(gtax => gtax.TaxAmount.EquivalentInEuros).Round(),
+                        TotalAmount                = ApplyGeneralDiscounts(g.Sum(gtax => gtax.TaxableBase.TotalAmount)).Round(),
+                        EquivalentInEuros          = ApplyGeneralDiscounts(g.Sum(gtax => gtax.TaxableBase.EquivalentInEuros)).Round(),
                         EquivalentInEurosSpecified = true
                     },
                     EquivalenceSurcharge          = g.Key.EquivalenceSurcharge,
                     EquivalenceSurchargeSpecified = g.Any(gtax => gtax.EquivalenceSurchargeSpecified),
-                    EquivalenceSurchargeAmount    = new AmountType
-                    {
-                        TotalAmount                = g.Where(gtax => gtax.EquivalenceSurchargeSpecified)
-                                                      .Sum(gtax => gtax.EquivalenceSurchargeAmount.TotalAmount).Round(),
-                        EquivalentInEuros          = g.Where(gtax => gtax.EquivalenceSurchargeSpecified)
-                                                      .Sum(gtax => gtax.EquivalenceSurchargeAmount.EquivalentInEuros).Round(),
-                        EquivalentInEurosSpecified = true
-                    },
-                    TaxTypeCode = g.Key.TaxTypeCode
+                    TaxTypeCode                   = g.Key.TaxTypeCode
                 };
 
         TaxesOutputs = [.. q.OrderBy(x => x.TaxTypeCode).ThenBy(x => x.TaxRate).ThenBy(x => x.EquivalenceSurcharge)];
+
+        foreach (var tax in TaxesOutputs)
+        {
+            tax.TaxAmount = new AmountType
+            {
+                TotalAmount                = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100.0M).Round(),
+                EquivalentInEuros          = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100.0M).Round(),
+                EquivalentInEurosSpecified = true
+            };
+
+            if (tax.EquivalenceSurchargeSpecified)
+            {
+                tax.EquivalenceSurchargeAmount = new AmountType
+                {
+                    TotalAmount                = (tax.TaxableBase.TotalAmount * tax.EquivalenceSurcharge / 100.0M).Round(),
+                    EquivalentInEuros          = (tax.TaxableBase.TotalAmount * tax.EquivalenceSurcharge / 100.0M).Round(),
+                    EquivalentInEurosSpecified = true
+                };
+            }
+        }
 
         // Taxes Withheld
         var w = from tax in Items.SelectMany(x => x.TaxesWithheld)
@@ -503,9 +528,6 @@ public partial class InvoiceType
 
         TaxesWithheld = [.. w.OrderBy(x => x.TaxTypeCode).ThenBy(x => x.TaxRate)];
 
-        // Invoice totals
-        InvoiceTotals = new InvoiceTotalsType();
-
         // Calculate totals
         InvoiceTotals.TotalGrossAmount = Items.Sum(it => it.GrossAmount).Round();
 
@@ -514,8 +536,8 @@ public partial class InvoiceType
         CalculateGeneralSurchargesTotals();
 
         InvoiceTotals.TotalGrossAmountBeforeTaxes = (InvoiceTotals.TotalGrossAmount
-                                                    - InvoiceTotals.TotalGeneralDiscounts
-                                                    + InvoiceTotals.TotalGeneralSurcharges).Round();
+                                                   - InvoiceTotals.TotalGeneralDiscounts
+                                                   + InvoiceTotals.TotalGeneralSurcharges).Round();
 
         CalculatePaymentsOnAccountTotals();
 
@@ -557,10 +579,25 @@ public partial class InvoiceType
         return Parent;
     }
 
+    private decimal ApplyGeneralDiscounts(decimal baseAmount)
+    {
+        var discount = 0.0M;
+
+        if (InvoiceTotals.GeneralDiscounts is not null && InvoiceTotals.GeneralDiscounts.Count > 0)
+        {
+            foreach (var gd in InvoiceTotals.GeneralDiscounts)
+            {
+                discount += baseAmount * gd.DiscountRate / 100;
+            }
+        }
+
+        return baseAmount - discount;
+    }
+
     private void CalculateSubsidyAmounts()
     {
         // Rate applied to the Invoice Total.
-        InvoiceTotals.Subsidies.ForEach(s => s.SubsidyAmount = (InvoiceTotals.InvoiceTotal * s.SubsidyRate / 100).Round());
+        InvoiceTotals.Subsidies.ForEach(s => s.SubsidyAmount = (InvoiceTotals.InvoiceTotal * s.SubsidyRate / 100.0M).Round());
     }
 
     private void CalculateReimbursableExpensesTotals()
@@ -588,7 +625,7 @@ public partial class InvoiceType
         {
             InvoiceTotals.GeneralSurcharges.ForEach
             (
-                gs => gs.ChargeAmount = (InvoiceTotals.TotalGrossAmount * gs.ChargeRate / 100).Round()
+                gs => gs.ChargeAmount = (InvoiceTotals.TotalGrossAmount * gs.ChargeRate / 100.0M).Round()
             );
 
             InvoiceTotals.TotalGeneralSurcharges = InvoiceTotals.GeneralSurcharges.Sum(gs => gs.ChargeAmount).Round();
@@ -601,7 +638,7 @@ public partial class InvoiceType
         {
             InvoiceTotals.GeneralDiscounts.ForEach
             (
-                gd => gd.DiscountAmount = (InvoiceTotals.TotalGrossAmount * gd.DiscountRate / 100).Round()
+                gd => gd.DiscountAmount = (InvoiceTotals.TotalGrossAmount * gd.DiscountRate / 100.0M).Round()
             );
 
             InvoiceTotals.TotalGeneralDiscounts = InvoiceTotals.GeneralDiscounts.Sum(gd => gd.DiscountAmount).Round();
@@ -647,6 +684,14 @@ public partial class InvoiceLineType
     {
          IssuerTransactionDate          = value ?? DateTime.Today;
          IssuerTransactionDateSpecified = value.HasValue;
+
+         return this;
+    }
+
+    public InvoiceLineType SetTransactionDate(DateTime? value)
+    {
+         TransactionDate          = value ?? DateTime.Today;
+         TransactionDateSpecified = value.HasValue;
 
          return this;
     }
@@ -753,7 +798,7 @@ public partial class InvoiceLineType
         {
             foreach (var dar in DiscountsAndRebates)
             {
-                dar.DiscountAmount = (TotalCost * dar.DiscountRate / 100).Round();
+                dar.DiscountAmount = (TotalCost * dar.DiscountRate / 100.0M).Round();
                 totalDiscounts     = (totalDiscounts + dar.DiscountAmount).Round();
             }
         }
@@ -762,7 +807,7 @@ public partial class InvoiceLineType
         {
             foreach (var chr in Charges)
             {
-                chr.ChargeAmount = (TotalCost * chr.ChargeRate / 100).Round();
+                chr.ChargeAmount = (TotalCost * chr.ChargeRate / 100.0M).Round();
                 totalCharges     = (totalCharges + chr.ChargeAmount).Round();
             }
         }
@@ -782,14 +827,14 @@ public partial class InvoiceLineType
 
                 tax.TaxAmount ??= new AmountType();
 
-                tax.TaxAmount.TotalAmount       = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100).Round();
+                tax.TaxAmount.TotalAmount       = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100.0M).Round();
                 tax.TaxAmount.EquivalentInEuros = tax.TaxAmount.TotalAmount;
 
                 if (tax.EquivalenceSurchargeSpecified)
                 {
                     tax.EquivalenceSurchargeAmount ??= new AmountType();
 
-                    tax.EquivalenceSurchargeAmount.TotalAmount       = (tax.TaxableBase.TotalAmount * tax.EquivalenceSurcharge / 100).Round();
+                    tax.EquivalenceSurchargeAmount.TotalAmount       = (tax.TaxableBase.TotalAmount * tax.EquivalenceSurcharge / 100.0M).Round();
                     tax.EquivalenceSurchargeAmount.EquivalentInEuros = tax.EquivalenceSurchargeAmount.TotalAmount;
                     tax.EquivalenceSurchargeAmount.EquivalentInEurosSpecified = true;
                 }
@@ -810,7 +855,7 @@ public partial class InvoiceLineType
 
                 tax.TaxAmount ??= new AmountType();
 
-                tax.TaxAmount.TotalAmount                = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100).Round();
+                tax.TaxAmount.TotalAmount                = (tax.TaxableBase.TotalAmount * tax.TaxRate / 100.0M).Round();
                 tax.TaxAmount.EquivalentInEuros          = tax.TaxAmount.TotalAmount;
                 tax.TaxAmount.EquivalentInEurosSpecified = true;
             }
